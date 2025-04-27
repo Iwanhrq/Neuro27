@@ -34,4 +34,7 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-supabase.ts
+# Apenas ignorar o arquivo supabase.ts na pasta constants
+src/constants/supabase.ts
+
+
