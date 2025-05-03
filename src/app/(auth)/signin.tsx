@@ -39,7 +39,7 @@ export default function SignIn() {
         // 2. O listener no _layout.tsx captura esse evento
         // 3. O usuário é redirecionado automaticamente para o perfil
         setLoading(false);
-        router.replace('/(panel)/profile' as any)
+        router.replace('/(panel)/home' as any)
     }
 
     return (

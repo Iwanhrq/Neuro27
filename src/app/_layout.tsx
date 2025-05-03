@@ -26,23 +26,19 @@ function MainLayout() {
     // 3. Token expira
     // 4. Página é recarregada
     supabase.auth.onAuthStateChange((_event, session) => {
-    
       if(session){
         // Se existe uma sessão, significa que o usuário está logado
-        // Salvamos os dados do usuário no contexto
         setAuth(session.user)
-        // Redirecionamos para a área logada (perfil)
-        router.replace('/(panel)/profile' as any)
+        // Redirecionamos para a área logada
+        router.replace('/(panel)/home' as any)
         return
       }
       // Se não existe sessão, significa que o usuário não está logado
-      // Limpamos os dados do usuário do contexto
       setAuth(null)
       // Redirecionamos para a tela de login
       router.replace('/(auth)/signin' as any)
     })
   }, []) // Array vazio significa que o useEffect só roda uma vez quando o componente monta
-
 
   return (
     // Stack é um navegador que permite empilhar telas
@@ -60,10 +56,9 @@ function MainLayout() {
       
       {/* Telas privadas (precisam de autenticação) */}
       <Stack.Screen
-        name="(panel)/profile"
+        name="(panel)"
         options={{ headerShown: false }}
       />
-
     </Stack>
   )
 }
