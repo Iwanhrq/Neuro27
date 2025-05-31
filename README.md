@@ -48,3 +48,6 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+# Neuro27
+Esse app está sendo desenvolvido como parrte para do Trabalho de Conclusão de Curso (TCC) em Desenvolvimento de Sistemas. Ele tem como propósito de ensinar sobre como os neurotransmissores funcionam e afetam nossas emoções.
