@@ -4,5 +4,5 @@ Esse app está sendo desenvolvido como parrte para do Trabalho de Conclusão de 
 
 
 <p align="center">
-  <img src="readme-images/carbon.png" alt="Exemplo de código" width="600"/>
+  <img src="readme-images/" alt="Exemplo de código" width="600"/>
 </p>
