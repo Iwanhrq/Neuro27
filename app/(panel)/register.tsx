@@ -152,5 +152,6 @@ const styles = StyleSheet.create({
   },
   linkText: {
     fontSize: 14,
+    paddingTop: 64
   },
 }); 

@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
   },
   linkButton: {
     alignItems: 'center',
+    paddingTop: 128,
   },
   linkText: {
     fontSize: 14,

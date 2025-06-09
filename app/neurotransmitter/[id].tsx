@@ -26,15 +26,24 @@ export default function NeurotransmitterDetailScreen() {
   useEffect(() => {
     const fetchNeurotransmitter = async () => {
       try {
+        console.log('Buscando dados para o ID:', id);
+        console.log('URL:', `${API_URL}/neurotransmitters/${id}`);
+        
         const response = await fetch(`${API_URL}/neurotransmitters/${id}`);
+        console.log('Status da resposta:', response.status);
+        
         if (!response.ok) {
-          throw new Error('Erro ao buscar dados');
+          const errorText = await response.text();
+          console.error('Resposta da API:', errorText);
+          throw new Error(`Erro ao buscar dados: ${response.status} ${errorText}`);
         }
+        
         const data = await response.json();
+        console.log('Dados recebidos:', data);
         setNeurotransmitter(data);
       } catch (error) {
-        console.error('Erro ao buscar dados:', error);
-        setError('Não foi possível carregar os detalhes do neurotransmissor');
+        console.error('Erro detalhado:', error);
+        setError('Não foi possível carregar os detalhes do neurotransmissor. Tente novamente mais tarde.');
       } finally {
         setLoading(false);
       }
