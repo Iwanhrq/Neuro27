@@ -1,8 +1,23 @@
 import { useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { Dimensions, Image, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+type NeurotransmitterId = 'serotonin' | 'dopamine' | 'norepinephrine' | 'gaba' | 'glutamate' | 'acetylcholine' | 'endorphin' | 'histamine';
+
+// Mapeamento das imagens dos neurotransmissores
+const NEUROTRANSMITTER_IMAGES: Record<NeurotransmitterId, any> = {
+  serotonin: require('../../assets/images/serotonina.png'),
+  dopamine: require('../../assets/images/dopamina.png'),
+  norepinephrine: require('../../assets/images/serotonina.png'),
+  gaba: require('../../assets/images/dopamina.png'),
+  glutamate: require('../../assets/images/serotonina.png'),
+  acetylcholine: require('../../assets/images/dopamina.png'),
+  endorphin: require('../../assets/images/serotonina.png'),
+  histamine: require('../../assets/images/dopamina.png'),
+};
 
 // Lista estática de neurotransmissores
-const NEUROTRANSMITTERS = [
+const NEUROTRANSMITTERS: { id: NeurotransmitterId; name: string }[] = [
   { id: 'serotonin', name: 'Serotonina' },
   { id: 'dopamine', name: 'Dopamina' },
   { id: 'norepinephrine', name: 'Noradrenalina' },
@@ -42,11 +57,67 @@ const EMOTIONS = [
   },
 ];
 
+// Lista estática das partes do cérebro
+const BRAIN_PARTS = [
+  { id: '1', name: 'Córtex Cerebral' },
+  { id: '2', name: 'Cerebelo' },
+  { id: '3', name: 'Tronco Encefálico' },
+  { id: '4', name: 'Sistema Límbico' },
+];
+
 export default function Home() {
   const router = useRouter();
+  const screenWidth = Dimensions.get('window').width;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollViewRef = useRef(null);
+
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const contentOffset = event.nativeEvent.contentOffset.x;
+    const index = Math.round(contentOffset / (screenWidth - 40));
+    setActiveIndex(index);
+  };
 
   return (
+
     <View style={styles.container}>
+      {/* Carrossel das Partes do Cérebro */}
+      <View style={styles.brainCarouselContainer}>
+        <View style={styles.carouselWrapper}>
+          <ScrollView 
+            ref={scrollViewRef}
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled
+            snapToInterval={screenWidth - 40}
+            decelerationRate="fast"
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            contentContainerStyle={styles.brainCarouselScroll}
+          >
+            {BRAIN_PARTS.map((part) => (
+              <TouchableOpacity
+                key={part.id}
+                style={[styles.brainPartCard, { width: screenWidth - 40 }]}
+              >
+                <Text style={styles.brainPartName}>{part.name}</Text>
+                <View style={styles.pagination}>
+                  {BRAIN_PARTS.map((_, index) => (
+                    <View
+                      key={index}
+                      style={[
+                        styles.paginationDot,
+                        index === activeIndex && styles.paginationDotActive
+                      ]}
+                    />
+                  ))}
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+      </View>
+
+      {/*Stories dos Neurotransmissores*/}
       <View style={styles.storiesContainer}>
         <Text style={styles.storiesTitle}>Neurotransmissores</Text>
         <ScrollView 
@@ -61,6 +132,11 @@ export default function Home() {
               onPress={() => router.push(`/neurotransmitter/${neurotransmitter.id}`)}
             >
               <View style={styles.storyCircle}>
+                <Image 
+                  source={NEUROTRANSMITTER_IMAGES[neurotransmitter.id]}
+                  style={styles.storyImage}
+                  resizeMode="cover"
+                />
               </View>
               <Text style={styles.storyName} numberOfLines={1}>
                 {neurotransmitter.name}
@@ -70,6 +146,7 @@ export default function Home() {
         </ScrollView>
       </View>
 
+      {/*Cards das Emoções*/}
       <View style={styles.emotionsContainer}>
         <Text style={styles.emotionsTitle}>Emoções</Text>
         <ScrollView 
@@ -102,8 +179,33 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
-  storiesContainer: {
+  brainCarouselContainer: {
     marginTop: 60,
+  },
+  brainCarouselScroll: {
+    paddingRight: 20,
+  },
+  carouselWrapper: {
+    position: 'relative',
+  },
+  brainPartCard: {
+    height: 200,
+    marginRight: 20,
+    backgroundColor: '#ABD4FC',
+    borderRadius: 12,
+    padding: 20,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  brainPartName: {
+    color: '#001B29',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    paddingLeft: 10,
+  },
+  storiesContainer: {
+    marginTop: 30,
   },
   storiesTitle: {
     fontSize: 20,
@@ -117,17 +219,23 @@ const styles = StyleSheet.create({
   storyCard: {
     alignItems: 'center',
     marginRight: 15,
-    width: 80,
+    width: 90,
   },
   storyCircle: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
     borderColor: '#D0E5FB',
+    overflow: 'hidden',
+  },
+  storyImage: {
+    width: '65%',
+    height: '65%',
+    borderRadius: 20,
   },
   storyInitial: {
     fontSize: 24,
@@ -140,11 +248,8 @@ const styles = StyleSheet.create({
     color: '#001B29',
     textAlign: 'center',
   },
-
-
-
   emotionsContainer: {
-    marginTop: 40,
+    marginTop: 30,
   },
   emotionsTitle: {
     fontSize: 20,
@@ -189,5 +294,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#001B29',
+  },
+  pagination: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+  },
+  paginationDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 4,
+    backgroundColor: '#D0E5FB',
+    marginHorizontal: 4,
+  },
+  paginationDotActive: {
+    backgroundColor: '#001B29',
+    width: 8,
+    height: 8,
+    borderRadius: 6,
   },
 }); 

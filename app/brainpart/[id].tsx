@@ -40,16 +40,26 @@ export default function BrainPartDetailScreen() {
         
         const data = await response.json();
         console.log('Dados recebidos:', data);
+        
+        if (!data || !data.id) {
+          throw new Error('Dados inválidos recebidos da API');
+        }
+        
         setBrainPart(data);
       } catch (error) {
         console.error('Erro detalhado:', error);
-        setError('Não foi possível carregar os detalhes da parte do cérebro. Tente novamente mais tarde.');
+        setError('Não foi possível carregar os detalhes da parte do cérebro. Verifique sua conexão com a internet e tente novamente.');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBrainPart();
+    if (id) {
+      fetchBrainPart();
+    } else {
+      setError('ID não fornecido');
+      setLoading(false);
+    }
   }, [id]);
 
   if (loading) {
@@ -92,7 +102,7 @@ export default function BrainPartDetailScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Funções</Text>
-          {brainPart.functions.map((function_, index) => (
+          {brainPart.functions?.map((function_, index) => (
             <View key={index} style={styles.listItem}>
               <Text style={styles.bulletPoint}>•</Text>
               <Text style={styles.listText}>{function_}</Text>
@@ -102,7 +112,7 @@ export default function BrainPartDetailScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Efeitos</Text>
-          {brainPart.effects.map((effect, index) => (
+          {brainPart.effects?.map((effect, index) => (
             <View key={index} style={styles.listItem}>
               <Text style={styles.bulletPoint}>•</Text>
               <Text style={styles.listText}>{effect}</Text>
@@ -112,7 +122,7 @@ export default function BrainPartDetailScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Condições Relacionadas</Text>
-          {brainPart.relatedConditions.map((condition, index) => (
+          {brainPart.relatedConditions?.map((condition, index) => (
             <View key={index} style={styles.listItem}>
               <Text style={styles.bulletPoint}>•</Text>
               <Text style={styles.listText}>{condition}</Text>

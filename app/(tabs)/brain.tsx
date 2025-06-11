@@ -21,15 +21,27 @@ export default function BrainPartsScreen() {
   useEffect(() => {
     const fetchBrainParts = async () => {
       try {
+        console.log('Buscando lista de partes do cérebro...');
         const response = await fetch(`${API_URL}/brainparts`);
+        console.log('Status da resposta:', response.status);
+        
         if (!response.ok) {
-          throw new Error('Erro ao buscar dados');
+          const errorText = await response.text();
+          console.error('Resposta da API:', errorText);
+          throw new Error(`Erro ao buscar dados: ${response.status} ${errorText}`);
         }
+        
         const data = await response.json();
+        console.log('Dados recebidos:', data);
+        
+        if (!Array.isArray(data)) {
+          throw new Error('Formato de dados inválido recebido da API');
+        }
+        
         setBrainParts(data);
       } catch (error) {
         console.error('Erro ao buscar dados:', error);
-        setError('Não foi possível carregar a lista de partes do cérebro');
+        setError('Não foi possível carregar a lista de partes do cérebro. Verifique sua conexão com a internet e tente novamente.');
       } finally {
         setLoading(false);
       }
