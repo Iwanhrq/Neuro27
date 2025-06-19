@@ -119,7 +119,7 @@ export default function Home() {
 
       {/*Stories dos Neurotransmissores*/}
       <View style={styles.storiesContainer}>
-        <Text style={styles.storiesTitle}>Neurotransmissores</Text>
+        <Text style={styles.storiesTitle}>#</Text>
         <ScrollView 
           horizontal 
           showsHorizontalScrollIndicator={false}
