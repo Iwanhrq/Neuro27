@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { register as firebaseRegister } from '../../constants/auth';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -9,13 +10,39 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
 
-  const handleRegister = () => {
+  const validateEmail = (email: string) => {
+    // Regex simples para validar email
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
+  const handleRegister = async () => {
+    if (!name || !email || !password || !confirmPassword) {
+      Alert.alert('Erro', 'Preencha todos os campos');
+      return;
+    }
+    if (!validateEmail(email)) {
+      Alert.alert('Erro', 'Email inválido');
+      return;
+    }
+    if (password.length < 6) {
+      Alert.alert('Erro', 'A senha deve ter pelo menos 6 caracteres');
+      return;
+    }
     if (password !== confirmPassword) {
       Alert.alert('Erro', 'As senhas não coincidem');
       return;
     }
-    // Implementar lógica de registro aqui
-    router.push('/(panel)/login' as any);
+    try {
+      await firebaseRegister(email, password);
+      Alert.alert('Sucesso', 'Conta criada com sucesso!');
+      router.push('/(panel)/login' as any);
+    } catch (error: any) {
+      let message = 'Erro ao criar conta';
+      if (error.code === 'auth/email-already-in-use') message = 'Email já está em uso';
+      if (error.code === 'auth/invalid-email') message = 'Email inválido';
+      if (error.code === 'auth/weak-password') message = 'Senha muito fraca';
+      Alert.alert('Erro', message);
+    }
   };
 
   return (

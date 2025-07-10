@@ -1,19 +1,35 @@
 import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { login as firebaseLogin } from '../../constants/auth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleLogin = () => {
-    if (email === 'admin' && password === '1234') {
-      // Login successful
+  const validateEmail = (email: string) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Erro', 'Preencha todos os campos');
+      return;
+    }
+    if (!validateEmail(email)) {
+      Alert.alert('Erro', 'Email inválido');
+      return;
+    }
+    try {
+      await firebaseLogin(email, password);
       router.push('/(tabs)/home' as any);
-    } else {
-      // Login failed
-      Alert.alert('Erro', 'Email ou senha incorretos');
+    } catch (error: any) {
+      let message = 'Email ou senha incorretos';
+      if (error.code === 'auth/invalid-email') message = 'Email inválido';
+      if (error.code === 'auth/user-not-found') message = 'Usuário não encontrado';
+      if (error.code === 'auth/wrong-password') message = 'Senha incorreta';
+      Alert.alert('Erro', message);
     }
   };
 
