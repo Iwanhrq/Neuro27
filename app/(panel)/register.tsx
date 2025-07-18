@@ -52,7 +52,7 @@ export default function Register() {
     >
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <ImageBackground
-          source={require('../../assets/images/Fundo-login.png')}
+          source={require('../../assets/images/fundo.png')}
           style={styles.header}
           resizeMode="cover"
         >

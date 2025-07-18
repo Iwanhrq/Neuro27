@@ -40,11 +40,12 @@ export default function Login() {
     >
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <ImageBackground
-          source={require('../../assets/images/Fundo-login.png')}
-          style={styles.header}
+          source={require('../../assets/images/fundo.png')}
+          style={[styles.header]}
+          imageStyle={{ transform: [{ translateY: 20 }] }}
           resizeMode="cover"
         >
-          <Text style={styles.headerText}>Bem-vindo(a) de volta!</Text>
+          <Text style={styles.headerText}>Neuro27</Text>
         </ImageBackground>
 
         <View style={styles.content}>

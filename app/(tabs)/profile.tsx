@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   background: {
-    marginTop: 50,
+    marginTop: 60,
     // width será definido dinamicamente
     height: '85%',
     backgroundColor: '#fff',
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     zIndex: 1, // Fica acima do triângulo
   },
   headerText: {
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: 'bold',
     color: '#001B29',
   },
@@ -135,8 +135,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 75,
-    borderWidth: 2,
-    borderColor: '#000',
     marginBottom: 10,
   },
   profileName: {

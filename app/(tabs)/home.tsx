@@ -1,13 +1,8 @@
+import { MaterialIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
-import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-// Dados estáticos das partes do cérebro
-const BRAIN_PARTS = [
-  { id: '1', name: 'Córtex Cerebral' },
-  { id: '2', name: 'Cerebelo' },
-  { id: '3', name: 'Tronco Encefálico' },
-  { id: '4', name: 'Sistema Límbico' },
-];
 
 // Dados estáticos dos neurotransmissores
 const NEUROTRANSMITTERS = [
@@ -30,6 +25,7 @@ export default function Home() {
   const screenWidth = Dimensions.get('window').width;
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollViewRef = useRef(null);
+  const router = useRouter();
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const contentOffset = event.nativeEvent.contentOffset.x;
@@ -37,42 +33,26 @@ export default function Home() {
     setActiveIndex(index);
   };
 
+  const handleLogout = () => {
+    // Aqui você pode adicionar sua lógica de signOut (ex: Firebase)
+    // Após o signOut, redirecione para a tela de login
+    router.replace('/(panel)/login');
+  };
+
   return (
     <View style={styles.container}>
+      {/* Botão de Logoff com Ícone */}
+      <View style={styles.logoutButtonContainer}>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout} accessibilityLabel="Sair">
+          <MaterialIcons name="logout" size={28} color="#001B29" />
+        </TouchableOpacity>
+      </View>
       {/* Carrossel das Partes do Cérebro */}
-      <View style={styles.brainCarouselContainer}>
+      <View>
         <View style={styles.carouselWrapper}>
-          <ScrollView
-            ref={scrollViewRef}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            pagingEnabled
-            snapToInterval={screenWidth - 40}
-            decelerationRate="fast"
-            onScroll={handleScroll}
-            scrollEventThrottle={16}
-            contentContainerStyle={styles.brainCarouselScroll}
-          >
-            {BRAIN_PARTS.map((part) => (
-              <View
-                key={part.id}
-                style={[styles.brainPartCard, { width: screenWidth - 40 }]}
-              >
-                <Text style={styles.brainPartName}>{part.name}</Text>
-                <View style={styles.pagination}>
-                  {BRAIN_PARTS.map((_, index) => (
-                    <View
-                      key={index}
-                      style={[
-                        styles.paginationDot,
-                        index === activeIndex && styles.paginationDotActive
-                      ]}
-                    />
-                  ))}
-                </View>
-              </View>
-            ))}
-          </ScrollView>
+          <View style={[styles.brainCard, { width: screenWidth - 40 }]}> 
+            <Text style={styles.brainName}>Cérebro 3D</Text>
+          </View>
         </View>
       </View>
 
@@ -130,16 +110,21 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
-  brainCarouselContainer: {
-    marginTop: 60,
+  logoutButtonContainer: {
+    alignItems: 'flex-end',
+    marginBottom: 10,
   },
-  brainCarouselScroll: {
-    paddingRight: 20,
+  logoutButton: {
+    paddingTop: 35,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 8,
+    borderRadius: 8,
   },
   carouselWrapper: {
     position: 'relative',
   },
-  brainPartCard: {
+  brainCard: {
     height: 200,
     marginRight: 20,
     backgroundColor: '#ABD4FC',
@@ -148,7 +133,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  brainPartName: {
+  brainName: {
     color: '#001B29',
     fontSize: 24,
     fontWeight: 'bold',
@@ -156,7 +141,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   storiesContainer: {
-    marginTop: 30,
+    marginTop: 30
   },
   storiesTitle: {
     fontSize: 20,
