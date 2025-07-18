@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { register as firebaseRegister } from '../../constants/auth';
 
 export default function Register() {
@@ -17,31 +17,31 @@ export default function Register() {
 
   const handleRegister = async () => {
     if (!name || !email || !password || !confirmPassword) {
-      Alert.alert('Erro', 'Preencha todos os campos');
+      // Alert.alert('Erro', 'Preencha todos os campos');
       return;
     }
     if (!validateEmail(email)) {
-      Alert.alert('Erro', 'Email inválido');
+      // Alert.alert('Erro', 'Email inválido');
       return;
     }
     if (password.length < 6) {
-      Alert.alert('Erro', 'A senha deve ter pelo menos 6 caracteres');
+      // Alert.alert('Erro', 'A senha deve ter pelo menos 6 caracteres');
       return;
     }
     if (password !== confirmPassword) {
-      Alert.alert('Erro', 'As senhas não coincidem');
+      // Alert.alert('Erro', 'As senhas não coincidem');
       return;
     }
     try {
-      await firebaseRegister(email, password);
-      Alert.alert('Sucesso', 'Conta criada com sucesso!');
+      await firebaseRegister(email, password, name);
+      // Alert.alert('Sucesso', 'Conta criada com sucesso!');
       router.push('/(panel)/login' as any);
     } catch (error: any) {
-      let message = 'Erro ao criar conta';
-      if (error.code === 'auth/email-already-in-use') message = 'Email já está em uso';
-      if (error.code === 'auth/invalid-email') message = 'Email inválido';
-      if (error.code === 'auth/weak-password') message = 'Senha muito fraca';
-      Alert.alert('Erro', message);
+      // let message = 'Erro ao criar conta';
+      // if (error.code === 'auth/email-already-in-use') message = 'Email já está em uso';
+      // if (error.code === 'auth/invalid-email') message = 'Email inválido';
+      // if (error.code === 'auth/weak-password') message = 'Senha muito fraca';
+      // Alert.alert('Erro', message);
     }
   };
 

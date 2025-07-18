@@ -1,63 +1,7 @@
-import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
-import { Dimensions, Image, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-type NeurotransmitterId = 'serotonin' | 'dopamine' | 'norepinephrine' | 'gaba' | 'glutamate' | 'acetylcholine' | 'endorphin' | 'histamine';
-
-// Mapeamento das imagens dos neurotransmissores
-const NEUROTRANSMITTER_IMAGES: Record<NeurotransmitterId, any> = {
-  serotonin: require('../../assets/images/serotonina.png'),
-  dopamine: require('../../assets/images/dopamina.png'),
-  norepinephrine: require('../../assets/images/serotonina.png'),
-  gaba: require('../../assets/images/dopamina.png'),
-  glutamate: require('../../assets/images/serotonina.png'),
-  acetylcholine: require('../../assets/images/dopamina.png'),
-  endorphin: require('../../assets/images/serotonina.png'),
-  histamine: require('../../assets/images/dopamina.png'),
-};
-
-// Lista estática de neurotransmissores
-const NEUROTRANSMITTERS: { id: NeurotransmitterId; name: string }[] = [
-  { id: 'serotonin', name: 'Serotonina' },
-  { id: 'dopamine', name: 'Dopamina' },
-  { id: 'norepinephrine', name: 'Noradrenalina' },
-  { id: 'gaba', name: 'GABA' },
-  { id: 'glutamate', name: 'Glutamato' },
-  { id: 'acetylcholine', name: 'Acetilcolina' },
-  { id: 'endorphin', name: 'Endorfina' },
-  { id: 'histamine', name: 'Histamina' },
-];
-
-// Lista estática de emoções (provisória)
-const EMOTIONS = [
-  { 
-    id: '1',
-    name: 'Alegria',
-    category: 'Positiva',
-  },
-  { 
-    id: '2',
-    name: 'Tristeza',
-    category: 'Negativa',
-  },
-  { 
-    id: '3',
-    name: 'Raiva',
-    category: 'Negativa',
-  },
-  { 
-    id: '4',
-    name: 'Medo',
-    category: 'Negativa',
-  },
-  { 
-    id: '5',
-    name: 'Amor',
-    category: 'Positiva',
-  },
-];
-
-// Lista estática das partes do cérebro
+// Dados estáticos das partes do cérebro
 const BRAIN_PARTS = [
   { id: '1', name: 'Córtex Cerebral' },
   { id: '2', name: 'Cerebelo' },
@@ -65,8 +9,24 @@ const BRAIN_PARTS = [
   { id: '4', name: 'Sistema Límbico' },
 ];
 
+// Dados estáticos dos neurotransmissores
+const NEUROTRANSMITTERS = [
+  { id: 'serotonin', name: 'Serotonina', image: require('../../assets/images/serotonina.png') },
+  { id: 'dopamine', name: 'Dopamina', image: require('../../assets/images/dopamina.png') },
+  { id: 'noradrenaline', name: 'Noradrenalina', image: require('../../assets/images/serotonina.png') },
+  { id: 'gaba', name: 'GABA', image: require('../../assets/images/dopamina.png') },
+];
+
+// Dados estáticos das emoções
+const EMOTIONS = [
+  { id: '1', name: 'Alegria', category: 'Positiva' },
+  { id: '2', name: 'Tristeza', category: 'Negativa' },
+  { id: '3', name: 'Raiva', category: 'Negativa' },
+  { id: '4', name: 'Medo', category: 'Negativa' },
+  { id: '5', name: 'Amor', category: 'Positiva' },
+];
+
 export default function Home() {
-  const router = useRouter();
   const screenWidth = Dimensions.get('window').width;
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollViewRef = useRef(null);
@@ -78,14 +38,13 @@ export default function Home() {
   };
 
   return (
-
     <View style={styles.container}>
       {/* Carrossel das Partes do Cérebro */}
       <View style={styles.brainCarouselContainer}>
         <View style={styles.carouselWrapper}>
-          <ScrollView 
+          <ScrollView
             ref={scrollViewRef}
-            horizontal 
+            horizontal
             showsHorizontalScrollIndicator={false}
             pagingEnabled
             snapToInterval={screenWidth - 40}
@@ -95,7 +54,7 @@ export default function Home() {
             contentContainerStyle={styles.brainCarouselScroll}
           >
             {BRAIN_PARTS.map((part) => (
-              <TouchableOpacity
+              <View
                 key={part.id}
                 style={[styles.brainPartCard, { width: screenWidth - 40 }]}
               >
@@ -111,61 +70,53 @@ export default function Home() {
                     />
                   ))}
                 </View>
-              </TouchableOpacity>
+              </View>
             ))}
           </ScrollView>
         </View>
       </View>
 
-      {/*Stories dos Neurotransmissores*/}
+      {/* Stories dos Neurotransmissores */}
       <View style={styles.storiesContainer}>
-        <Text style={styles.storiesTitle}>#</Text>
-        <ScrollView 
-          horizontal 
+        <Text style={styles.storiesTitle}>Neurotransmissores</Text>
+        <ScrollView
+          horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.storiesScroll}
         >
           {NEUROTRANSMITTERS.map((neurotransmitter) => (
-            <TouchableOpacity
+            <View
               key={neurotransmitter.id}
               style={styles.storyCard}
-              onPress={() => router.push(`/neurotransmitter/${neurotransmitter.id}`)}
             >
-              <View style={styles.storyCircle}>
-                <Image 
-                  source={NEUROTRANSMITTER_IMAGES[neurotransmitter.id]}
-                  style={styles.storyImage}
-                  resizeMode="cover"
-                />
-              </View>
+              <View style={styles.storyCircle} />
               <Text style={styles.storyName} numberOfLines={1}>
                 {neurotransmitter.name}
               </Text>
-            </TouchableOpacity>
+            </View>
           ))}
         </ScrollView>
       </View>
 
-      {/*Cards das Emoções*/}
+      {/* Cards das Emoções */}
       <View style={styles.emotionsContainer}>
         <Text style={styles.emotionsTitle}>Emoções</Text>
-        <ScrollView 
-          horizontal 
+        <ScrollView
+          horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.emotionsScroll}
         >
           {EMOTIONS.map((emotion) => (
-            <TouchableOpacity
+            <View
               key={emotion.id}
               style={styles.emotionCard}
             >
-              <View style={styles.emotionImageContainer}>
-              </View>
+              <View style={styles.emotionImageContainer} />
               <View style={styles.emotionInfo}>
                 <Text style={styles.emotionCategory}>{emotion.category}</Text>
                 <Text style={styles.emotionName}>{emotion.name}</Text>
               </View>
-            </TouchableOpacity>
+            </View>
           ))}
         </ScrollView>
       </View>
@@ -237,11 +188,6 @@ const styles = StyleSheet.create({
     height: '65%',
     borderRadius: 20,
   },
-  storyInitial: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
-  },
   storyName: {
     marginTop: 5,
     fontSize: 12,
@@ -263,10 +209,11 @@ const styles = StyleSheet.create({
   emotionCard: {
     width: 160,
     marginRight: 15,
+    marginBottom: 16, // Espaço para a sombra aparecer
     backgroundColor: '#fff',
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    elevation: 1,
+    
   },
   emotionImageContainer: {
     width: '100%',
@@ -276,11 +223,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ABD4FC',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  emotionInitial: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#001B29',
   },
   emotionInfo: {
     padding: 12,

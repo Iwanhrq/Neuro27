@@ -36,6 +36,12 @@ export default function TabsLayout() {
           tabBarIcon: ({ color }) => <FontAwesome name="heart" size={24} color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          tabBarIcon: ({ color }) => <FontAwesome name="user" size={24} color={color} />,
+        }}
+      />
     </Tabs>
   );
 } 
