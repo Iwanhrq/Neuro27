@@ -1,6 +1,6 @@
 import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { login as firebaseLogin } from '../../constants/auth';
 
 export default function Login() {
@@ -45,6 +45,10 @@ export default function Login() {
           imageStyle={{ transform: [{ translateY: 20 }] }}
           resizeMode="cover"
         >
+          <Image
+            style={styles.logo}
+            source={require('../../assets/images/logo.png')}
+          />
           <Text style={styles.headerText}>Neuro27</Text>
         </ImageBackground>
 
@@ -96,13 +100,18 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   header: {
-    height: 250,
+    height: 280,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  logo: {
+    marginTop: 25,
+    marginBottom: -15,
+    width: 185,
+    height: 180,
+  },
   headerText: {
-    paddingTop: 25,
     color: '#fff',
     fontSize: 32,
   },

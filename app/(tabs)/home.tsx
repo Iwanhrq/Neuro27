@@ -1,15 +1,17 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
-import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// Remover importação do Card
 
 
 // Dados estáticos dos neurotransmissores
 const NEUROTRANSMITTERS = [
-  { id: 'serotonin', name: 'Serotonina', image: require('../../assets/images/serotonina.png') },
-  { id: 'dopamine', name: 'Dopamina', image: require('../../assets/images/dopamina.png') },
-  { id: 'noradrenaline', name: 'Noradrenalina', image: require('../../assets/images/serotonina.png') },
-  { id: 'gaba', name: 'GABA', image: require('../../assets/images/dopamina.png') },
+  { id: '1', name: 'Dopamina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: '2', name: 'Serotonina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: '3', name: 'Acetilcolina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: '4', name: 'GABA', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: '5', name: 'Glutamato', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
 ];
 
 // Dados estáticos das emoções
@@ -27,11 +29,6 @@ export default function Home() {
   const scrollViewRef = useRef(null);
   const router = useRouter();
 
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const contentOffset = event.nativeEvent.contentOffset.x;
-    const index = Math.round(contentOffset / (screenWidth - 40));
-    setActiveIndex(index);
-  };
 
   const handleLogout = () => {
     // Aqui você pode adicionar sua lógica de signOut (ex: Firebase)
@@ -65,15 +62,16 @@ export default function Home() {
           contentContainerStyle={styles.storiesScroll}
         >
           {NEUROTRANSMITTERS.map((neurotransmitter) => (
-            <View
+            <TouchableOpacity
               key={neurotransmitter.id}
               style={styles.storyCard}
+              onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.name.toLowerCase()}`)}
             >
               <View style={styles.storyCircle} />
               <Text style={styles.storyName} numberOfLines={1}>
                 {neurotransmitter.name}
               </Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </View>
@@ -87,16 +85,17 @@ export default function Home() {
           contentContainerStyle={styles.emotionsScroll}
         >
           {EMOTIONS.map((emotion) => (
-            <View
+            <TouchableOpacity
               key={emotion.id}
               style={styles.emotionCard}
+              onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.name.toLowerCase()}`)}
             >
               <View style={styles.emotionImageContainer} />
               <View style={styles.emotionInfo}>
                 <Text style={styles.emotionCategory}>{emotion.category}</Text>
                 <Text style={styles.emotionName}>{emotion.name}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </View>
@@ -168,11 +167,6 @@ const styles = StyleSheet.create({
     borderColor: '#D0E5FB',
     overflow: 'hidden',
   },
-  storyImage: {
-    width: '65%',
-    height: '65%',
-    borderRadius: 20,
-  },
   storyName: {
     marginTop: 5,
     fontSize: 12,
@@ -221,27 +215,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#001B29',
-  },
-  pagination: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 20,
-    left: 0,
-    right: 0,
-  },
-  paginationDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 4,
-    backgroundColor: '#D0E5FB',
-    marginHorizontal: 4,
-  },
-  paginationDotActive: {
-    backgroundColor: '#001B29',
-    width: 8,
-    height: 8,
-    borderRadius: 6,
   },
 }); 
