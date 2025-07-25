@@ -1,6 +1,6 @@
 import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Image, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { login as firebaseLogin } from '../../constants/auth';
 
 export default function Login() {
@@ -34,67 +34,72 @@ export default function Login() {
   };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <SafeAreaView
       style={styles.container}
     >
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <ImageBackground
-          source={require('../../assets/images/fundo.png')}
-          style={[styles.header]}
-          imageStyle={{ transform: [{ translateY: 20 }] }}
-          resizeMode="cover"
-        >
-          <Image
-            style={styles.logo}
-            source={require('../../assets/images/logo.png')}
-          />
-          <Text style={styles.headerText}>Neuro27</Text>
-        </ImageBackground>
-
-        <View style={styles.content}>
-          <Text style={styles.title}>Login</Text>
-
-          <View style={styles.form}>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <ImageBackground
+            source={require('../../assets/images/fundo.png')}
+            style={[styles.header]}
+            resizeMode="cover"
+          >
+            <Image
+              style={styles.logo}
+              source={require('../../assets/images/logo.png')}
             />
+            <Text style={styles.headerText}>Neuro27</Text>
+          </ImageBackground>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Senha"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
+          <View style={styles.block}>
+            <View style={styles.content}>
+              <Text style={styles.title}>Login</Text>
 
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-              <Text style={styles.buttonText}>Entrar</Text>
-            </TouchableOpacity>
+              <View style={styles.form}>
+                <TextInput
+                  style={[styles.input, { marginBottom: 32 }]}
+                  placeholder="Email"
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
 
-            <Link href="/(panel)/register" asChild>
-              <TouchableOpacity style={styles.linkButton}>
-                <Text style={styles.linkText}>Não possui uma conta ainda?
-                  <Text style={styles.colorfulText}> Cadastre-se</Text>
-                </Text>
-              </TouchableOpacity>
-            </Link>
+                <TextInput
+                  style={[styles.input, { marginBottom: 0 }]}
+                  placeholder="Senha"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                />
+                <TouchableOpacity>
+                  <Text style={[styles.colorfulText, { marginTop: 4, marginBottom: 32, paddingLeft: 2 }]}>Esqueceu a senha</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                  <Text style={styles.buttonText}>Entrar</Text>
+                </TouchableOpacity>
+
+                <Link href="/(panel)/register" asChild>
+                  <TouchableOpacity style={styles.linkButton}>
+                    <Text style={styles.linkText}>Não possui uma conta ainda?
+                      <Text style={styles.colorfulText}> Cadastre-se</Text>
+                    </Text>
+                  </TouchableOpacity>
+                </Link>
+              </View>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#001B29'
+    backgroundColor: '#F6F8FB',
   },
   scrollContent: {
     flexGrow: 1,
@@ -115,6 +120,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 32,
   },
+  block: {
+    backgroundColor: "#001B2A"
+  },
   content: {
     paddingTop: 75,
     flex: 1,
@@ -129,7 +137,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   form: {
-    gap: 32,
+    // gap: 32, // Removido para usar marginBottom individual
   },
   input: {
     height: 45,
@@ -139,9 +147,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 16,
     fontSize: 16,
-  },
-  colorfulText: {
-    color: '#A283C8'
+    marginBottom: 32, // Adicionado espaçamento entre inputs
   },
   button: {
     height: 45,
@@ -162,4 +168,7 @@ const styles = StyleSheet.create({
   linkText: {
     fontSize: 14,
   },
-}); 
+  colorfulText: {
+    color: '#A283C8'
+  },
+});

@@ -81,6 +81,11 @@ const styles = StyleSheet.create({
   brainContainer: {
     marginTop: 30
   },
+  brainTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#001B29',
+  },
   brainPartCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -99,11 +104,6 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     flex: 1,
   },
-  brainTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#001B29',
-  },
   brainPartTitle: {
     fontSize: 17,
     fontWeight: '400',
@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'left',
   },
-}); 
+});

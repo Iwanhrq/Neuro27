@@ -1,8 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useRef, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// Remover importação do Card
 
 
 // Dados estáticos dos neurotransmissores
@@ -25,25 +23,22 @@ const EMOTIONS = [
 
 export default function Home() {
   const screenWidth = Dimensions.get('window').width;
-  const [activeIndex, setActiveIndex] = useState(0);
-  const scrollViewRef = useRef(null);
   const router = useRouter();
 
-
   const handleLogout = () => {
-    // Aqui você pode adicionar sua lógica de signOut (ex: Firebase)
-    // Após o signOut, redirecione para a tela de login
     router.replace('/(panel)/login');
   };
 
   return (
     <View style={styles.container}>
+
       {/* Botão de Logoff com Ícone */}
       <View style={styles.logoutButtonContainer}>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout} accessibilityLabel="Sair">
           <MaterialIcons name="logout" size={28} color="#001B29" />
         </TouchableOpacity>
       </View>
+
       {/* Carrossel das Partes do Cérebro */}
       <View>
         <View style={styles.carouselWrapper}>
@@ -188,11 +183,10 @@ const styles = StyleSheet.create({
   emotionCard: {
     width: 160,
     marginRight: 15,
-    marginBottom: 16, // Espaço para a sombra aparecer
+    marginBottom: 16, 
     backgroundColor: '#fff',
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
-    
   },
   emotionImageContainer: {
     width: '100%',
@@ -216,4 +210,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#001B29',
   },
-}); 
+});

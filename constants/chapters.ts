@@ -1,3 +1,5 @@
+
+// Objeto capítulos com cada capítulo associado a sua respectiva categorias
 export const chapters = {
   neurotransmissores: {
     dopamina: [

@@ -1,14 +1,17 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
+import { auth } from '../constants/firebase';
 
 export default function RootLayout() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Temporary authentication check - replace with your actual auth logic
   useEffect(() => {
-    // For now, we'll just set it to true to show the tabs
-    setIsAuthenticated(true);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+    });
+    return unsubscribe;
   }, []);
 
   return (

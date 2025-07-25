@@ -1,6 +1,6 @@
-import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { register as firebaseRegister } from '../../constants/auth';
 
 export default function Register() {
@@ -46,79 +46,84 @@ export default function Register() {
   };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <SafeAreaView
       style={styles.container}
     >
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <ImageBackground
-          source={require('../../assets/images/fundo.png')}
-          style={styles.header}
-          resizeMode="cover"
-        >
-          <Text style={styles.headerText}>Bem-vindo(a)!</Text>
-        </ImageBackground>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
 
-        <View style={styles.content}>
-          <Text style={styles.title}>Cadastre-se</Text>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <ImageBackground
+            source={require('../../assets/images/fundo.png')}
+            style={styles.header}
+            resizeMode="cover"
+          >
+            <Text style={styles.headerText}>Bem-vindo(a)!</Text>
+          </ImageBackground>
 
-          <View style={styles.form}>
-            <TextInput
-              style={styles.input}
-              placeholder="Nome"
-              value={name}
-              onChangeText={setName}
-              autoCapitalize="words"
-            />
 
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
+          <View style={styles.block}>
+            <View style={styles.content}>
+              <Text style={styles.title}>Cadastre-se</Text>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Senha"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
+              <View style={styles.form}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Nome"
+                  value={name}
+                  onChangeText={setName}
+                  autoCapitalize="words"
+                />
 
-            <TextInput
-              style={styles.input}
-              placeholder="Confirmar senha"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry
-            />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
 
-            <TouchableOpacity style={styles.button} onPress={handleRegister}>
-              <Text style={styles.buttonText}>Cadastrar</Text>
-            </TouchableOpacity>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Senha"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                />
 
-            <TouchableOpacity
-              style={styles.linkButton}
-              onPress={() => router.back()}
-            >
-              <Text style={styles.linkText}>Já possui uma conta?
-                <Text style={styles.colorfulText}> Faça login</Text>
-              </Text>
-            </TouchableOpacity>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Confirmar senha"
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  secureTextEntry
+                />
+
+                <TouchableOpacity style={styles.button} onPress={handleRegister}>
+                  <Text style={styles.buttonText}>Cadastrar</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.linkButton}
+                  onPress={() => router.back()}
+                >
+                  <Text style={styles.linkText}>Já possui uma conta?
+                    <Text style={styles.colorfulText}> Faça login</Text>
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#001B29'
+    backgroundColor: '#F6F8FB'
   },
   scrollContent: {
     flexGrow: 1,
@@ -133,6 +138,9 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     color: '#fff',
     fontSize: 32,
+  },
+  block: {
+    backgroundColor: "#001B2A"
   },
   content: {
     paddingTop: 75,
@@ -159,9 +167,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
   },
-  colorfulText: {
-    color: '#A283C8'
-  },
   button: {
     height: 45,
     backgroundColor: '#ABD4FC',
@@ -181,4 +186,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingTop: 64
   },
-}); 
+  colorfulText: {
+    color: '#A283C8'
+  },
+});

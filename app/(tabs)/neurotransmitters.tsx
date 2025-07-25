@@ -45,7 +45,6 @@ export default function NeurotransmittersScreen() {
               </View>
             </TouchableOpacity>
           ))}
-
         </View>
       </View>
     </ScrollView>
@@ -79,13 +78,18 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   brainContainer: {
-    marginTop: 30
+    marginTop: 30,
+  },
+  brainTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#001B29',
   },
   brainPartCard: {
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 12,
-    paddingTop: 15
+    paddingTop: 15,
   },
   brainImageContainer: {
     width: 80,
@@ -98,11 +102,6 @@ const styles = StyleSheet.create({
   brainInfo: {
     marginLeft: 16,
     flex: 1,
-  },
-  brainTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#001B29',
   },
   brainPartTitle: {
     fontSize: 17,
@@ -117,4 +116,4 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'left',
   },
-}); 
+});
