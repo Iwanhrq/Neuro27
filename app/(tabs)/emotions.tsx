@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ContentCard, HeaderCard } from '../../components';
 
 // Dados estáticos das emoções
 const EMOTIONS = [
@@ -11,20 +12,13 @@ const EMOTIONS = [
 ];
 
 export default function EmotionsScreen() {
-  const screenWidth = Dimensions.get('window').width;
   const router = useRouter();
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.container}>
         {/* Carrossel das Emoções */}
-        <View>
-          <View style={styles.carouselWrapper}>
-            <View style={[styles.brainCard, { width: screenWidth - 40 }]}> 
-              <Text style={styles.brainName}>Emoções</Text>
-            </View>
-          </View>
-        </View>
+        <HeaderCard title="Emoções" />
 
         {/* Lista de emoções */}
         <View style={styles.brainContainer}>
@@ -33,19 +27,13 @@ export default function EmotionsScreen() {
           </Text>
 
           {EMOTIONS.map((emotion) => (
-            <TouchableOpacity
-              style={styles.brainPartCard}
+            <ContentCard
               key={emotion.id}
+              title={emotion.name}
+              description={emotion.info}
               onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.name.toLowerCase()}`)}
-            >
-              <View style={styles.brainImageContainer}></View>
-              <View style={styles.brainInfo}>
-                <Text style={styles.brainPartTitle}>{emotion.name}</Text>
-                <Text style={styles.brainPartText}>{emotion.info}</Text>
-              </View>
-            </TouchableOpacity>
+            />
           ))}
-
         </View>
       </View>
     </ScrollView>
@@ -58,26 +46,6 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
-  carouselWrapper: { 
-    marginTop: 60,
-    position: 'relative',
-  },
-  brainCard: {
-    height: 200,
-    marginRight: 20,
-    backgroundColor: '#ABD4FC',
-    borderRadius: 12,
-    padding: 20,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  brainName: {
-    color: '#001B29',
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'left',
-    paddingLeft: 10,
-  },
   brainContainer: {
     marginTop: 30
   },
@@ -85,36 +53,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#001B29',
-  },
-  brainPartCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 12,
-    paddingTop: 15
-  },
-  brainImageContainer: {
-    width: 80,
-    height: 80,
-    backgroundColor: '#ABD4FC',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  brainInfo: {
-    marginLeft: 16,
-    flex: 1,
-  },
-  brainPartTitle: {
-    fontSize: 17,
-    fontWeight: '400',
-    color: '#000',
-    marginBottom: 4,
-    textAlign: 'left',
-  },
-  brainPartText: {
-    fontWeight: '300',
-    fontSize: 12,
-    color: '#333',
-    textAlign: 'left',
   },
 });

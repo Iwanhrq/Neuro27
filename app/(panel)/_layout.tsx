@@ -4,6 +4,12 @@ export default function PanelLayout() {
   return (
     <Stack>
       <Stack.Screen
+        name="outset"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="login"
         options={{
           headerShown: false,
@@ -11,6 +17,12 @@ export default function PanelLayout() {
       />
       <Stack.Screen
         name="register"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
         options={{
           headerShown: false,
         }}

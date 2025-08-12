@@ -1,7 +1,6 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { EmotionCard, HomeHeaderCard, LogoutButton, StoryCard } from '../../components';
 
 // Dados estáticos dos neurotransmissores
 const NEUROTRANSMITTERS = [
@@ -22,7 +21,6 @@ const EMOTIONS = [
 ];
 
 export default function Home() {
-  const screenWidth = Dimensions.get('window').width;
   const router = useRouter();
 
   const handleLogout = () => {
@@ -31,22 +29,10 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-
-      {/* Botão de Logoff com Ícone */}
-      <View style={styles.logoutButtonContainer}>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout} accessibilityLabel="Sair">
-          <MaterialIcons name="logout" size={28} color="#001B29" />
-        </TouchableOpacity>
-      </View>
+      <LogoutButton onPress={handleLogout} />
 
       {/* Carrossel das Partes do Cérebro */}
-      <View>
-        <View style={styles.carouselWrapper}>
-          <View style={[styles.brainCard, { width: screenWidth - 40 }]}> 
-            <Text style={styles.brainName}>Cérebro 3D</Text>
-          </View>
-        </View>
-      </View>
+      <HomeHeaderCard title="Cérebro 3D" />
 
       {/* Stories dos Neurotransmissores */}
       <View style={styles.storiesContainer}>
@@ -57,16 +43,11 @@ export default function Home() {
           contentContainerStyle={styles.storiesScroll}
         >
           {NEUROTRANSMITTERS.map((neurotransmitter) => (
-            <TouchableOpacity
+            <StoryCard
               key={neurotransmitter.id}
-              style={styles.storyCard}
+              name={neurotransmitter.name}
               onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.name.toLowerCase()}`)}
-            >
-              <View style={styles.storyCircle} />
-              <Text style={styles.storyName} numberOfLines={1}>
-                {neurotransmitter.name}
-              </Text>
-            </TouchableOpacity>
+            />
           ))}
         </ScrollView>
       </View>
@@ -80,17 +61,12 @@ export default function Home() {
           contentContainerStyle={styles.emotionsScroll}
         >
           {EMOTIONS.map((emotion) => (
-            <TouchableOpacity
+            <EmotionCard
               key={emotion.id}
-              style={styles.emotionCard}
+              name={emotion.name}
+              category={emotion.category}
               onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.name.toLowerCase()}`)}
-            >
-              <View style={styles.emotionImageContainer} />
-              <View style={styles.emotionInfo}>
-                <Text style={styles.emotionCategory}>{emotion.category}</Text>
-                <Text style={styles.emotionName}>{emotion.name}</Text>
-              </View>
-            </TouchableOpacity>
+            />
           ))}
         </ScrollView>
       </View>
@@ -104,36 +80,6 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#fff',
   },
-  logoutButtonContainer: {
-    alignItems: 'flex-end',
-    marginBottom: 10,
-  },
-  logoutButton: {
-    paddingTop: 35,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-    borderRadius: 8,
-  },
-  carouselWrapper: {
-    position: 'relative',
-  },
-  brainCard: {
-    height: 200,
-    marginRight: 20,
-    backgroundColor: '#ABD4FC',
-    borderRadius: 12,
-    padding: 20,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  brainName: {
-    color: '#001B29',
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'left',
-    paddingLeft: 10,
-  },
   storiesContainer: {
     marginTop: 30
   },
@@ -146,28 +92,6 @@ const styles = StyleSheet.create({
   storiesScroll: {
     paddingRight: 20,
   },
-  storyCard: {
-    alignItems: 'center',
-    marginRight: 15,
-    width: 90,
-  },
-  storyCircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#D0E5FB',
-    overflow: 'hidden',
-  },
-  storyName: {
-    marginTop: 5,
-    fontSize: 12,
-    color: '#001B29',
-    textAlign: 'center',
-  },
   emotionsContainer: {
     marginTop: 30,
   },
@@ -179,35 +103,5 @@ const styles = StyleSheet.create({
   },
   emotionsScroll: {
     paddingRight: 20,
-  },
-  emotionCard: {
-    width: 160,
-    marginRight: 15,
-    marginBottom: 16, 
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-  },
-  emotionImageContainer: {
-    width: '100%',
-    height: 150,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-    backgroundColor: '#ABD4FC',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  emotionInfo: {
-    padding: 12,
-  },
-  emotionCategory: {
-    fontSize: 12,
-    color: '#666',
-    marginBottom: 4,
-  },
-  emotionName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#001B29',
   },
 });

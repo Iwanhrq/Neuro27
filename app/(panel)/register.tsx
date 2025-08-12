@@ -1,7 +1,9 @@
-import { useState } from 'react';
-import { ImageBackground, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { AuthLayout, CustomButton, CustomInput } from '../../components';
 import { register as firebaseRegister } from '../../constants/auth';
+import { fontFamily } from '../../constants/fonts';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -46,145 +48,89 @@ export default function Register() {
   };
 
   return (
-    <SafeAreaView
-      style={styles.container}
-    >
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+    <AuthLayout showLogo={false} headerText="" headerHeight={175} showBackButton={true}>
+      <Text style={styles.title}>Crie sua conta</Text>
+      <Text style={styles.subtitle}>
+        Desperte sua curiosidade sobre
+        a {'\n'}mente
+      </Text>
+      <View style={styles.form}>
+        <CustomInput
+          placeholder="Nome"
+          value={name}
+          onChangeText={setName}
+          autoCapitalize="words"
+          width="90%"
+        />
 
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <ImageBackground
-            source={require('../../assets/images/fundo.png')}
-            style={styles.header}
-            resizeMode="cover"
-          >
-            <Text style={styles.headerText}>Bem-vindo(a)!</Text>
-          </ImageBackground>
+        <CustomInput
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          width="90%"
+        />
 
+        <CustomInput
+          placeholder="Senha"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          width="90%"
+        />
 
-          <View style={styles.block}>
-            <View style={styles.content}>
-              <Text style={styles.title}>Cadastre-se</Text>
+        <CustomInput
+          placeholder="Confirmar senha"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry
+          width="90%"
+        />
 
-              <View style={styles.form}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Nome"
-                  value={name}
-                  onChangeText={setName}
-                  autoCapitalize="words"
-                />
+        <CustomButton title="Cadastrar" onPress={handleRegister} width="90%" />
 
-                <TextInput
-                  style={styles.input}
-                  placeholder="Email"
-                  value={email}
-                  onChangeText={setEmail}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                />
+{/*/
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={() => router.back()}
+        >
+          <Text style={styles.linkText}>
+            Já possui uma conta?
+            <Text style={styles.colorfulText}> Faça login</Text>
+          </Text>
+        </TouchableOpacity>
 
-                <TextInput
-                  style={styles.input}
-                  placeholder="Senha"
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry
-                />
-
-                <TextInput
-                  style={styles.input}
-                  placeholder="Confirmar senha"
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
-                  secureTextEntry
-                />
-
-                <TouchableOpacity style={styles.button} onPress={handleRegister}>
-                  <Text style={styles.buttonText}>Cadastrar</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={styles.linkButton}
-                  onPress={() => router.back()}
-                >
-                  <Text style={styles.linkText}>Já possui uma conta?
-                    <Text style={styles.colorfulText}> Faça login</Text>
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        */}
+      </View>
+    </AuthLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F6F8FB'
-  },
-  scrollContent: {
-    flexGrow: 1,
-  },
-  header: {
-    height: 175,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerText: {
-    paddingTop: 25,
-    color: '#fff',
-    fontSize: 32,
-  },
-  block: {
-    backgroundColor: "#001B2A"
-  },
-  content: {
-    paddingTop: 75,
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#F6F8FB',
-    borderTopLeftRadius: 80,
-  },
   title: {
-    fontSize: 35,
-    fontWeight: 'bold',
-    marginBottom: 40,
+    fontSize: 30,
+    fontFamily: fontFamily.semibold,
     textAlign: 'center',
   },
+  subtitle: {
+    fontSize: 15,
+    fontFamily: fontFamily.regular,
+    textAlign: 'center',
+    opacity: 0.5,
+    marginBottom: 50
+  },
   form: {
-    gap: 32,
-  },
-  input: {
-    height: 45,
-    borderWidth: 1,
-    backgroundColor: '#fff',
-    borderColor: '#E0E0E0',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    fontSize: 16,
-  },
-  button: {
-    height: 45,
-    backgroundColor: '#ABD4FC',
-    borderRadius: 8,
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 8,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
+    width: '100%',
+    // gap: 32, // Removido para usar marginBottom individual
   },
   linkButton: {
     alignItems: 'center',
+    paddingTop: 64,
   },
   linkText: {
     fontSize: 14,
-    paddingTop: 64
   },
   colorfulText: {
     color: '#A283C8'
