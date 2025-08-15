@@ -24,6 +24,7 @@ export default function HomeHeaderCard({
 const styles = StyleSheet.create({
   carouselWrapper: {
     position: 'relative',
+    paddingTop: 50,
   },
   brainCard: {
     marginRight: 20,

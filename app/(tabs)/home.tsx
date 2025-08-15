@@ -1,23 +1,23 @@
 import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { EmotionCard, HomeHeaderCard, LogoutButton, StoryCard } from '../../components';
+import { EmotionCard, HomeHeaderCard, StoryCard } from '../../components';
 
 // Dados estáticos dos neurotransmissores
 const NEUROTRANSMITTERS = [
-  { id: '1', name: 'Dopamina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '2', name: 'Serotonina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '3', name: 'Acetilcolina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '4', name: 'GABA', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '5', name: 'Glutamato', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: 'dopamina', name: 'Dopamina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: 'serotonina', name: 'Serotonina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: 'acetilcolina', name: 'Acetilcolina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: 'gaba', name: 'GABA', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: 'glutamato', name: 'Glutamato', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
 ];
 
 // Dados estáticos das emoções
 const EMOTIONS = [
-  { id: '1', name: 'Alegria', category: 'Positiva' },
-  { id: '2', name: 'Tristeza', category: 'Negativa' },
-  { id: '3', name: 'Raiva', category: 'Negativa' },
-  { id: '4', name: 'Medo', category: 'Negativa' },
-  { id: '5', name: 'Amor', category: 'Positiva' },
+  { id: 'alegria', name: 'Alegria', category: 'Positiva' },
+  { id: 'tristeza', name: 'Tristeza', category: 'Negativa' },
+  { id: 'raiva', name: 'Raiva', category: 'Negativa' },
+  { id: 'medo', name: 'Medo', category: 'Negativa' },
+  { id: 'amor', name: 'Amor', category: 'Positiva' },
 ];
 
 export default function Home() {
@@ -29,7 +29,8 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <LogoutButton onPress={handleLogout} />
+
+      {/*<LogoutButton onPress={handleLogout} />*/}
 
       {/* Carrossel das Partes do Cérebro */}
       <HomeHeaderCard title="Cérebro 3D" />
@@ -46,7 +47,7 @@ export default function Home() {
             <StoryCard
               key={neurotransmitter.id}
               name={neurotransmitter.name}
-              onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.name.toLowerCase()}`)}
+              onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.id}&from=home`)}
             />
           ))}
         </ScrollView>
@@ -65,7 +66,7 @@ export default function Home() {
               key={emotion.id}
               name={emotion.name}
               category={emotion.category}
-              onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.name.toLowerCase()}`)}
+              onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.id}&from=home`)}
             />
           ))}
         </ScrollView>

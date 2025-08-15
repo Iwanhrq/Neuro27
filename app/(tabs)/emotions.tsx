@@ -4,11 +4,10 @@ import { ContentCard, HeaderCard } from '../../components';
 
 // Dados estáticos das emoções
 const EMOTIONS = [
-  { id: '1', name: 'Alegria', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '2', name: 'Tristeza', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '3', name: 'Raiva', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '4', name: 'Medo', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '5', name: 'Amor', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: 'emocoes', name: 'O que são as emoções?', info: 'Entenda como o cérebro cria as emoções e como elas ajudam você a reagir, se conectar e tomar decisões no dia a dia.' },
+  { id: 'alegria', name: 'Alegria: energia para viver', info: 'Veja como a alegria influencia seu bem-estar, fortalece relacionamentos e aumenta a motivação' },
+  { id: 'tristeza', name: 'Tristeza: a força para refletir', info: 'Aprenda por que a tristeza faz parte do equilíbrio emocional e como ela ajuda a lidar com perdas e mudanças.' },
+  { id: 'raiva', name: 'Raiva: o motor da ação', info: 'Descubra como a raiva pode servir como alerta e combustível para buscar justiça ou defender limites.' },
 ];
 
 export default function EmotionsScreen() {
@@ -18,12 +17,12 @@ export default function EmotionsScreen() {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.container}>
         {/* Carrossel das Emoções */}
-        <HeaderCard title="Emoções" />
+        <HeaderCard variant="dark" />
 
         {/* Lista de emoções */}
         <View style={styles.brainContainer}>
           <Text style={styles.brainTitle}>
-            Principais emoções
+            Emoções
           </Text>
 
           {EMOTIONS.map((emotion) => (
@@ -31,7 +30,7 @@ export default function EmotionsScreen() {
               key={emotion.id}
               title={emotion.name}
               description={emotion.info}
-              onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.name.toLowerCase()}`)}
+              onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.id}&from=emotions`)}
             />
           ))}
         </View>
@@ -43,15 +42,16 @@ export default function EmotionsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#fff',
   },
   brainContainer: {
-    marginTop: 30
+    marginTop: 230,
+    padding: 20,
   },
   brainTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#001B29',
+    paddingBottom: 20,
   },
 });

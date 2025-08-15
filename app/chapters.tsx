@@ -11,7 +11,7 @@ function toTitleCase(str: string) {
 }
 
 export default function Chapters() {
-  const { tipo, id } = useLocalSearchParams<{ tipo?: string; id?: string }>();
+  const { tipo, id, from } = useLocalSearchParams<{ tipo?: string; id?: string; from?: string }>();
   const router = useRouter();
 
   if (!tipo || !id) return <Text style={styles.loading}>Loading...</Text>;
@@ -29,7 +29,36 @@ export default function Chapters() {
   const categorias: AssociationCategoria[] = ['emocoes', 'neurotransmissores', 'partesCerebro'];
 
   const handleBack = () => {
-    router.replace('/(tabs)/home');
+    // Volta para a tela baseada no parâmetro 'from'
+    switch (from) {
+      case 'home':
+        router.replace('/(tabs)/home');
+        break;
+      case 'neurotransmitters':
+        router.replace('/(tabs)/neurotransmitters');
+        break;
+      case 'brain':
+        router.replace('/(tabs)/brain');
+        break;
+      case 'emotions':
+        router.replace('/(tabs)/emotions');
+        break;
+      default:
+        // Fallback: usa o tipo se 'from' não estiver definido
+        switch (tipo) {
+          case 'neurotransmissores':
+            router.replace('/(tabs)/neurotransmitters');
+            break;
+          case 'partesCerebro':
+            router.replace('/(tabs)/brain');
+            break;
+          case 'emocoes':
+            router.replace('/(tabs)/emotions');
+            break;
+          default:
+            router.replace('/(tabs)/home');
+        }
+    }
   };
 
   return (
@@ -57,9 +86,9 @@ export default function Chapters() {
               <TouchableOpacity
                 key={categoria + '-' + chave}
                 style={styles.marker}
-                onPress={() =>
-                  router.push(`/chapters?tipo=${categoria}&id=${chave}`)
-                }
+                                 onPress={() =>
+                   router.push(`/chapters?tipo=${categoria}&id=${chave}&from=${from}`)
+                 }
               >
                 <Text style={styles.textMarker} numberOfLines={2} ellipsizeMode="tail">{toTitleCase(chave)}</Text>
               </TouchableOpacity>
@@ -76,7 +105,7 @@ export default function Chapters() {
               <Text style={styles.chapterTitle}>{item.title}</Text>
             </View>
           )}
-          ListEmptyComponent={<Text style={styles.empty}>No chapters found.</Text>}
+          ListEmptyComponent={<Text style={styles.empty}>Não foram encontrados capítulos.</Text>}
         />
       </View>
     </View>
@@ -104,7 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   headerTitle: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
   },
@@ -134,17 +163,21 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   textMarker: {
-    fontSize: 13,
+    fontSize: 12,
     textAlign: 'center',
     fontWeight: '500',
     lineHeight: 16, 
   },
   chapterItem: {
+    height: 60, // altura fixa
+    justifyContent: 'center',
     paddingLeft: 25,
-    paddingBottom: 25,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E2E2E2',
   },
+
   chapterTitle: {
-    fontSize: 19,
+    fontSize: 18,
     color: '#333',
   },
   empty: {

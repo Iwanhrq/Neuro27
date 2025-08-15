@@ -4,11 +4,10 @@ import { ContentCard, HeaderCard } from '../../components';
 
 // Dados estáticos dos neurotransmissores
 const NEUROTRANSMITTERS = [
-  { id: '1', name: 'Dopamina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '2', name: 'Serotonina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '3', name: 'Acetilcolina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '4', name: 'GABA', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: '5', name: 'Glutamato', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: 'neurotransmissores', name: 'O que são os neurotransmissores?', info: 'Descubra como essas substâncias químicas transmitem mensagens entre neurônios e controlam funções como humor, memória e atenção.' },
+  { id: 'dopamina', name: 'Dopamina: a molécula da motivação', info: 'Entenda como a dopamina influencia prazer, recompensa e foco, e por que ela é essencial para aprender e se sentir motivado.' },
+  { id: 'serotonina', name: 'Serotonina: o estabilizador do humor', info: 'Veja como a serotonina ajuda a regular o bem-estar, o sono e a ansiedade, mantendo o equilíbrio emocional.' },
+  { id: 'adrenalina', name: 'Adrenalina: o impulso da ação', info: 'Saiba como a adrenalina prepara seu corpo para reagir rapidamente em situações de perigo ou desafio.' },
 ];
 
 export default function NeurotransmittersScreen() {
@@ -18,12 +17,12 @@ export default function NeurotransmittersScreen() {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.container}>
         {/* Carrossel dos Neurotransmissores */}
-        <HeaderCard title="Neurotransmissores" />
+        <HeaderCard variant="dark" />
 
         {/* Lista de neurotransmissores */}
         <View style={styles.brainContainer}>
           <Text style={styles.brainTitle}>
-            Principais neurotransmissores
+            Neurotransmissores
           </Text>
 
           {NEUROTRANSMITTERS.map((nt) => (
@@ -31,7 +30,7 @@ export default function NeurotransmittersScreen() {
               key={nt.id}
               title={nt.name}
               description={nt.info}
-              onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${nt.name.toLowerCase()}`)}
+              onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${nt.id}&from=neurotransmitters`)}
             />
           ))}
         </View>
@@ -43,15 +42,16 @@ export default function NeurotransmittersScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#fff',
   },
   brainContainer: {
-    marginTop: 30,
+    marginTop: 230,
+    padding: 20,
   },
   brainTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#001B29',
+    paddingBottom: 20,
   },
 });

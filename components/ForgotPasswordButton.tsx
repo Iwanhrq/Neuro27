@@ -40,7 +40,6 @@ export default function ForgotPasswordButton({
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    paddingHorizontal: 20,
     paddingBottom: 20,
   },
   button: {

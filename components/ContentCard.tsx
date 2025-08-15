@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 12,
-    paddingTop: 15,
+    paddingBottom: 25,
   },
   brainImageContainer: {
     width: 80,
