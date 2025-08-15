@@ -1,14 +1,16 @@
 import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import dopaminImage from '../../assets/images/dopamin.png';
+import serotoninImage from '../../assets/images/serotonin.png';
 import { EmotionCard, HomeHeaderCard, StoryCard } from '../../components';
 
 // Dados estáticos dos neurotransmissores
 const NEUROTRANSMITTERS = [
-  { id: 'dopamina', name: 'Dopamina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: 'serotonina', name: 'Serotonina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: 'acetilcolina', name: 'Acetilcolina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: 'gaba', name: 'GABA', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
-  { id: 'glutamato', name: 'Glutamato', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.' },
+  { id: 'dopamina', name: 'Dopamina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.', image: dopaminImage },
+  { id: 'serotonina', name: 'Serotonina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.', image: serotoninImage },
+  { id: 'acetilcolina', name: 'Acetilcolina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.', image: dopaminImage },
+  { id: 'gaba', name: 'GABA', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.', image: serotoninImage },
+  { id: 'glutamato', name: 'Glutamato', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.', image: dopaminImage },
 ];
 
 // Dados estáticos das emoções
@@ -47,6 +49,7 @@ export default function Home() {
             <StoryCard
               key={neurotransmitter.id}
               name={neurotransmitter.name}
+              imageSource={neurotransmitter.image}
               onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.id}&from=home`)}
             />
           ))}
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#FBFBFB',
   },
   storiesContainer: {
     marginTop: 30

@@ -1,20 +1,30 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface StoryCardProps {
   name: string;
   onPress: () => void;
   circleColor?: string;
+  imageSource?: any;
 }
 
 export default function StoryCard({ 
   name, 
   onPress, 
-  circleColor = '#fff' 
+  circleColor = '#fff',
+  imageSource
 }: StoryCardProps) {
   return (
     <TouchableOpacity style={styles.storyCard} onPress={onPress}>
-      <View style={[styles.storyCircle, { backgroundColor: circleColor }]} />
+      <View style={[styles.storyCircle, { backgroundColor: circleColor }]}>
+        {imageSource && (
+          <Image 
+            source={imageSource} 
+            style={styles.storyImage}
+            resizeMode="contain"
+          />
+        )}
+      </View>
       <Text style={styles.storyName} numberOfLines={1}>
         {name}
       </Text>
@@ -34,9 +44,13 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: '#D0E5FB',
     overflow: 'hidden',
+  },
+  storyImage: {
+    width: 72,
+    height: 72,
   },
   storyName: {
     marginTop: 5,

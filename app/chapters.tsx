@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0,    
     backgroundColor: '#ABD4FC',
     width: 100,
-    height: 35, 
+    height: 28, 
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -163,19 +163,18 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   textMarker: {
-    fontSize: 12,
+    fontSize: 11,
     textAlign: 'center',
     fontWeight: '500',
-    lineHeight: 16, 
+    lineHeight: 13, 
   },
   chapterItem: {
-    height: 60, // altura fixa
+    height: 75,
     justifyContent: 'center',
     paddingLeft: 25,
     borderBottomWidth: 1,
     borderBottomColor: '#E2E2E2',
   },
-
   chapterTitle: {
     fontSize: 18,
     color: '#333',

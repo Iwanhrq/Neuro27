@@ -61,7 +61,7 @@ export default function AuthLayout({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F6F8FB',
+    backgroundColor: '#FBFBFB',
   },
   scrollContent: {
     flexGrow: 1,
@@ -85,8 +85,7 @@ const styles = StyleSheet.create({
   logo: {
     marginTop: 25,
     marginBottom: -15,
-    width: 245,
-    height: 180,
+    width: 210,
   },
   headerText: {
     color: '#fff',

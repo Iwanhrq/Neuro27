@@ -42,7 +42,7 @@ export default function EmotionsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FBFBFB',
   },
   brainContainer: {
     marginTop: 230,
