@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
   logo: {
     marginTop: 25,
     marginBottom: -15,
-    width: 210,
+    width: 230,
+    height: 230,
   },
   headerText: {
     color: '#fff',

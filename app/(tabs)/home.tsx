@@ -49,7 +49,6 @@ export default function Home() {
             <StoryCard
               key={neurotransmitter.id}
               name={neurotransmitter.name}
-              imageSource={neurotransmitter.image}
               onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.id}&from=home`)}
             />
           ))}

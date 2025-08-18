@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   marker: {
     paddingHorizontal: 15,
     paddingVertical: 0,    
-    backgroundColor: '#ABD4FC',
+    backgroundColor: '#B2A4FF',
     width: 100,
     height: 28, 
     borderRadius: 50,
@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   textMarker: {
+    color: '#fff',
     fontSize: 11,
     textAlign: 'center',
     fontWeight: '500',
