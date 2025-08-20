@@ -1,4 +1,5 @@
 export { default as AuthLayout } from './AuthLayout';
+export { default as BrainPartCard } from './BrainPartCard';
 export { default as ContentCard } from './ContentCard';
 export { default as CustomButton } from './CustomButton';
 export { default as CustomInput } from './CustomInput';
@@ -11,5 +12,6 @@ export { default as ForgotPasswordTimer } from './ForgotPasswordTimer';
 export { default as HeaderCard } from './HeaderCard';
 export { default as HomeHeaderCard } from './HomeHeaderCard';
 export { default as LogoutButton } from './LogoutButton';
+export { default as NeurotransmitterCard } from './NeurotransmitterCard';
 export { default as StoryCard } from './StoryCard';
 

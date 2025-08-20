@@ -12,7 +12,7 @@ export default function EmotionCard({
   name, 
   category, 
   onPress, 
-  imageColor = '#ABD4FC' 
+  imageColor = '#A283C8' 
 }: EmotionCardProps) {
   return (
     <TouchableOpacity style={styles.emotionCard} onPress={onPress}>
@@ -31,14 +31,10 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginBottom: 16, 
     backgroundColor: '#fff',
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
   },
   emotionImageContainer: {
     width: '100%',
     height: 150,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
   },

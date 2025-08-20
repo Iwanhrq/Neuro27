@@ -31,6 +31,7 @@ export default function NeurotransmittersScreen() {
               title={nt.name}
               description={nt.info}
               onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${nt.id}&from=neurotransmitters`)}
+              imageContainerColor="#B2A4FF" // Cor azul para neurotransmissores
             />
           ))}
         </View>

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   brainCard: {
     marginRight: 20,
-    backgroundColor: '#ABD4FC',
+    backgroundColor: '#D0E5FB',
     borderRadius: 12,
     padding: 20,
     flexDirection: 'column',

@@ -6,17 +6,19 @@ interface ContentCardProps {
   description: string;
   onPress: () => void;
   imageContainer?: React.ReactNode;
+  imageContainerColor?: string;
 }
 
 export default function ContentCard({ 
   title, 
   description, 
   onPress, 
-  imageContainer 
+  imageContainer,
+  imageContainerColor = '#ABD4FC'
 }: ContentCardProps) {
   return (
     <TouchableOpacity style={styles.brainPartCard} onPress={onPress}>
-      <View style={styles.brainImageContainer}>
+      <View style={[styles.brainImageContainer, { backgroundColor: imageContainerColor }]}>
         {imageContainer}
       </View>
       <View style={styles.brainInfo}>
@@ -37,10 +39,9 @@ const styles = StyleSheet.create({
   brainImageContainer: {
     width: 80,
     height: 80,
-    backgroundColor: '#ABD4FC',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 12,
   },
   brainInfo: {
     marginLeft: 16,

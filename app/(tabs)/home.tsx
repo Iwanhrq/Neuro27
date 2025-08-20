@@ -2,7 +2,8 @@ import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import dopaminImage from '../../assets/images/dopamin.png';
 import serotoninImage from '../../assets/images/serotonin.png';
-import { EmotionCard, HomeHeaderCard, StoryCard } from '../../components';
+import { EmotionCard, HomeHeaderCard, NeurotransmitterCard } from '../../components';
+import BrainPartCard from '../../components/BrainPartCard';
 
 // Dados estáticos dos neurotransmissores
 const NEUROTRANSMITTERS = [
@@ -11,6 +12,16 @@ const NEUROTRANSMITTERS = [
   { id: 'acetilcolina', name: 'Acetilcolina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.', image: dopaminImage },
   { id: 'gaba', name: 'GABA', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.', image: serotoninImage },
   { id: 'glutamato', name: 'Glutamato', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.', image: dopaminImage },
+  { id: 'noradrenalina', name: 'Noradrenalina', info: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis hic possimus amet, provident quisquam velit magnam fugit in ea sapiente.', image: dopaminImage },
+];
+
+// Dados estáticos das partes do cérebro
+const BRAIN_PARTS = [
+  { id: 'cerebro', name: 'Cérebro' },
+  { id: 'cerebelo', name: 'Cerebelo' },
+  { id: 'tronco', name: 'Tronco Cerebral' },
+  { id: 'hipotalamo', name: 'Hipotálamo' },
+  { id: 'amigdala', name: 'Amígdala' },
 ];
 
 // Dados estáticos das emoções
@@ -30,29 +41,53 @@ export default function Home() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
       {/*<LogoutButton onPress={handleLogout} />*/}
 
-      {/* Carrossel das Partes do Cérebro */}
-      <HomeHeaderCard title="Cérebro 3D" />
+      <HomeHeaderCard title="" />
 
-      {/* Stories dos Neurotransmissores */}
-      <View style={styles.storiesContainer}>
-        <Text style={styles.storiesTitle}>Neurotransmissores</Text>
+      {/* Cards das Partes do Cérebro */}
+      <View style={styles.brainPartsContainer}>
+        <Text style={styles.brainPartsTitle}>Partes do cérebro</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.storiesScroll}
+          contentContainerStyle={styles.brainPartsScroll}
         >
-          {NEUROTRANSMITTERS.map((neurotransmitter) => (
-            <StoryCard
-              key={neurotransmitter.id}
-              name={neurotransmitter.name}
-              onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.id}&from=home`)}
+          {BRAIN_PARTS.map((brainPart) => (
+            <BrainPartCard
+              key={brainPart.id}
+              name={brainPart.name}
+              onPress={() => router.push(`/chapters?tipo=partes-cerebro&id=${brainPart.id}&from=home`)}
             />
           ))}
         </ScrollView>
+      </View>
+
+      {/* Grid dos Neurotransmissores */}
+      <View style={styles.neurotransmittersContainer}>
+        <Text style={styles.neurotransmittersTitle}>Neurotransmissores</Text>
+        <View style={styles.neurotransmittersGrid}>
+          <View style={styles.column}>
+            {NEUROTRANSMITTERS.slice(0, 3).map((neurotransmitter) => (
+              <NeurotransmitterCard
+                key={neurotransmitter.id}
+                name={neurotransmitter.name}
+                onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.id}&from=home`)}
+              />
+            ))}
+          </View>
+          <View style={styles.column}>
+            {NEUROTRANSMITTERS.slice(3, 6).map((neurotransmitter) => (
+              <NeurotransmitterCard
+                key={neurotransmitter.id}
+                name={neurotransmitter.name}
+                onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.id}&from=home`)}
+              />
+            ))}
+          </View>
+        </View>
       </View>
 
       {/* Cards das Emoções */}
@@ -73,7 +108,13 @@ export default function Home() {
           ))}
         </ScrollView>
       </View>
-    </View>
+
+
+
+      {/* Espaço extra no final para garantir que todos os cards sejam visíveis */}
+      <View style={{ height: 50 }} />
+
+    </ScrollView>
   );
 }
 
@@ -83,16 +124,16 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#FBFBFB',
   },
-  storiesContainer: {
-    marginTop: 30
+  brainPartsContainer: {
+    marginTop: 30,
   },
-  storiesTitle: {
+  brainPartsTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#001B29',
     marginBottom: 15,
   },
-  storiesScroll: {
+  brainPartsScroll: {
     paddingRight: 20,
   },
   emotionsContainer: {
@@ -106,5 +147,22 @@ const styles = StyleSheet.create({
   },
   emotionsScroll: {
     paddingRight: 20,
+  },
+  neurotransmittersContainer: {
+    marginTop: 30,
+  },
+  neurotransmittersTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#001B29',
+    marginBottom: 15,
+  },
+  neurotransmittersGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  column: {
+    flex: 1,
+    marginHorizontal: 5,
   },
 });

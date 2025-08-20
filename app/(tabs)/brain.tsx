@@ -31,6 +31,7 @@ export default function BrainPartsScreen() {
               title={brainpart.name}
               description={brainpart.info}
               onPress={() => router.push(`/chapters?tipo=partesCerebro&id=${brainpart.id}&from=brain`)}
+              imageContainerColor="#D0E5FB" 
             />
           ))}
         </View>

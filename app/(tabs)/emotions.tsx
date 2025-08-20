@@ -31,6 +31,7 @@ export default function EmotionsScreen() {
               title={emotion.name}
               description={emotion.info}
               onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.id}&from=emotions`)}
+              imageContainerColor="#A283C8" // Cor roxa para emoções
             />
           ))}
         </View>
