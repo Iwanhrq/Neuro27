@@ -11,7 +11,6 @@ O nosso **objetivo** é democratizar o ensino neurocientífico e promover a alfa
 * 📚 **Conteúdo educativo** sobre partes do cérebro, neurotransmissores, emoções e suas funções. 
 * 🎨 **Visualizações dinâmicas** que ajudam a compreender como o cérebro processa emoções.
 * 🔐 **Autenticação com Firebase** (login e cadastro seguros).
-* 👤 **Tela de perfil** para personalização da experiência do usuário.
 * ⚡ Uso do **Expo** para agilizar desenvolvimento, testes e deploy.
 
 ---
