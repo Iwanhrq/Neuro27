@@ -16,7 +16,37 @@ O nosso **objetivo** é democratizar o ensino neurocientífico e promover a alfa
 
 ---
 
-## 🛠️ Tecnologias utilizadas
+## 🚀 Tecnologias e Ferramentas
+
+<div align="center">
+  <!-- Desenvolvimento -->
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="React Native" title="React Native"/>
+  <img width="20"/>
+  <img src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/48/external-expo-a-framework-and-a-platform-for-universal-react-applications-logo-color-tal-revivo.png" height="40" alt="Expo" title="Expo"/>
+  <img width="20"/>
+  <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" height="40" alt="Firebase" title="Firebase"/>
+  <img width="20"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="TypeScript" title="TypeScript"/>
+  
+  <br/><br/>
+  
+  <!-- Design -->
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" height="40" alt="Figma" title="Figma"/>
+  <img width="20"/>
+  <img src="https://img.icons8.com/color/48/pinterest--v1.png" height="40" alt="Pinterest" title="Pinterest"/>
+
+  <br/><br/>
+
+  <!-- Organização -->
+  <img src="https://www.vectorlogo.zone/logos/notionhq/notionhq-icon.svg" height="40" alt="Notion" title="Notion"/>
+  
+  <br/><br/>
+
+  <!-- IDEs -->
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" height="40" alt="Visual Studio Code" title="Visual Studio Code"/>
+  <img width="20"/>
+  <img src="https://avatars.githubusercontent.com/u/139895814?s=200&v=4" height="40" alt="Cursor IDE" title="Cursor"/>
+</div>
 
 
 ---
