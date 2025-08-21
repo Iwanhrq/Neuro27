@@ -21,7 +21,7 @@ O nosso **objetivo** é democratizar o ensino neurocientífico e promover a alfa
 <div align="center">
   <!-- Primeira fileira -->
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/reactnative/reactnative-original.svg" height="50" alt"React Native" />
-  <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Expo_Logo_white.png" height="50" alt="Expo" />
+<img src="https://img.icons8.com/?color=FFFFFF&format=png&id=7ImWFDcPfSlz&size=100" height="50" alt="Expo" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg" height="50" alt"Firebase" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" height="50" alt"TypeScript" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" height="50" alt"Figma" />
