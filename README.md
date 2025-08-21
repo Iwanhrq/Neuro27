@@ -21,13 +21,13 @@ O nosso **objetivo** é democratizar o ensino neurocientífico e promover a alfa
 <div align="center">
   <!-- Primeira fileira -->
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/reactnative/reactnative-original.svg" height="40" alt"React Native" />
-  <img width="20"/>
+  <img width="40"/>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/reactnative/reactnative-original.svg" height="40" alt"Expo" />
-  <img width="20"/>
+  <img width="40"/>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/reactnative/reactnative-original.svg" height="40" alt"Firebase" />
-  <img width="20"/>
+  <img width="40"/>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/reactnative/reactnative-original.svg" height="40" alt"TypeScript" />
-  <img width="20"/>
+  <img width="40"/>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/reactnative/reactnative-original.svg" height="40" alt"Figma" />
   
   <br/><br/>
