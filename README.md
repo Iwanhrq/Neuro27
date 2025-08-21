@@ -33,15 +33,11 @@ O nosso **objetivo** é democratizar o ensino neurocientífico e promover a alfa
   <br/><br/>
 
   <!-- Segunda fileira -->
-  <img src="https://www.vectorlogo.zone/logos/notionhq/notionhq-icon.svg" height="40" alt="Notion" title="Notion"/>
-  <img width="20"/>
-  <img src="https://img.icons8.com/color/48/pinterest--v1.png" height="40" alt="Pinterest" title="Pinterest"/>
-  <img width="20"/>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" height="40" alt="Visual Studio Code" title="Visual Studio Code"/>
-  <img width="20"/>
-  <img src="https://avatars.githubusercontent.com/u/139895814?s=200&v=4" height="40" alt="Cursor IDE" title="Cursor"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/notion/notion-original.svg" height="50" alt="Notion" />
+  <img width="12"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" height="50" alt="Visual Studio Code"/>
+  <img width="12"/>
 </div>
-
 
 ---
 
