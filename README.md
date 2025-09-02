@@ -4,9 +4,6 @@ O **Neuro27** é um aplicativo mobile interativo desenvolvido em **React Native*
 Ele combina **conteúdos educativos**, **visualizações dinâmicas** e **recursos interativos** para tornar o aprendizado de neurociência mais acessível e envolvente.
 O nosso **objetivo** é democratizar o ensino neurocientífico e promover a alfabetização emocional dos nossos usuários.
 
-
----
-
 <p align="center">
   <img width="600" height="400" alt="Projetos - Portfólio" src="https://github.com/user-attachments/assets/6603fc15-f901-4248-bc4c-b9ac76d31edb" />
 </p>
