@@ -7,7 +7,12 @@ O nosso **objetivo** é democratizar o ensino neurocientífico e promover a alfa
 
 ---
 
+<p align="center">
+  <img width="600" height="400" alt="Projetos - Portfólio" src="https://github.com/user-attachments/assets/6603fc15-f901-4248-bc4c-b9ac76d31edb" />
+</p>
+
 ## 🚀 Funcionalidades (até o momento) 
+
 * 📚 **Conteúdo educativo** sobre partes do cérebro, neurotransmissores, emoções e suas funções. 
 * 🎨 **Visualizações dinâmicas** que ajudam a compreender como o cérebro processa emoções.
 * 🔐 **Autenticação com Firebase** (login e cadastro seguros).
