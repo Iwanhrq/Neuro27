@@ -2,6 +2,8 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ForgotPasswordButton, ForgotPasswordCodeInputs, ForgotPasswordHeader, ForgotPasswordTimer } from '../../../components';
+import { fontFamily } from '@/constants/fonts';
+import colors from '@/constants/colors';
 
 export default function ForgotPasswordCode() {
   const router = useRouter();
@@ -53,28 +55,27 @@ export default function ForgotPasswordCode() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#001C2A',
+    backgroundColor: colors.backgroundSecondary,
   },
   content: {
     paddingTop: 40,
     alignItems: 'center',
   },
   title: {
+    fontFamily: fontFamily.semibold,
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
+    color: colors.textLight,
     marginBottom: 16,
   },
   subtitle: {
+    fontFamily: fontFamily.regular,
     fontSize: 16,
-    color: '#fff',
-    opacity: 0.8,
+    color: colors.textLight,
     marginBottom: 40,
     lineHeight: 22,
+    opacity: 0.8,
     textAlign: 'center',
   },
-
-
   buttonContainer: {
     paddingHorizontal: 55,
     paddingBottom: 20,

@@ -2,6 +2,8 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ForgotPasswordButton, ForgotPasswordHeader, ForgotPasswordInput } from '../../../components';
+import { fontFamily } from '@/constants/fonts';
+import colors from '@/constants/colors';
 
 export default function ForgotPasswordEmail() {
   const [email, setEmail] = useState('');
@@ -41,21 +43,22 @@ export default function ForgotPasswordEmail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#001C2A',
+    backgroundColor: colors.backgroundSecondary,
   },
   content: {
     flex: 1,
     paddingHorizontal: 20,
   },
   title: {
+    fontFamily: fontFamily.semibold,
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
+    color: colors.textLight,
     marginBottom: 16,
   },
   subtitle: {
+    fontFamily: fontFamily.regular,
     fontSize: 16,
-    color: '#fff',
+    color: colors.textLight,
     opacity: 0.8,
     marginBottom: 40,
     lineHeight: 22,

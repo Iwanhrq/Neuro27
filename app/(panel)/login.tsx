@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AuthLayout, CustomButton, CustomInput } from '../../components';
 import { login as firebaseLogin } from '../../constants/auth';
+import colors from '../../constants/colors';
 import { fontFamily } from '../../constants/fonts';
 
 export default function Login() {
@@ -121,6 +122,6 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   colorfulText: {
-    color: '#A283C8'
+    color: colors.purple
   },
 });

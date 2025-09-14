@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { fontFamily } from '../constants/fonts';
 
 interface BrainPartCardProps {
   name: string;
@@ -39,8 +40,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   brainPartName: {
+    fontFamily: fontFamily.semibold,
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#001B29',
   },
 });

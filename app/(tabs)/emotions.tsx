@@ -1,6 +1,8 @@
 import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ContentCard, HeaderCard } from '../../components';
+import { fontFamily } from '@/constants/fonts';
+import colors from '@/constants/colors';
 
 // Dados estáticos das emoções
 const EMOTIONS = [
@@ -43,16 +45,15 @@ export default function EmotionsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FBFBFB',
+    backgroundColor: colors.background,
   },
   brainContainer: {
     marginTop: 230,
     padding: 20,
   },
   brainTitle: {
+    fontFamily: fontFamily.semibold,
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#001B29',
     paddingBottom: 20,
   },
 });

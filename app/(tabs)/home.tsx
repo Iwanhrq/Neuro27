@@ -4,6 +4,8 @@ import dopaminImage from '../../assets/images/dopamin.png';
 import serotoninImage from '../../assets/images/serotonin.png';
 import { EmotionCard, HomeHeaderCard, NeurotransmitterCard } from '../../components';
 import BrainPartCard from '../../components/BrainPartCard';
+import { fontFamily } from '@/constants/fonts';
+import colors from '@/constants/colors';
 
 // Dados estáticos dos neurotransmissores
 const NEUROTRANSMITTERS = [
@@ -49,7 +51,7 @@ export default function Home() {
 
       {/* Cards das Partes do Cérebro */}
       <View style={styles.brainPartsContainer}>
-        <Text style={styles.brainPartsTitle}>Partes do cérebro</Text>
+        <Text style={styles.title}>Partes do cérebro</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -67,7 +69,7 @@ export default function Home() {
 
       {/* Grid dos Neurotransmissores */}
       <View style={styles.neurotransmittersContainer}>
-        <Text style={styles.neurotransmittersTitle}>Neurotransmissores</Text>
+        <Text style={styles.title}>Neurotransmissores</Text>
         <View style={styles.neurotransmittersGrid}>
           <View style={styles.column}>
             {NEUROTRANSMITTERS.slice(0, 3).map((neurotransmitter) => (
@@ -92,7 +94,7 @@ export default function Home() {
 
       {/* Cards das Emoções */}
       <View style={styles.emotionsContainer}>
-        <Text style={styles.emotionsTitle}>Emoções</Text>
+        <Text style={styles.title}>Emoções</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -122,16 +124,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#FBFBFB',
+    backgroundColor: colors.background,
+  },
+  title: {
+    fontFamily: fontFamily.semibold,
+    fontSize: 20,
+    marginBottom: 15,
   },
   brainPartsContainer: {
     marginTop: 30,
-  },
-  brainPartsTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#001B29',
-    marginBottom: 15,
   },
   brainPartsScroll: {
     paddingRight: 20,
@@ -139,23 +140,11 @@ const styles = StyleSheet.create({
   emotionsContainer: {
     marginTop: 30,
   },
-  emotionsTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#001B29',
-    marginBottom: 15,
-  },
   emotionsScroll: {
     paddingRight: 20,
   },
   neurotransmittersContainer: {
     marginTop: 30,
-  },
-  neurotransmittersTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#001B29',
-    marginBottom: 15,
   },
   neurotransmittersGrid: {
     flexDirection: 'row',

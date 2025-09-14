@@ -4,6 +4,8 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 
 import { AssociationCategoria, AssociationItem, associations } from '../constants/associations';
 import { chapters } from '../constants/chapters';
+import { fontFamily } from '../constants/fonts';
+
 
 // Função utilitária para deixar a primeira letra de cada palavra maiúscula
 function toTitleCase(str: string) {
@@ -133,9 +135,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   headerTitle: {
+    fontFamily: fontFamily.semibold,
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#333',
   },
   content: {
     backgroundColor: '#fff',
@@ -163,6 +164,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   textMarker: {
+    fontFamily: fontFamily.regular,
     color: '#fff',
     fontSize: 11,
     textAlign: 'center',
@@ -177,8 +179,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E2E2E2',
   },
   chapterTitle: {
-    fontSize: 18,
-    color: '#333',
+    fontFamily: fontFamily.regular,
+    fontSize: 16,
   },
   empty: {
     textAlign: 'center',

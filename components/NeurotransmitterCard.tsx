@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { fontFamily } from '../constants/fonts';
 
 interface NeurotransmitterCardProps {
   name: string;
@@ -48,9 +49,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   name: {
+    fontFamily: fontFamily.semibold,
     fontSize: 14,
-    fontWeight: '600',
-    color: '#001B29',
     lineHeight: 18,
   },
 });

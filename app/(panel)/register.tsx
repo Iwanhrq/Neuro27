@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { AuthLayout, CustomButton, CustomInput } from '../../components';
 import { register as firebaseRegister } from '../../constants/auth';
+import colors from '../../constants/colors';
 import { fontFamily } from '../../constants/fonts';
 
 export default function Register() {
@@ -133,6 +134,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   colorfulText: {
-    color: '#A283C8'
+    color: colors.purple
   },
 });

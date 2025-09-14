@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { fontFamily } from '../constants/fonts';
 
 interface EmotionCardProps {
   name: string;
@@ -42,13 +43,13 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   emotionCategory: {
+    fontFamily: fontFamily.regular,
     fontSize: 12,
     color: '#666',
     marginBottom: 4,
   },
   emotionName: {
+    fontFamily: fontFamily.semibold,
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#001B29',
   },
 });

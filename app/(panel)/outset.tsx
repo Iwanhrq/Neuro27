@@ -2,12 +2,13 @@ import { useRouter } from 'expo-router';
 import { Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import logoImage from '../../assets/images/logo.png';
+import { fontFamily } from '@/constants/fonts';
+import colors from '@/constants/colors';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 export default function Outset() {
   const router = useRouter();
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -16,22 +17,20 @@ export default function Outset() {
           style={styles.logo}
           resizeMode="contain"
         />
-
         {/* Onda invertida horizontalmente */}
-        <Svg height="100" width={screenWidth} style={styles.wave}>
+        <Svg height="80" width={screenWidth} style={styles.wave}>
           <Path
             d={`
               M${screenWidth} 10 
               Q ${screenWidth * 0.75} 80, ${screenWidth * 0.5} 45 
               Q ${screenWidth * 0.25} 5, 0 50
             `}
-            stroke="#ABD4FC"
+            stroke={colors.wave} // Usando a cor da onda
             strokeWidth="3"
             fill="transparent"
             strokeLinecap="round"
           />
         </Svg>
-
         <Text style={styles.title}>Neuro27</Text>
         <Text style={styles.subtitle}>
           Explore seu cérebro em profundidade. Compreenda como suas emoções nascem e se transformam.
@@ -60,7 +59,7 @@ export default function Outset() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#001C2A',
+    backgroundColor: colors.backgroundSecondary, // Usando a cor de fundo
   },
   content: {
     flex: 1,
@@ -76,16 +75,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontFamily: fontFamily.semibold,
+    fontSize: 36,
+    color: colors.textLight, // Usando a cor de texto claro
     textAlign: 'center',
     marginBottom: 20
   },
   subtitle: {
+    fontFamily: fontFamily.regular,
     fontSize: 15,
-    fontWeight: '400',
-    color: '#808D95',
+    color: colors.textMuted, // Usando a cor de texto secundário
     textAlign: 'center',
     marginBottom: 50,
     maxWidth: 250
@@ -96,22 +95,22 @@ const styles = StyleSheet.create({
     maxWidth: 300,
   },
   buttonLogin: {
-    backgroundColor: '#ABD4FC',
+    backgroundColor: colors.buttonPrimary, // Usando a cor do botão primário
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 20,
     alignItems: 'center',
   },
   buttonRegister: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.buttonSecondary, // Usando a cor do botão secundário
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 20,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#000',
+    fontFamily: fontFamily.semibold,
+    color: colors.textDark, // Usando a cor de texto escuro
     fontSize: 16,
-    fontWeight: '500',
   },
 });

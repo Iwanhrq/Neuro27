@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { fontFamily } from '../constants/fonts';
 
 interface ContentCardProps {
   title: string;
@@ -48,9 +49,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   brainPartTitle: {
+    fontFamily: fontFamily.regular,
     fontSize: 17,
-    fontWeight: '400',
-    color: '#000',
     marginBottom: 4,
     textAlign: 'left',
   },
