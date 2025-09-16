@@ -1,38 +1,55 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { AuthLayout, CustomButton, CustomInput } from '../../components';
+import { AuthLayout, CustomInput } from '../../components';
 import { login as firebaseLogin } from '../../constants/auth';
 import colors from '../../constants/colors';
 import { fontFamily } from '../../constants/fonts';
+import { LoginFormData, loginSchema } from '../../constants/validation';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const router = useRouter();
+  
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const validateEmail = (email: string) => {
-    return /\S+@\S+\.\S+/.test(email);
-  };
-
-  const handleLogin = async () => {
-    if (!email || !password) {
-      // Alert.alert('Erro', 'Preencha todos os campos');
-      return;
-    }
-    if (!validateEmail(email)) {
-      // Alert.alert('Erro', 'Email inválido');
-      return;
-    }
+  const handleLogin = async (data: LoginFormData) => {
     try {
-      await firebaseLogin(email, password);
+      await firebaseLogin(data.email, data.password);
       router.push('/(tabs)/home' as any);
     } catch (error: any) {
-      // let message = 'Email ou senha incorretos';
-      // if (error.code === 'auth/invalid-email') message = 'Email inválido';
-      // if (error.code === 'auth/user-not-found') message = 'Usuário não encontrado';
-      // if (error.code === 'auth/wrong-password') message = 'Senha incorreta';
-      // Alert.alert('Erro', message);
+      let message = 'Email ou senha incorretos';
+      let field: keyof LoginFormData = 'email';
+      
+      if (error.code === 'auth/invalid-email') {
+        message = 'Email inválido';
+        field = 'email';
+      } else if (error.code === 'auth/user-not-found') {
+        message = 'Usuário não encontrado';
+        field = 'email';
+      } else if (error.code === 'auth/wrong-password') {
+        message = 'Senha incorreta';
+        field = 'password';
+      } else if (error.code === 'auth/invalid-credential') {
+        message = 'Email ou senha incorretos';
+        field = 'email';
+      }
+      
+      setError(field, {
+        type: 'manual',
+        message: message,
+      });
     }
   };
 
@@ -44,27 +61,43 @@ export default function Login() {
         Continue {'\n'}aprendendo
       </Text>
       <View style={styles.form}>
-        <CustomInput
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          width="90%"
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder="Email"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              width="90%"
+              error={errors.email?.message}
+            />
+          )}
         />
 
-        <CustomInput
-          placeholder="Senha"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          marginBottom={0}
-          width="90%"
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder="Senha"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              secureTextEntry
+              marginBottom={0}
+              width="90%"
+              error={errors.password?.message}
+            />
+          )}
         />
 
         <TouchableOpacity 
           style={styles.forgotPasswordContainer}
-          onPress={() => router.push('/(panel)/ForgotPassword/ForgotPasswordEmail' as any)}
+          onPress={() => router.push('/(panel)/ForgotPassword/ForgotPasswordEmail')}
         >
           <Text style={[styles.colorfulText, { marginTop: 4, marginBottom: 32 }]}>
             Esqueceu a senha?
@@ -72,7 +105,14 @@ export default function Login() {
         </TouchableOpacity>
 
 
-        <CustomButton title="Entrar" onPress={handleLogin} width="90%" />
+        <TouchableOpacity 
+          style={[styles.button, { width: '90%' }]} 
+          onPress={handleSubmit(handleLogin)}
+        >
+          <Text style={styles.buttonText}>
+            {isSubmitting ? "Entrando..." : "Entrar"}
+          </Text>
+        </TouchableOpacity>
 
         {/*
         <Link href="/(panel)/register" asChild>
@@ -123,5 +163,18 @@ const styles = StyleSheet.create({
   },
   colorfulText: {
     color: colors.purple
+  },
+  button: {
+    height: 45,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ABD4FC',
+    marginTop: 8,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#fff',
   },
 });

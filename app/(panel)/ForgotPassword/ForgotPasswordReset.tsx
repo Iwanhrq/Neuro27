@@ -1,9 +1,10 @@
+import colors from '@/constants/colors';
+import { fontFamily } from '@/constants/fonts';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ForgotPasswordButton, ForgotPasswordHeader, ForgotPasswordInput } from '../../../components';
-import { fontFamily } from '@/constants/fonts';
-import colors from '@/constants/colors';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ForgotPasswordInput } from '../../../components';
 
 export default function ForgotPasswordReset() {
   const [password, setPassword] = useState('');
@@ -12,7 +13,11 @@ export default function ForgotPasswordReset() {
 
   return (
     <View style={styles.container}>
-      <ForgotPasswordHeader />
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={35} color="#fff" />
+        </TouchableOpacity>
+      </View>
 
       {/* Conteúdo principal */}
       <View style={styles.content}>
@@ -42,11 +47,14 @@ export default function ForgotPasswordReset() {
         />
 
         {/* Botão */}
-        <ForgotPasswordButton 
-          title="Redefinir senha" 
-          onPress={() => router.push('(panel)/ForgotPassword/ForgotPasswordCode' as any)}
-          containerStyle={styles.buttonContainer}
-        />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+            style={styles.button}
+            onPress={() => router.push('(panel)/ForgotPassword/ForgotPasswordCode' as any)}
+          >
+            <Text style={styles.buttonText}>Redefinir senha</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -74,7 +82,30 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     lineHeight: 22,
   },
+  header: {
+    paddingTop: 50,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   buttonContainer: {
     paddingTop: 40,
+  },
+  button: {
+    height: 48,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ABD4FC',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#000',
   },
 });

@@ -1,11 +1,11 @@
+import colors from '@/constants/colors';
+import { fontFamily } from '@/constants/fonts';
 import { useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import dopaminImage from '../../assets/images/dopamin.png';
 import serotoninImage from '../../assets/images/serotonin.png';
-import { EmotionCard, HomeHeaderCard, NeurotransmitterCard } from '../../components';
+import { EmotionCard, NeurotransmitterCard } from '../../components';
 import BrainPartCard from '../../components/BrainPartCard';
-import { fontFamily } from '@/constants/fonts';
-import colors from '@/constants/colors';
 
 // Dados estáticos dos neurotransmissores
 const NEUROTRANSMITTERS = [
@@ -45,9 +45,11 @@ export default function Home() {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
-      {/*<LogoutButton onPress={handleLogout} />*/}
 
-      <HomeHeaderCard title="" />
+      <View style={styles.headerCard}>
+        <View style={[styles.brainCard, { width: Dimensions.get('window').width - 40, height: 200 }]}>
+        </View>
+      </View>
 
       {/* Cards das Partes do Cérebro */}
       <View style={styles.brainPartsContainer}>
@@ -125,6 +127,18 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: colors.background,
+  },
+  headerCard: {
+    position: 'relative',
+    paddingTop: 50,
+  },
+  brainCard: {
+    marginRight: 20,
+    backgroundColor: '#D0E5FB',
+    borderRadius: 12,
+    padding: 20,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   title: {
     fontFamily: fontFamily.semibold,

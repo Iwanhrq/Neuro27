@@ -1,9 +1,10 @@
+import colors from '@/constants/colors';
+import { fontFamily } from '@/constants/fonts';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ForgotPasswordButton, ForgotPasswordCodeInputs, ForgotPasswordHeader, ForgotPasswordTimer } from '../../../components';
-import { fontFamily } from '@/constants/fonts';
-import colors from '@/constants/colors';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ForgotPasswordCodeInputs, ForgotPasswordTimer } from '../../../components';
 
 export default function ForgotPasswordCode() {
   const router = useRouter();
@@ -16,7 +17,11 @@ export default function ForgotPasswordCode() {
 
   return (
     <View style={styles.container}>
-      <ForgotPasswordHeader />
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={35} color="#fff" />
+        </TouchableOpacity>
+      </View>
 
       {/* Conteúdo */}
       <View style={styles.content}>
@@ -35,19 +40,22 @@ export default function ForgotPasswordCode() {
       </View>
 
       {/* Botões */}
-      <ForgotPasswordButton 
-        title="Verificar" 
-        onPress={handleVerify}
-        containerStyle={styles.buttonContainer}
-        borderRadius={20}
-      />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={handleVerify}
+        >
+          <Text style={styles.buttonText}>Verificar</Text>
+        </TouchableOpacity>
+      </View>
 
-      <ForgotPasswordButton 
-        title="Enviar novamente" 
-        variant="secondary"
-        containerStyle={styles.buttonContainer}
-        borderRadius={20}
-      />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity 
+          style={styles.secondaryButton}
+        >
+          <Text style={styles.secondaryButtonText}>Enviar novamente</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -76,8 +84,43 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     textAlign: 'center',
   },
+  header: {
+    paddingTop: 50,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   buttonContainer: {
     paddingHorizontal: 55,
     paddingBottom: 20,
+  },
+  button: {
+    height: 48,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ABD4FC',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#000',
+  },
+  secondaryButton: {
+    height: 48,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  secondaryButtonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#000',
   },
 });

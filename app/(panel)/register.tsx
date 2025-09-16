@@ -1,50 +1,55 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { AuthLayout, CustomButton, CustomInput } from '../../components';
+import { Controller, useForm } from 'react-hook-form';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AuthLayout, CustomInput } from '../../components';
 import { register as firebaseRegister } from '../../constants/auth';
 import colors from '../../constants/colors';
 import { fontFamily } from '../../constants/fonts';
+import { RegisterFormData, registerSchema } from '../../constants/validation';
 
 export default function Register() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
+  
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
-  const validateEmail = (email: string) => {
-    // Regex simples para validar email
-    return /\S+@\S+\.\S+/.test(email);
-  };
-
-  const handleRegister = async () => {
-    if (!name || !email || !password || !confirmPassword) {
-      // Alert.alert('Erro', 'Preencha todos os campos');
-      return;
-    }
-    if (!validateEmail(email)) {
-      // Alert.alert('Erro', 'Email inválido');
-      return;
-    }
-    if (password.length < 6) {
-      // Alert.alert('Erro', 'A senha deve ter pelo menos 6 caracteres');
-      return;
-    }
-    if (password !== confirmPassword) {
-      // Alert.alert('Erro', 'As senhas não coincidem');
-      return;
-    }
+  const handleRegister = async (data: RegisterFormData) => {
     try {
-      await firebaseRegister(email, password, name);
+      await firebaseRegister(data.email, data.password, data.name);
       // Alert.alert('Sucesso', 'Conta criada com sucesso!');
       router.push('/(panel)/login' as any);
     } catch (error: any) {
-      // let message = 'Erro ao criar conta';
-      // if (error.code === 'auth/email-already-in-use') message = 'Email já está em uso';
-      // if (error.code === 'auth/invalid-email') message = 'Email inválido';
-      // if (error.code === 'auth/weak-password') message = 'Senha muito fraca';
-      // Alert.alert('Erro', message);
+      let message = 'Erro ao criar conta';
+      let field: keyof RegisterFormData = 'email';
+      
+      if (error.code === 'auth/email-already-in-use') {
+        message = 'Email já está em uso';
+        field = 'email';
+      } else if (error.code === 'auth/invalid-email') {
+        message = 'Email inválido';
+        field = 'email';
+      } else if (error.code === 'auth/weak-password') {
+        message = 'Senha muito fraca';
+        field = 'password';
+      }
+      
+      setError(field, {
+        type: 'manual',
+        message: message,
+      });
     }
   };
 
@@ -56,40 +61,79 @@ export default function Register() {
         a {'\n'}mente
       </Text>
       <View style={styles.form}>
-        <CustomInput
-          placeholder="Nome"
-          value={name}
-          onChangeText={setName}
-          autoCapitalize="words"
-          width="90%"
+        <Controller
+          control={control}
+          name="name"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder="Nome"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              autoCapitalize="words"
+              width="90%"
+              error={errors.name?.message}
+            />
+          )}
         />
 
-        <CustomInput
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          width="90%"
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder="Email"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              width="90%"
+              error={errors.email?.message}
+            />
+          )}
         />
 
-        <CustomInput
-          placeholder="Senha"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          width="90%"
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder="Senha"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              secureTextEntry
+              width="90%"
+              error={errors.password?.message}
+            />
+          )}
         />
 
-        <CustomInput
-          placeholder="Confirmar senha"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry
-          width="90%"
+        <Controller
+          control={control}
+          name="confirmPassword"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder="Confirmar senha"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              secureTextEntry
+              width="90%"
+              error={errors.confirmPassword?.message}
+            />
+          )}
         />
 
-        <CustomButton title="Cadastrar" onPress={handleRegister} width="90%" />
+        <TouchableOpacity 
+          style={[styles.button, { width: '90%' }]} 
+          onPress={handleSubmit(handleRegister)}
+        >
+          <Text style={styles.buttonText}>
+            {isSubmitting ? "Cadastrando..." : "Cadastrar"}
+          </Text>
+        </TouchableOpacity>
 
 {/*/
         <TouchableOpacity
@@ -135,5 +179,18 @@ const styles = StyleSheet.create({
   },
   colorfulText: {
     color: colors.purple
+  },
+  button: {
+    height: 45,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ABD4FC',
+    marginTop: 8,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#fff',
   },
 });

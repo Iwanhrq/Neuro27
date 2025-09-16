@@ -1,8 +1,8 @@
-import { useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { ContentCard, HeaderCard } from '../../components';
-import { fontFamily } from '@/constants/fonts';
 import colors from '@/constants/colors';
+import { fontFamily } from '@/constants/fonts';
+import { useRouter } from 'expo-router';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ContentCard } from '../../components';
 
 // Dados estáticos dos neurotransmissores
 const NEUROTRANSMITTERS = [
@@ -19,7 +19,10 @@ export default function NeurotransmittersScreen() {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.container}>
         {/* Carrossel dos Neurotransmissores */}
-        <HeaderCard variant="dark" />
+        <View style={styles.headerCard}>
+          <View style={[styles.brainCard, { width: Dimensions.get('window').width, height: 220 }]}>
+          </View>
+        </View>
 
         {/* Lista de neurotransmissores */}
         <View style={styles.brainContainer}>
@@ -47,8 +50,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
+  headerCard: {
+    position: 'relative',
+  },
+  brainCard: {
+    backgroundColor: '#001B29',
+    borderRadius: 0,
+    padding: 20,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
   brainContainer: {
-    marginTop: 230,
+    marginTop: 10,
     padding: 20,
   },
   brainTitle: {
