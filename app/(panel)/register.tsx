@@ -1,16 +1,18 @@
+import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AuthLayout, CustomInput } from '../../components';
-import { register as firebaseRegister } from '../../constants/auth';
-import colors from '../../constants/colors';
+import { register as firebaseRegister, auth } from '../../constants/auth';
+import colors from '@/constants/colors';
 import { fontFamily } from '../../constants/fonts';
 import { RegisterFormData, registerSchema } from '../../constants/validation';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export default function Register() {
   const router = useRouter();
-  
+
   const {
     control,
     handleSubmit,
@@ -26,30 +28,37 @@ export default function Register() {
     },
   });
 
+  // Redireciona automaticamente para Home quando o usuário estiver logado
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.replace('/(tabs)/home' as any);
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
   const handleRegister = async (data: RegisterFormData) => {
     try {
+      // Cria usuário no Firebase
       await firebaseRegister(data.email, data.password, data.name);
-      // Alert.alert('Sucesso', 'Conta criada com sucesso!');
-      router.push('/(panel)/login' as any);
+
+      // Não precisa chamar router.push aqui
     } catch (error: any) {
       let message = 'Erro ao criar conta';
       let field: keyof RegisterFormData = 'email';
-      
+
       if (error.code === 'auth/email-already-in-use') {
         message = 'Email já está em uso';
-        field = 'email';
       } else if (error.code === 'auth/invalid-email') {
         message = 'Email inválido';
-        field = 'email';
       } else if (error.code === 'auth/weak-password') {
         message = 'Senha muito fraca';
         field = 'password';
       }
-      
-      setError(field, {
-        type: 'manual',
-        message: message,
-      });
+
+      setError(field, { type: 'manual', message });
     }
   };
 
@@ -57,9 +66,9 @@ export default function Register() {
     <AuthLayout showLogo={false} headerText="" headerHeight={175} showBackButton={true}>
       <Text style={styles.title}>Crie sua conta</Text>
       <Text style={styles.subtitle}>
-        Desperte sua curiosidade sobre
-        a {'\n'}mente
+        Desperte sua curiosidade sobre{'\n'}a mente
       </Text>
+
       <View style={styles.form}>
         <Controller
           control={control}
@@ -126,27 +135,15 @@ export default function Register() {
           )}
         />
 
-        <TouchableOpacity 
-          style={[styles.button, { width: '90%' }]} 
+        <TouchableOpacity
+          style={[styles.button, { width: '90%' }]}
           onPress={handleSubmit(handleRegister)}
+          disabled={isSubmitting} // previne múltiplos cliques
         >
           <Text style={styles.buttonText}>
             {isSubmitting ? "Cadastrando..." : "Cadastrar"}
           </Text>
         </TouchableOpacity>
-
-{/*/
-        <TouchableOpacity
-          style={styles.linkButton}
-          onPress={() => router.back()}
-        >
-          <Text style={styles.linkText}>
-            Já possui uma conta?
-            <Text style={styles.colorfulText}> Faça login</Text>
-          </Text>
-        </TouchableOpacity>
-
-        */}
       </View>
     </AuthLayout>
   );
@@ -168,17 +165,6 @@ const styles = StyleSheet.create({
   form: {
     alignItems: 'center',
     width: '100%',
-    // gap: 32, // Removido para usar marginBottom individual
-  },
-  linkButton: {
-    alignItems: 'center',
-    paddingTop: 64,
-  },
-  linkText: {
-    fontSize: 14,
-  },
-  colorfulText: {
-    color: colors.purple
   },
   button: {
     height: 45,

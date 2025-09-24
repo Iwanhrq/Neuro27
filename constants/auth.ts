@@ -24,3 +24,5 @@ export const register = async (email: string, password: string, name: string) =>
 export const login = async (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password);
 }; 
+
+export { auth };
