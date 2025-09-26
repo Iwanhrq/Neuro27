@@ -1,3 +1,4 @@
+import colors from '@/constants/colors';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { fontFamily } from '../constants/fonts';
@@ -11,7 +12,7 @@ interface BrainPartCardProps {
 export default function BrainPartCard({ 
   name, 
   onPress, 
-  imageColor = '#001C2A' // Cor diferente para diferenciar das emoções
+  imageColor = colors.backgroundSecondary // Cor diferente para diferenciar das emoções
 }: BrainPartCardProps) {
   return (
     <TouchableOpacity style={styles.brainPartCard} onPress={onPress}>
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     width: 160,
     marginRight: 15,
     marginBottom: 16, 
-    backgroundColor: '#fff',
+    backgroundColor: colors.card,
   },
   brainPartImageContainer: {
     width: '100%',

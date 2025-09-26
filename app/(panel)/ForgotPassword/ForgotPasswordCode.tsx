@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ForgotPasswordCodeInputs, ForgotPasswordTimer } from '../../../components';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 export default function ForgotPasswordCode() {
   const router = useRouter();
@@ -104,23 +105,23 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ABD4FC',
+    backgroundColor: colors.buttonPrimary,
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: '500',
-    color: '#000',
+    fontFamily: fontFamily.semibold,
+    color: colors.textDark
   },
   secondaryButton: {
     height: 48,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.buttonSecondary,
   },
   secondaryButtonText: {
     fontSize: 16,
-    fontWeight: '500',
-    color: '#000',
+    fontFamily: fontFamily.semibold,
+    color: colors.textDark
   },
 });

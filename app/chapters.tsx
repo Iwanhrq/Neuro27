@@ -1,3 +1,4 @@
+import colors from '@/constants/colors';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -117,11 +118,11 @@ export default function Chapters() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ABD4FC',
+    backgroundColor: colors.background,
   },
   header: {
     height: 200,
-    backgroundColor: '#ABD4FC',
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 65,
@@ -139,7 +140,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   content: {
-    backgroundColor: '#fff',
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
     flex: 1,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   marker: {
     paddingHorizontal: 15,
     paddingVertical: 0,    
-    backgroundColor: '#B2A4FF',
+    backgroundColor: colors.purpleLight,
     width: 100,
     height: 28, 
     borderRadius: 50,
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   textMarker: {
     fontFamily: fontFamily.regular,
-    color: '#fff',
+    color: colors.textLight,
     fontSize: 11,
     textAlign: 'center',
     fontWeight: '500',
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: 25,
     borderBottomWidth: 1,
-    borderBottomColor: '#E2E2E2',
+    borderBottomColor: colors.border,
   },
   chapterTitle: {
     fontFamily: fontFamily.regular,

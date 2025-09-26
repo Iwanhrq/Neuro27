@@ -1,3 +1,4 @@
+import colors from '@/constants/colors';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { fontFamily } from '../constants/fonts';
@@ -13,7 +14,7 @@ export default function EmotionCard({
   name, 
   category, 
   onPress, 
-  imageColor = '#A283C8' 
+  imageColor = colors.purple
 }: EmotionCardProps) {
   return (
     <TouchableOpacity style={styles.emotionCard} onPress={onPress}>
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     width: 160,
     marginRight: 15,
     marginBottom: 16, 
-    backgroundColor: '#fff',
+    backgroundColor: colors.card,
   },
   emotionImageContainer: {
     width: '100%',
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   emotionCategory: {
     fontFamily: fontFamily.regular,
     fontSize: 12,
-    color: '#666',
+    color: colors.textMuted,
     marginBottom: 4,
   },
   emotionName: {

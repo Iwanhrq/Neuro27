@@ -3,8 +3,9 @@ export default  {
   // Cores de fundo
   background: '#FBFBFB', // Cor de fundo principal (Cinza)
   backgroundSecondary: '#001C2A', // Cor de fundo secundária (Azul escuro)
-  card: '#FFFFFF',       // Cor para cards e botões claros
-  
+  backgroundTertiary: '#F3F3F3', // Cor de fundo terciária (Cinza claro)
+
+  card: '#FFFFFF',       // Cor dos cards (Branco)  
   // Cores de texto
   textLight: '#FFFFFF',  // Texto claro (para fundos escuros)
   textMuted: '#808D95',  // Texto secundário
@@ -12,6 +13,7 @@ export default  {
   
   // Cores principais
   primary: '#ABD4FC',    // Cor primária (azul claro)
+  primaryLight: '#D0E5FB',  // Cor secundária (azul escuro)
   
   // Cores de botões
   buttonPrimary: '#ABD4FC', // Botão principal
@@ -19,5 +21,7 @@ export default  {
   
   // Outras cores
   wave: '#ABD4FC',      // Cor da onda SVG
-  purple: '#A283C8'
+  purpleLight: '#B2A4FF', // Cor de fundo para neurotransmissores
+  purple: '#A283C8', // Cor para marcadores
+  border: '#E2E2E2'      // Cor de borda (Cinza claro)
 };

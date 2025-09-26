@@ -169,12 +169,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ABD4FC',
+    backgroundColor: colors.buttonPrimary,
     marginTop: 8,
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: '500',
-    color: '#fff',
+    fontFamily: fontFamily.semibold,
+    color: colors.textLight,
   },
 });

@@ -101,11 +101,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ABD4FC',
+    backgroundColor: colors.buttonPrimary,
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: '500',
-    color: '#000',
+    fontFamily: fontFamily.semibold,
+    color: colors.textDark,
   },
 });

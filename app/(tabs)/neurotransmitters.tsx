@@ -36,7 +36,7 @@ export default function NeurotransmittersScreen() {
               title={nt.name}
               description={nt.info}
               onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${nt.id}&from=neurotransmitters`)}
-              imageContainerColor="#B2A4FF" // Cor azul para neurotransmissores
+              imageContainerColor= {colors.purpleLight}
             />
           ))}
         </View>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   brainCard: {
-    backgroundColor: '#001B29',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 0,
     padding: 20,
     flexDirection: 'column',

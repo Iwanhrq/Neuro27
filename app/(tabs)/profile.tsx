@@ -1,3 +1,4 @@
+import colors from '@/constants/colors';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { signOut } from 'firebase/auth';
@@ -29,7 +30,7 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.background,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -43,11 +44,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ABD4FC',
+    backgroundColor: colors.primary,
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: '500',
+    color: colors.textLight,
     fontSize: 16,
   },
 });

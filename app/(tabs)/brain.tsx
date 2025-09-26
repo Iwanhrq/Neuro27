@@ -36,7 +36,7 @@ export default function BrainPartsScreen() {
               title={brainpart.name}
               description={brainpart.info}
               onPress={() => router.push(`/chapters?tipo=partesCerebro&id=${brainpart.id}&from=brain`)}
-              imageContainerColor="#D0E5FB" 
+              imageContainerColor= {colors.primaryLight} 
             />
           ))}
         </View>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   brainCard: {
-    backgroundColor: '#001B29',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 0,
     padding: 20,
     flexDirection: 'column',

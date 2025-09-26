@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   brainCard: {
     marginRight: 20,
-    backgroundColor: '#D0E5FB',
+    backgroundColor: colors.primaryLight,
     borderRadius: 12,
     padding: 20,
     flexDirection: 'column',

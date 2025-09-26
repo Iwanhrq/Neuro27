@@ -1,3 +1,4 @@
+import colors from '@/constants/colors';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { fontFamily } from '../constants/fonts';
@@ -11,7 +12,7 @@ interface NeurotransmitterCardProps {
 export default function NeurotransmitterCard({ 
   name, 
   onPress, 
-  iconColor = '#D0E5FB'
+  iconColor = colors.primaryLight
 }: NeurotransmitterCardProps) {
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
   card: {
     height: 55,
     flexDirection: 'row',
-    backgroundColor: '#F3F3F3',
+    backgroundColor: colors.backgroundTertiary,
     borderRadius: 8,
     marginBottom: 12,
     overflow: 'hidden',

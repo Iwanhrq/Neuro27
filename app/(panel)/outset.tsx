@@ -59,7 +59,7 @@ export default function Outset() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundSecondary, // Usando a cor de fundo
+    backgroundColor: colors.backgroundSecondary,
   },
   content: {
     flex: 1,
@@ -77,14 +77,14 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: fontFamily.semibold,
     fontSize: 36,
-    color: colors.textLight, // Usando a cor de texto claro
+    color: colors.textLight,
     textAlign: 'center',
     marginBottom: 20
   },
   subtitle: {
     fontFamily: fontFamily.regular,
     fontSize: 15,
-    color: colors.textMuted, // Usando a cor de texto secundário
+    color: colors.textMuted,
     textAlign: 'center',
     marginBottom: 50,
     maxWidth: 250
@@ -95,14 +95,14 @@ const styles = StyleSheet.create({
     maxWidth: 300,
   },
   buttonLogin: {
-    backgroundColor: colors.buttonPrimary, // Usando a cor do botão primário
+    backgroundColor: colors.buttonPrimary, 
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 20,
     alignItems: 'center',
   },
   buttonRegister: {
-    backgroundColor: colors.buttonSecondary, // Usando a cor do botão secundário
+    backgroundColor: colors.buttonSecondary, 
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 20,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily: fontFamily.semibold,
-    color: colors.textDark, // Usando a cor de texto escuro
+    color: colors.textDark,
     fontSize: 16,
   },
 });
