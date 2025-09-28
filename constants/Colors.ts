@@ -23,5 +23,7 @@ export default  {
   wave: '#ABD4FC',      // Cor da onda SVG
   purpleLight: '#B2A4FF', // Cor de fundo para neurotransmissores
   purple: '#A283C8', // Cor para marcadores
-  border: '#E2E2E2'      // Cor de borda (Cinza claro)
+  border: '#E2E2E2',      // Cor de borda (Cinza claro)
+  error: '#FF6B6B',       // Cor de erro
+  tabInactive: '#8E8E93'  // Cor de tab inativa
 };

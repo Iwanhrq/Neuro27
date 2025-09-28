@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
+import colors from '../constants/colors';
+import { fontFamily } from '../constants/fonts';
 
 interface ForgotPasswordTimerProps {
   initialTime?: number; // em segundos
@@ -34,11 +36,12 @@ export default function ForgotPasswordTimer({
 
 const styles = StyleSheet.create({
   timer: {
-    color: '#fff',
+    color: colors.textLight,
     marginBottom: 40,
+    fontFamily: fontFamily.regular,
   },
   timerTime: {
-    color: '#ABD4FC',
-    fontWeight: 'bold'
+    color: colors.primary,
+    fontFamily: fontFamily.bold,
   },
 });

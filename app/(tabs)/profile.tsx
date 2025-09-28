@@ -1,8 +1,8 @@
+import { auth } from '@/constants/auth';
 import colors from '@/constants/colors';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../constants/auth'; // ajuste o caminho se necessário
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function ProfileScreen() {
   const router = useRouter();

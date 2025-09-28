@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import colors from '../constants/colors';
 import { fontFamily } from '../constants/fonts';
 
 interface ContentCardProps {
@@ -15,7 +16,7 @@ export default function ContentCard({
   description, 
   onPress, 
   imageContainer,
-  imageContainerColor = '#ABD4FC'
+  imageContainerColor = colors.primary
 }: ContentCardProps) {
   return (
     <TouchableOpacity style={styles.brainPartCard} onPress={onPress}>

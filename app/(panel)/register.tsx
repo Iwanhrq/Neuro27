@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
+import { auth, register as firebaseRegister } from '@/constants/auth';
+import colors from '@/constants/colors';
+import { fontFamily } from '@/constants/fonts';
+import { RegisterFormData, registerSchema } from '@/constants/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AuthLayout, CustomInput } from '../../components';
-import { register as firebaseRegister, auth } from '../../constants/auth';
-import colors from '@/constants/colors';
-import { fontFamily } from '../../constants/fonts';
-import { RegisterFormData, registerSchema } from '../../constants/validation';
-import { onAuthStateChanged } from 'firebase/auth';
 
 export default function Register() {
   const router = useRouter();

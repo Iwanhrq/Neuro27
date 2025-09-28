@@ -1,12 +1,12 @@
+import { login as firebaseLogin } from '@/constants/auth';
+import colors from '@/constants/colors';
+import { fontFamily } from '@/constants/fonts';
+import { LoginFormData, loginSchema } from '@/constants/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AuthLayout, CustomInput } from '../../components';
-import { login as firebaseLogin } from '../../constants/auth';
-import colors from '../../constants/colors';
-import { fontFamily } from '../../constants/fonts';
-import { LoginFormData, loginSchema } from '../../constants/validation';
 
 export default function Login() {
   const router = useRouter();

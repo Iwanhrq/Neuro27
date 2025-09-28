@@ -1,5 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import colors from '../constants/colors';
+import { fontFamily } from '../constants/fonts';
 
 interface StoryCardProps {
   name: string;
@@ -11,7 +13,7 @@ interface StoryCardProps {
 export default function StoryCard({ 
   name, 
   onPress, 
-  circleColor = '#fff',
+  circleColor = colors.card,
   imageSource
 }: StoryCardProps) {
   return (
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderColor: '#D0E5FB',
+    borderColor: colors.primaryLight,
     overflow: 'hidden',
   },
   storyImage: {
@@ -55,7 +57,8 @@ const styles = StyleSheet.create({
   storyName: {
     marginTop: 5,
     fontSize: 12,
-    color: '#001B29',
+    fontFamily: fontFamily.regular,
+    color: colors.backgroundSecondary,
     textAlign: 'center',
   },
 });

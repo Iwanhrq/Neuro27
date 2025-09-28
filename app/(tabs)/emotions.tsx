@@ -36,7 +36,7 @@ export default function EmotionsScreen() {
               title={emotion.name}
               description={emotion.info}
               onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.id}&from=emotions`)}
-              imageContainerColor="#A283C8" // Cor roxa para emoções
+              imageContainerColor={colors.purple} // Cor roxa para emoções
             />
           ))}
         </View>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   brainCard: {
-    backgroundColor: '#001B29',
+    backgroundColor: colors.backgroundSecondary,
     borderRadius: 0,
     padding: 20,
     flexDirection: 'column',

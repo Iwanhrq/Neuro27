@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
+import colors from '../constants/colors';
+import { fontFamily } from '../constants/fonts';
 
 interface ForgotPasswordInputProps extends TextInputProps {
   label?: string;
@@ -22,7 +24,7 @@ export default function ForgotPasswordInput({
           variant === 'code' ? styles.codeInput : styles.defaultInput,
           style
         ]}
-        placeholderTextColor="#999"
+        placeholderTextColor={colors.textMuted}
         {...props}
       />
     </View>
@@ -35,29 +37,30 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: '500',
-    color: '#fff',
+    fontFamily: fontFamily.semibold,
+    color: colors.textLight,
     marginBottom: 8,
     marginTop: 20,
   },
   input: {
     fontSize: 16,
+    fontFamily: fontFamily.regular,
   },
   defaultInput: {
     height: 55,
     borderWidth: 1,
-    borderColor: '#B5B5B5',
+    borderColor: colors.border,
     paddingHorizontal: 16,
   },
   codeInput: {
     width: 70,
     height: 75,
-    color: '#fff',
+    color: colors.textLight,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: fontFamily.bold,
     textAlign: 'center',
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: '#B5B5B5',
+    borderColor: colors.border,
   },
 });

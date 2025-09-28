@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
+import colors from '../constants/colors';
+import { fontFamily } from '../constants/fonts';
 
 interface ForgotPasswordCodeInputsProps {
   length?: number;
@@ -63,12 +65,12 @@ const styles = StyleSheet.create({
   codeInput: {
     width: 70,
     height: 75,
-    color: '#fff',
+    color: colors.textLight,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: fontFamily.bold,
     textAlign: 'center',
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: '#B5B5B5',
+    borderColor: colors.border,
   },
 });

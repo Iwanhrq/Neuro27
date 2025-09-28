@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
+import colors from '../constants/colors';
 import { fontFamily } from '../constants/fonts';
 
 interface CustomInputProps extends TextInputProps {
@@ -40,18 +41,18 @@ const styles = StyleSheet.create({
   input: {
     height: 45,
     borderWidth: 1,
-    backgroundColor: '#fff',
-    borderColor: '#E0E0E0',
+    backgroundColor: colors.card,
+    borderColor: colors.border,
     borderRadius: 8,
     paddingHorizontal: 16,
     fontSize: 16,
   },
   inputError: {
-    borderColor: '#FF6B6B',
+    borderColor: colors.error,
     borderWidth: 2,
   },
   errorText: {
-    color: '#FF6B6B',
+    color: colors.error,
     fontSize: 12,
     fontFamily: fontFamily.regular,
     marginTop: 4,
