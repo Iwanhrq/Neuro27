@@ -16,7 +16,7 @@ export default function ContentCard({
   description, 
   onPress, 
   imageContainer,
-  imageContainerColor = colors.primary
+  imageContainerColor = colors.brand
 }: ContentCardProps) {
   return (
     <TouchableOpacity style={styles.brainPartCard} onPress={onPress}>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   brainPartTitle: {
     fontFamily: fontFamily.regular,
-    fontSize: 17,
+    fontSize: 16,
     marginBottom: 4,
     textAlign: 'left',
   },

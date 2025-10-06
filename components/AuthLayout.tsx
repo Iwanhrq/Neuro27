@@ -1,8 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
+import { Image, ImageBackground, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import colors from '../constants/colors';
-import { Image, ImageBackground, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -61,7 +61,7 @@ export default function AuthLayout({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.surface,
   },
   scrollContent: {
     flexGrow: 1,
@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
     height: 230,
   },
   block: {
-    backgroundColor: colors.backgroundSecondary
+    backgroundColor: colors.surfaceDark
   },
   content: {
     paddingTop: 75,
     flex: 1,
     padding: 20,
-    backgroundColor: colors.background,
+    backgroundColor: colors.surface,
     borderTopLeftRadius: 80,
   },
 });

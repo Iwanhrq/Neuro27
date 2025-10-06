@@ -12,7 +12,7 @@ interface NeurotransmitterCardProps {
 export default function NeurotransmitterCard({ 
   name, 
   onPress, 
-  iconColor = colors.primaryLight
+  iconColor = colors.brandLight
 }: NeurotransmitterCardProps) {
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   card: {
     height: 55,
     flexDirection: 'row',
-    backgroundColor: colors.backgroundTertiary,
+    backgroundColor: colors.surfaceLight,
     borderRadius: 8,
     marginBottom: 12,
     overflow: 'hidden',

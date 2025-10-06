@@ -5,7 +5,6 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ForgotPasswordCodeInputs, ForgotPasswordTimer } from '../../../components';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 export default function ForgotPasswordCode() {
   const router = useRouter();
@@ -64,7 +63,7 @@ export default function ForgotPasswordCode() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundSecondary,
+    backgroundColor: colors.surfaceDark,
   },
   content: {
     paddingTop: 40,
@@ -73,13 +72,13 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: fontFamily.semibold,
     fontSize: 28,
-    color: colors.textLight,
+    color: colors.textOnDark,
     marginBottom: 16,
   },
   subtitle: {
     fontFamily: fontFamily.regular,
     fontSize: 16,
-    color: colors.textLight,
+    color: colors.textOnDark,
     marginBottom: 40,
     lineHeight: 22,
     opacity: 0.8,
@@ -105,12 +104,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.buttonPrimary,
+    backgroundColor: colors.button,
   },
   buttonText: {
     fontSize: 16,
     fontFamily: fontFamily.semibold,
-    color: colors.textDark
+    color: colors.textPrimary
   },
   secondaryButton: {
     height: 48,
@@ -122,6 +121,6 @@ const styles = StyleSheet.create({
   secondaryButtonText: {
     fontSize: 16,
     fontFamily: fontFamily.semibold,
-    color: colors.textDark
+    color: colors.textPrimary
   },
 });

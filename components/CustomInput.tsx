@@ -1,58 +1,95 @@
-import React from 'react';
-import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
+import React, { ReactNode } from 'react';
+import {
+    DimensionValue // 👇 1. Importar o tipo DimensionValue
+    ,
+    KeyboardTypeOptions,
+    StyleProp,
+    StyleSheet,
+    Text,
+    TextInput,
+    TextStyle,
+    View
+} from 'react-native';
 import colors from '../constants/colors';
 import { fontFamily } from '../constants/fonts';
 
-interface CustomInputProps extends TextInputProps {
-  marginBottom?: number;
-  width?: any;
+interface CustomInputProps {
   error?: string;
+  width?: DimensionValue; // 👇 2. Usar DimensionValue para a prop 'width'
+  marginBottom?: number;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
+  
+  value: string;
+  onChangeText: (text: string) => void;
+  onBlur?: () => void;
+  placeholder?: string;
+  keyboardType?: KeyboardTypeOptions;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+  secureTextEntry?: boolean;
+
+  style?: StyleProp<TextStyle>; 
 }
 
-export default function CustomInput({ 
-  style, 
-  marginBottom = 32, 
-  width,
+export default function CustomInput({
   error,
-  ...props 
+  width = '100%',
+  marginBottom = 24,
+  leftIcon,
+  rightIcon,
+  style,
+  ...props
 }: CustomInputProps) {
   return (
-    <View style={[styles.container, { marginBottom }, width ? { width } : {}]}>
-      <TextInput
-        style={[
-          styles.input, 
-          error && styles.inputError,
-          style
-        ]}
-        placeholderTextColor="#999"
-        {...props}
-      />
-      {error && (
-        <Text style={styles.errorText}>{error}</Text>
-      )}
+    // Esta linha agora é totalmente compatível com TypeScript
+    <View style={{ width, marginBottom }}>
+      
+      <View style={[styles.inputContainer, error && styles.errorBorder]}>
+        {leftIcon}
+        
+        <TextInput
+          style={[
+            styles.input,
+            { marginLeft: leftIcon ? 10 : 0 },
+            { marginRight: rightIcon ? 10 : 0 },
+            style
+          ]}
+          placeholderTextColor="#999"
+          {...props}
+        />
+        
+        {rightIcon}
+      </View>
+      
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 }
 
+// ... (seus estilos permanecem os mesmos)
 const styles = StyleSheet.create({
-  container: {
-    // Container para agrupar input e mensagem de erro
-  },
-  input: {
-    height: 45,
-    borderWidth: 1,
+  inputContainer: {
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: colors.card,
-    borderColor: colors.border,
+    borderColor: colors.outline,
+    borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 16,
-    fontSize: 16,
   },
-  inputError: {
-    borderColor: colors.error,
-    borderWidth: 2,
+  input: {
+    flex: 1,
+    fontSize: 16,
+    fontFamily: fontFamily.regular,
+    color: 'black', // Ajuste a cor conforme seu tema
+  },
+  errorBorder: {
+    borderColor: colors.danger,
+    borderWidth: 1.5,
   },
   errorText: {
-    color: colors.error,
+    color: colors.danger,
     fontSize: 12,
     fontFamily: fontFamily.regular,
     marginTop: 4,

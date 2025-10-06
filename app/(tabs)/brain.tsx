@@ -6,11 +6,13 @@ import { ContentCard } from '../../components';
 
 // Dados estáticos das partes do cérebro
 const BRAIN_PARTS = [
-  { id: 'cérebro_emocional', name: 'O que é o cérebro emocional?', info: 'Entenda quais áreas do cérebro cuidam das emoções e como elas se conectam para te ajudar a reagir, lembrar e se adaptar.' },
-  { id: 'sistema_limbico', name: 'Sistema Límbico: o centro das emoções básicas', info: 'Aprenda o que é o sistema límbico e por que ele é tão importante para emoções como medo, alegria e tristeza.' },
-  { id: 'amigdala', name: 'Amígdala: o alarme de emergência do cérebro', info: 'Descubra como essa pequena estrutura identifica ameaças e ativa reações como medo, raiva ou fuga.' },
-  { id: 'hipocampo', name: 'Hipocampo: onde memórias e emoções se encontram', info: 'Veja como o cérebro usa memórias emocionais para reconhecer situações e decidir o que sentir.' },
+  { id: 'cérebro_emocional', name: 'O que é o cérebro emocional?', title: 'Cérebro Emocional', info: 'Entenda quais áreas do cérebro cuidam das emoções e como elas se conectam para te ajudar a reagir, lembrar e se adaptar.' },
+  { id: 'sistema_limbico', name: 'Sistema Límbico: o centro das emoções básicas', title: 'Sistema Límbico', info: 'Aprenda o que é o sistema límbico e por que ele é tão importante para emoções como medo, alegria e tristeza.' },
+  { id: 'amigdala', name: 'Amígdala: o alarme de emergência do cérebro', title: 'Amígdala', info: 'Descubra como essa pequena estrutura identifica ameaças e ativa reações como medo, raiva ou fuga.' },
+  { id: 'hipocampo', name: 'Hipocampo: onde memórias e emoções se encontram', title: 'Hipocampo', info: 'Veja como o cérebro usa memórias emocionais para reconhecer situações e decidir o que sentir.' },
 ];
+
+
 
 export default function BrainPartsScreen() {
   const router = useRouter();
@@ -33,12 +35,15 @@ export default function BrainPartsScreen() {
           {BRAIN_PARTS.map((brainpart) => (
             <ContentCard
               key={brainpart.id}
-              title={brainpart.name}
-              description={brainpart.info}
-              onPress={() => router.push(`/chapters?tipo=partesCerebro&id=${brainpart.id}&from=brain`)}
-              imageContainerColor= {colors.primaryLight} 
+              title={brainpart.name} // título curto visível no card
+              description={brainpart.info} // texto longo
+              onPress={() => router.push(
+                `/chapters?tipo=partesCerebro&id=${brainpart.id}&name=${encodeURIComponent(brainpart.title)}&from=brain`
+              )}
+              imageContainerColor={colors.brandLight}
             />
           ))}
+
         </View>
       </View>
     </ScrollView>
@@ -48,13 +53,13 @@ export default function BrainPartsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.surface,
   },
   headerCard: {
     position: 'relative',
   },
   brainCard: {
-    backgroundColor: colors.backgroundSecondary,
+    backgroundColor: colors.surfaceDark,
     borderRadius: 0,
     padding: 20,
     flexDirection: 'column',

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderColor: colors.primaryLight,
+    borderColor: colors.brandLight,
     overflow: 'hidden',
   },
   storyImage: {
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 12,
     fontFamily: fontFamily.regular,
-    color: colors.backgroundSecondary,
+    color: colors.surfaceDark,
     textAlign: 'center',
   },
 });

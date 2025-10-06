@@ -30,7 +30,7 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.surface,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.brand,
   },
   buttonText: {
-    color: colors.textLight,
+    color: colors.textOnDark,
     fontSize: 16,
   },
 });

@@ -12,7 +12,7 @@ interface BrainPartCardProps {
 export default function BrainPartCard({ 
   name, 
   onPress, 
-  imageColor = colors.backgroundSecondary // Cor diferente para diferenciar das emoções
+  imageColor = colors.surfaceDark // Cor diferente para diferenciar das emoções
 }: BrainPartCardProps) {
   return (
     <TouchableOpacity style={styles.brainPartCard} onPress={onPress}>

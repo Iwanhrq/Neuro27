@@ -14,7 +14,7 @@ export default function EmotionCard({
   name, 
   category, 
   onPress, 
-  imageColor = colors.purple
+  imageColor = colors.accentPurpleDark
 }: EmotionCardProps) {
   return (
     <TouchableOpacity style={styles.emotionCard} onPress={onPress}>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   emotionCategory: {
     fontFamily: fontFamily.regular,
     fontSize: 12,
-    color: colors.textMuted,
+    color: colors.textSecondary,
     marginBottom: 4,
   },
   emotionName: {

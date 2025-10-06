@@ -36,12 +36,12 @@ export default function ForgotPasswordTimer({
 
 const styles = StyleSheet.create({
   timer: {
-    color: colors.textLight,
+    color: colors.textOnDark,
     marginBottom: 40,
     fontFamily: fontFamily.regular,
   },
   timerTime: {
-    color: colors.primary,
+    color: colors.brand,
     fontFamily: fontFamily.bold,
   },
 });

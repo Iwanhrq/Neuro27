@@ -2,6 +2,7 @@ import colors from "@/constants/colors";
 import { fontFamily } from "@/constants/fonts";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { Mail } from "lucide-react-native";
 import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ForgotPasswordInput } from "../../../components";
@@ -36,6 +37,7 @@ export default function ForgotPasswordEmail() {
           onChangeText={setEmail}
           keyboardType="email-address"
           autoCapitalize="none"
+          rightIcon={<Mail color={colors.textSecondary} size={22} />}
         />
       </View>
 
@@ -57,7 +59,7 @@ export default function ForgotPasswordEmail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundSecondary,
+    backgroundColor: colors.surfaceDark,
   },
   content: {
     flex: 1,
@@ -66,13 +68,13 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: fontFamily.semibold,
     fontSize: 28,
-    color: colors.textLight,
+    color: colors.textOnDark,
     marginBottom: 16,
   },
   subtitle: {
     fontFamily: fontFamily.regular,
     fontSize: 16,
-    color: colors.textLight,
+    color: colors.textOnDark,
     opacity: 0.8,
     marginBottom: 40,
     lineHeight: 22,
@@ -97,11 +99,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.buttonPrimary,
+    backgroundColor: colors.button,
   },
   buttonText: {
     fontSize: 16,
     fontFamily: fontFamily.semibold,
-    color: colors.textDark,
+    color: colors.textPrimary,
   },
 });

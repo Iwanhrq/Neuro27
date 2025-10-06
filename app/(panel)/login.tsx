@@ -4,13 +4,19 @@ import { fontFamily } from '@/constants/fonts';
 import { LoginFormData, loginSchema } from '@/constants/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
+import { Eye, EyeOff, Mail } from 'lucide-react-native';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AuthLayout, CustomInput } from '../../components';
 
+
+
 export default function Login() {
   const router = useRouter();
-  
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+
   const {
     control,
     handleSubmit,
@@ -31,7 +37,7 @@ export default function Login() {
     } catch (error: any) {
       let message = 'Email ou senha incorretos';
       let field: keyof LoginFormData = 'email';
-      
+
       if (error.code === 'auth/invalid-email') {
         message = 'Email inválido';
         field = 'email';
@@ -45,7 +51,7 @@ export default function Login() {
         message = 'Email ou senha incorretos';
         field = 'email';
       }
-      
+
       setError(field, {
         type: 'manual',
         message: message,
@@ -74,6 +80,7 @@ export default function Login() {
               autoCapitalize="none"
               width="90%"
               error={errors.email?.message}
+              rightIcon={<Mail color={colors.textSecondary} size={22} />}
             />
           )}
         />
@@ -87,15 +94,24 @@ export default function Login() {
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              secureTextEntry
+              secureTextEntry={!isPasswordVisible} 
               marginBottom={0}
               width="90%"
               error={errors.password?.message}
+              rightIcon={
+                <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
+                  {isPasswordVisible ? (
+                    <EyeOff color={colors.textSecondary} size={22} />
+                  ) : (
+                    <Eye color={colors.textSecondary} size={22} />
+                  )}
+                </TouchableOpacity>
+              }
             />
           )}
         />
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.forgotPasswordContainer}
           onPress={() => router.push('/(panel)/ForgotPassword/ForgotPasswordEmail')}
         >
@@ -105,8 +121,8 @@ export default function Login() {
         </TouchableOpacity>
 
 
-        <TouchableOpacity 
-          style={[styles.button, { width: '90%' }]} 
+        <TouchableOpacity
+          style={[styles.button, { width: '90%' }]}
           onPress={handleSubmit(handleLogin)}
         >
           <Text style={styles.buttonText}>
@@ -162,19 +178,19 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   colorfulText: {
-    color: colors.purple
+    color: colors.accentPurpleDark
   },
   button: {
     height: 45,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.buttonPrimary,
+    backgroundColor: colors.button,
     marginTop: 8,
   },
   buttonText: {
     fontSize: 16,
     fontFamily: fontFamily.semibold,
-    color: colors.textLight,
+    color: colors.textOnDark,
   },
 });

@@ -5,8 +5,8 @@ import { Tabs } from 'expo-router';
 export default function TabsLayout() {
   return (
     <Tabs screenOptions={{
-      tabBarActiveTintColor: colors.primary,
-      tabBarInactiveTintColor: colors.tabInactive,
+      tabBarActiveTintColor: colors.brand,
+      tabBarInactiveTintColor: colors.inactive,
       tabBarStyle: {
         backgroundColor: colors.card,
       },

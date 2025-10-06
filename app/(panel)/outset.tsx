@@ -1,9 +1,9 @@
+import colors from '@/constants/colors';
+import { fontFamily } from '@/constants/fonts';
 import { useRouter } from 'expo-router';
 import { Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import logoImage from '../../assets/images/logo.png';
-import { fontFamily } from '@/constants/fonts';
-import colors from '@/constants/colors';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -25,7 +25,7 @@ export default function Outset() {
               Q ${screenWidth * 0.75} 80, ${screenWidth * 0.5} 45 
               Q ${screenWidth * 0.25} 5, 0 50
             `}
-            stroke={colors.wave} // Usando a cor da onda
+            stroke={colors.accent} // Usando a cor da onda
             strokeWidth="3"
             fill="transparent"
             strokeLinecap="round"
@@ -59,7 +59,7 @@ export default function Outset() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.backgroundSecondary,
+    backgroundColor: colors.surfaceDark,
   },
   content: {
     flex: 1,
@@ -77,14 +77,14 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: fontFamily.semibold,
     fontSize: 36,
-    color: colors.textLight,
+    color: colors.textOnDark,
     textAlign: 'center',
     marginBottom: 20
   },
   subtitle: {
     fontFamily: fontFamily.regular,
     fontSize: 15,
-    color: colors.textMuted,
+    color: colors.textSecondary,
     textAlign: 'center',
     marginBottom: 50,
     maxWidth: 250
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     maxWidth: 300,
   },
   buttonLogin: {
-    backgroundColor: colors.buttonPrimary, 
+    backgroundColor: colors.button, 
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 20,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily: fontFamily.semibold,
-    color: colors.textDark,
+    color: colors.textPrimary,
     fontSize: 16,
   },
 });

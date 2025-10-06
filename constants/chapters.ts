@@ -1,5 +1,4 @@
-
-// Objeto capítulos com cada capítulo associado a sua respectiva categorias
+// Objeto capítulos com cada capítulo associado à sua respectiva categoria
 export const chapters = {
   neurotransmissores: {
     neurotransmissores: [
@@ -9,33 +8,33 @@ export const chapters = {
     ],
     dopamina: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Dopamina e Comportamento" },
+      { id: 3, title: "Capítulo 3 - Dopamina e Saúde Mental" },
     ],
     serotonina: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Serotonina e Humor" },
+      { id: 3, title: "Capítulo 3 - Regulação Biológica" },
     ],
     acetilcolina: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Funções Principais" },
+      { id: 3, title: "Capítulo 3 - Relação com Memória" },
     ],
     adrenalina: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Resposta ao Estresse" },
+      { id: 3, title: "Capítulo 3 - Efeitos no Corpo" },
     ],
     gaba: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Inibição Neural" },
+      { id: 3, title: "Capítulo 3 - Relação com Ansiedade" },
     ],
     glutamato: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Função Excitatória" },
+      { id: 3, title: "Capítulo 3 - Plasticidade Neural" },
     ],
   },
   emocoes: {
@@ -52,45 +51,45 @@ export const chapters = {
     ],
     tristeza: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Causas e Impactos" },
+      { id: 3, title: "Capítulo 3 - Superação" },
     ],
     raiva: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Gatilhos da Raiva" },
+      { id: 3, title: "Capítulo 3 - Controle Emocional" },
     ],
     medo: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Função Biológica" },
+      { id: 3, title: "Capítulo 3 - Ansiedade e Medo" },
     ],
     amor: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Tipos de Amor" },
+      { id: 3, title: "Capítulo 3 - Neurociência do Amor" },
     ],
   },
   partesCerebro: {
     cerebro_emocional: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Estruturas Principais" },
+      { id: 3, title: "Capítulo 3 - Funções" },
     ],
     sistema_limbico: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Estruturas do Sistema Límbico" },
+      { id: 3, title: "Capítulo 3 - Emoções Associadas" },
     ],
     amigdala: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Papel no Medo" },
+      { id: 3, title: "Capítulo 3 - Outras Emoções" },
     ],
     hipocampo: [
       { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2" },
-      { id: 3, title: "Capítulo 3" },
+      { id: 2, title: "Capítulo 2 - Memória e Aprendizado" },
+      { id: 3, title: "Capítulo 3 - Relação com Doenças" },
     ],
   },
-}; 
+};

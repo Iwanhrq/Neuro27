@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
   codeInput: {
     width: 70,
     height: 75,
-    color: colors.textLight,
+    color: colors.textOnDark,
     fontSize: 20,
     fontFamily: fontFamily.bold,
     textAlign: 'center',
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.outline,
   },
 });

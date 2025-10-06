@@ -5,13 +5,16 @@ import { RegisterFormData, registerSchema } from '@/constants/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useEffect } from 'react';
+import { Eye, EyeOff, Mail, UserRound } from 'lucide-react-native';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AuthLayout, CustomInput } from '../../components';
 
 export default function Register() {
   const router = useRouter();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
 
   const {
     control,
@@ -82,6 +85,7 @@ export default function Register() {
               autoCapitalize="words"
               width="90%"
               error={errors.name?.message}
+              rightIcon={<UserRound color={colors.textSecondary} size={22} />}
             />
           )}
         />
@@ -99,6 +103,7 @@ export default function Register() {
               autoCapitalize="none"
               width="90%"
               error={errors.email?.message}
+              rightIcon={<Mail color={colors.textSecondary} size={22} />}
             />
           )}
         />
@@ -112,9 +117,18 @@ export default function Register() {
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              secureTextEntry
+              secureTextEntry={!isPasswordVisible}
               width="90%"
               error={errors.password?.message}
+              rightIcon={
+                <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
+                  {isPasswordVisible ? (
+                    <EyeOff color={colors.textSecondary} size={22} />
+                  ) : (
+                    <Eye color={colors.textSecondary} size={22} />
+                  )}
+                </TouchableOpacity>
+              }
             />
           )}
         />
@@ -128,9 +142,18 @@ export default function Register() {
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              secureTextEntry
+              secureTextEntry={!isConfirmPasswordVisible}
               width="90%"
               error={errors.confirmPassword?.message}
+              rightIcon={
+                <TouchableOpacity onPress={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}>
+                  {isConfirmPasswordVisible ? (
+                    <EyeOff color={colors.textSecondary} size={22} />
+                  ) : (
+                    <Eye color={colors.textSecondary} size={22} />
+                  )}
+                </TouchableOpacity>
+              }
             />
           )}
         />
@@ -171,12 +194,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.buttonPrimary,
+    backgroundColor: colors.button,
     marginTop: 8,
   },
   buttonText: {
     fontSize: 16,
     fontFamily: fontFamily.semibold,
-    color: colors.textLight,
+    color: colors.textOnDark,
   },
 });

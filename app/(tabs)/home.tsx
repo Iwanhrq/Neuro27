@@ -63,7 +63,7 @@ export default function Home() {
             <BrainPartCard
               key={brainPart.id}
               name={brainPart.name}
-              onPress={() => router.push(`/chapters?tipo=partes-cerebro&id=${brainPart.id}&from=home`)}
+              onPress={() => router.push(`/chapters?tipo=partes-cerebro&id=${brainPart.id}&name=${encodeURIComponent(brainPart.name)}&from=home`)}
             />
           ))}
         </ScrollView>
@@ -78,7 +78,7 @@ export default function Home() {
               <NeurotransmitterCard
                 key={neurotransmitter.id}
                 name={neurotransmitter.name}
-                onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.id}&from=home`)}
+                onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.id}&name=${encodeURIComponent(neurotransmitter.name)}&from=home`)}
               />
             ))}
           </View>
@@ -87,7 +87,7 @@ export default function Home() {
               <NeurotransmitterCard
                 key={neurotransmitter.id}
                 name={neurotransmitter.name}
-                onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.id}&from=home`)}
+                onPress={() => router.push(`/chapters?tipo=neurotransmissores&id=${neurotransmitter.id}&name=${encodeURIComponent(neurotransmitter.name)}&from=home`)}
               />
             ))}
           </View>
@@ -107,7 +107,7 @@ export default function Home() {
               key={emotion.id}
               name={emotion.name}
               category={emotion.category}
-              onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.id}&from=home`)}
+              onPress={() => router.push(`/chapters?tipo=emocoes&id=${emotion.id}&name=${encodeURIComponent(emotion.name)}&from=home`)}
             />
           ))}
         </ScrollView>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: colors.background,
+    backgroundColor: colors.surface,
   },
   headerCard: {
     position: 'relative',
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   brainCard: {
     marginRight: 20,
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.brandLight,
     borderRadius: 12,
     padding: 20,
     flexDirection: 'column',
