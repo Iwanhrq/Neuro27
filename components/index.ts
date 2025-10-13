@@ -1,5 +1,6 @@
 export { default as AuthLayout } from './AuthLayout';
 export { default as BrainPartCard } from './BrainPartCard';
+export { default as ChapterCompleteButton } from './ChapterCompleteButton';
 export { default as ContentCard } from './ContentCard';
 export { default as CustomInput } from './CustomInput';
 export { default as EmotionCard } from './EmotionCard';

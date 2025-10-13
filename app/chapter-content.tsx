@@ -5,8 +5,10 @@ import { useRoute } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 import React from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ChapterCompleteButton } from "../components";
 import { AssociationCategoria, AssociationItem, associations } from "../constants/associations";
 import { ChapterContentType, contents } from "../constants/chapter-content";
+import { useChapterProgressContext } from "../contexts/ChapterProgressContext";
 
 // Função utilitária para deixar a primeira letra de cada palavra maiúscula
 function toTitleCase(str: string) {
@@ -25,6 +27,10 @@ export default function ChapterContent() {
   };
 
   const chapterIdNum = Number(chapterId);
+  const chapterIdString = chapterId.toString();
+  
+  // Contexto para gerenciar progresso dos capítulos
+  const { markChapterAsCompleted, unmarkChapterAsCompleted, isChapterCompleted } = useChapterProgressContext();
 
   // Cast de tipo para acessar o conteúdo corretamente
   const chapterData: ChapterContentType | undefined =
@@ -41,6 +47,22 @@ export default function ChapterContent() {
 
   const handleBack = () => {
     router.back(); // volta para a página anterior
+  };
+
+  const handleChapterComplete = async (chapterId: string) => {
+    const success = await markChapterAsCompleted(chapterId);
+    if (success) {
+      // Feedback visual será mostrado automaticamente pelo componente
+      // O estado será atualizado em tempo real em todas as telas
+    }
+  };
+
+  const handleChapterUncomplete = async (chapterId: string) => {
+    const success = await unmarkChapterAsCompleted(chapterId);
+    if (success) {
+      // Feedback visual será mostrado automaticamente pelo componente
+      // O estado será atualizado em tempo real em todas as telas
+    }
   };
 
   if (!chapterData) {
@@ -102,6 +124,16 @@ export default function ChapterContent() {
           <View style={styles.contentContainer}>
             <Text style={styles.title}>{chapterData.title}</Text>
             <Text style={styles.content}>{chapterData.content}</Text>
+            
+            {/* Botão para marcar capítulo como concluído */}
+            <View style={styles.buttonContainer}>
+              <ChapterCompleteButton
+                chapterId={chapterIdString}
+                isCompleted={isChapterCompleted(chapterIdString)}
+                onComplete={handleChapterComplete}
+                onUncomplete={handleChapterUncomplete}
+              />
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -140,9 +172,11 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     padding: 16,
+    paddingBottom: 32,
   },
   contentContainer: {
     flex: 1,
+    minHeight: '100%',
   },
   title: {
     fontSize: 28,
@@ -183,5 +217,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '500',
     lineHeight: 13, 
+  },
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: 24,
+    marginBottom: 16,
   },
 });

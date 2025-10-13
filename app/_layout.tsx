@@ -6,6 +6,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { auth } from '../constants/firebase';
 import { fonts } from '../constants/fonts';
+import { ChapterProgressProvider } from '../contexts/ChapterProgressContext';
 
 export default function RootLayout() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,7 +31,7 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <ChapterProgressProvider userId={auth.currentUser?.uid}>
       <StatusBar style="dark" />
       <Stack screenOptions={{ headerShown: false }}>
         {!isAuthenticated ? (
@@ -39,6 +40,6 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" />
         )}
       </Stack>
-    </>
+    </ChapterProgressProvider>
   );
 }

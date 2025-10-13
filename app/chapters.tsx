@@ -8,6 +8,7 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import { AssociationCategoria, AssociationItem, associations } from '../constants/associations';
 import { chapters } from '../constants/chapters';
 import { fontFamily } from '../constants/fonts';
+import { useChapterProgressContext } from '../contexts/ChapterProgressContext';
 
 
 // Função utilitária para deixar a primeira letra de cada palavra maiúscula
@@ -19,7 +20,9 @@ export default function Chapters() {
   const { tipo, id, name, from } = useLocalSearchParams<{ tipo?: string; id?: string; name?: string; from?: string }>();
   const router = useRouter();
   const [savedChapters, setSavedChapters] = useState<Set<string>>(new Set());
-  const [readChapters, setReadChapters] = useState<Set<string>>(new Set());
+  
+  // Usar o contexto para gerenciar capítulos lidos
+  const { completedChapters, isChapterCompleted } = useChapterProgressContext();
 
   if (!tipo || !id) return <Text style={styles.loading}>Loading...</Text>;
 
@@ -54,7 +57,8 @@ export default function Chapters() {
   // Função para calcular o progresso
   const calculateProgress = () => {
     if (lista.length === 0) return 0;
-    return (readChapters.size / lista.length) * 100;
+    const completedInThisList = lista.filter(item => isChapterCompleted(item.id.toString())).length;
+    return (completedInThisList / lista.length) * 100;
   };
 
   // Função para navegar para o conteúdo do capítulo
@@ -65,7 +69,8 @@ export default function Chapters() {
 
   // Função para marcar capítulo como concluído (chamada após questionário)
   const markChapterAsCompleted = (chapterId: string) => {
-    setReadChapters(prev => new Set([...prev, chapterId]));
+    // Esta função não é mais necessária pois o contexto gerencia isso
+    // Mantida para compatibilidade se necessário
   };
 
   const handleBack = () => {
@@ -118,7 +123,7 @@ export default function Chapters() {
             />
           </View>
           <Text style={styles.progressText}>
-            {readChapters.size}/{lista.length} capítulos lidos
+            {lista.filter(item => isChapterCompleted(item.id.toString())).length}/{lista.length} capítulos lidos
           </Text>
         </View>
 
@@ -130,18 +135,18 @@ export default function Chapters() {
             <TouchableOpacity
               style={[
                 styles.chapterItem,
-                readChapters.has(item.id.toString()) && styles.chapterItemRead
+                isChapterCompleted(item.id.toString()) && styles.chapterItemRead
               ]}
               onPress={() => navigateToChapterContent(item.id.toString(), item.title)}
             >
               <View style={styles.chapterContent}>
                 <Text style={[
                   styles.chapterTitle,
-                  readChapters.has(item.id.toString()) && styles.chapterTitleRead
+                  isChapterCompleted(item.id.toString()) && styles.chapterTitleRead
                 ]}>
                   {item.title}
                 </Text>
-                {readChapters.has(item.id.toString()) && (
+                {isChapterCompleted(item.id.toString()) && (
                   <Text style={styles.readIndicator}>✓ Lido</Text>
                 )}
               </View>

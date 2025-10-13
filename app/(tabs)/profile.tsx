@@ -1,10 +1,12 @@
 import { auth } from '@/constants/auth';
 import colors from '@/constants/colors';
 import { fontFamily } from '@/constants/fonts';
+import { useChapterProgressContext } from '@/contexts/ChapterProgressContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { ChevronDown, Edit, Settings, Shield, UserRound } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -12,6 +14,12 @@ export default function ProfileScreen() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [isPersonalInfoExpanded, setIsPersonalInfoExpanded] = useState(false);
+  const [isPreferencesExpanded, setIsPreferencesExpanded] = useState(false);
+  const [isAccountSettingsExpanded, setIsAccountSettingsExpanded] = useState(false);
+
+  // Contexto para gerenciar progresso dos capítulos
+  const { progressPercentage, completedChapters, totalChapters } = useChapterProgressContext();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -80,7 +88,7 @@ export default function ProfileScreen() {
     if (!result.canceled && result.assets[0]) {
       const imageUri = result.assets[0].uri;
       setProfileImage(imageUri);
-      
+
       // Salva localmente
       await saveImageLocally(imageUri);
       Alert.alert('Sucesso', 'Foto de perfil salva com sucesso!');
@@ -103,11 +111,24 @@ export default function ProfileScreen() {
     if (!result.canceled && result.assets[0]) {
       const imageUri = result.assets[0].uri;
       setProfileImage(imageUri);
-      
+
       // Salva localmente
       await saveImageLocally(imageUri);
       Alert.alert('Sucesso', 'Foto de perfil salva com sucesso!');
     }
+  };
+
+
+  const togglePersonalInfoMenu = () => {
+    setIsPersonalInfoExpanded(!isPersonalInfoExpanded);
+  };
+
+  const togglePreferencesMenu = () => {
+    setIsPreferencesExpanded(!isPreferencesExpanded);
+  };
+
+  const toggleAccountSettingsMenu = () => {
+    setIsAccountSettingsExpanded(!isAccountSettingsExpanded);
   };
 
   const handleLogout = async () => {
@@ -142,13 +163,153 @@ export default function ProfileScreen() {
             <Text style={styles.title}>
               {user?.displayName || 'Usuário'}
             </Text>
-            <Text style={styles.subtitle}>
-              Gerencie suas informações e configurações pessoais
-            </Text>
 
-            <TouchableOpacity style={styles.button} onPress={handleLogout}>
-              <Text style={styles.buttonText}>Logout</Text>
-            </TouchableOpacity>
+            {/* Barra de Progresso Geral */}
+            <View style={styles.progressSection}>
+              <View style={styles.progressBarContainer}>
+                <View style={styles.progressBarBackground}>
+                  <View style={[styles.progressBarFill, { width: `${progressPercentage}%` }]} />
+                </View>
+              </View>
+              <View style={styles.progressPercentageContainer}>
+                <Text style={styles.progressPercentage}>{progressPercentage}% completo</Text>
+
+              </View>
+              <Text style={styles.progressMessage}>
+                {progressPercentage === 100
+                  ? "Parabéns! Você completou todos os capítulos!"
+                  : progressPercentage >= 75
+                    ? "Você está quase lá! Continue assim!"
+                    : progressPercentage >= 50
+                      ? "Metade do caminho percorrido! Não pare agora!"
+                      : "Você já começou sua jornada! Continue explorando!"
+                }
+              </Text>
+            </View>
+
+            {/*Seção de Informações Pessoais*/}
+            <View style={[styles.sectionContainer, isPersonalInfoExpanded && styles.sectionContainerExpanded]}>
+              <TouchableOpacity style={styles.sectionHeader} onPress={togglePersonalInfoMenu}>
+                <View style={styles.sectionHeaderContent}>
+                  <View style={styles.sectionTextContainer}>
+                    <UserRound color={colors.accentPurple} size={30} style={styles.sectionIcon} />
+                    <View style={styles.sectionTextsContainer}>
+                      <Text style={styles.sectionTitle}>Informações pessoais</Text>
+                      <Text style={styles.sectionSubtitle}>Nome, e-mail, senha e foto de perfil</Text>
+                    </View>
+                  </View>
+                  <ChevronDown 
+                    color={colors.accentPurple} 
+                    size={20} 
+                    style={[styles.expandIcon, isPersonalInfoExpanded && styles.expandIconRotated]} 
+                  />
+                </View>
+              </TouchableOpacity>
+              {/*Menu - só aparece se expandido*/}
+              {isPersonalInfoExpanded && (
+                <>
+                  <TouchableOpacity style={styles.menuItem}>
+                    <View style={styles.menuItemContent}>
+                      <Edit color={colors.accentPurple} size={18} style={styles.menuItemIcon} />
+                      <Text style={styles.menuItemText}>Editar perfil</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.menuItem}>
+                    <View style={styles.menuItemContent}>
+                      <Edit color={colors.accentPurple} size={18} style={styles.menuItemIcon} />
+                      <Text style={styles.menuItemText}>Editar endereço de e-mail</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.menuItem}>
+                    <View style={styles.menuItemContent}>
+                      <Edit color={colors.accentPurple} size={18} style={styles.menuItemIcon} />
+                      <Text style={styles.menuItemText}>Editar senha</Text>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+
+            {/*Linha Divisória*/}
+            <View style={styles.divider} />
+
+            {/*Seção de Preferências*/}
+            <View style={[styles.sectionContainer, isPreferencesExpanded && styles.sectionContainerExpanded]}>
+              <TouchableOpacity style={styles.sectionHeader} onPress={togglePreferencesMenu}>
+                <View style={styles.sectionHeaderContent}>
+                  <View style={styles.sectionTextContainer}>
+                    <Settings color={colors.accentPurple} size={30} style={styles.sectionIcon} />
+                    <View style={styles.sectionTextsContainer}>
+                      <Text style={styles.sectionTitle}>Preferências</Text>
+                      <Text style={styles.sectionSubtitle}>Tema, preferências de notificações</Text>
+                    </View>
+                  </View>
+                  <ChevronDown 
+                    color={colors.accentPurple} 
+                    size={20} 
+                    style={[styles.expandIcon, isPreferencesExpanded && styles.expandIconRotated]} 
+                  />
+                </View>
+              </TouchableOpacity>
+              {/*Menu - só aparece se expandido*/}
+              {isPreferencesExpanded && (
+                <>
+                  <TouchableOpacity style={styles.menuItem}>
+                    <Text style={styles.menuItemText}>Tema</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.menuItem}>
+                    <Text style={styles.menuItemText}>Notificações</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.menuItem}>
+                    <Text style={styles.menuItemText}>Idioma</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+
+            {/*Linha Divisória*/}
+            <View style={styles.divider} />
+
+            {/*Seção de Configurações de Conta*/}
+            <View style={[styles.sectionContainer, isAccountSettingsExpanded && styles.sectionContainerExpanded]}>
+              <TouchableOpacity style={styles.sectionHeader} onPress={toggleAccountSettingsMenu}>
+                <View style={styles.sectionHeaderContent}>
+                  <View style={styles.sectionTextContainer}>
+                    <Shield color={colors.accentPurple} size={30} style={styles.sectionIcon} />
+                    <View style={styles.sectionTextsContainer}>
+                      <Text style={styles.sectionTitle}>Configurações de conta</Text>
+                      <Text style={styles.sectionSubtitle}>Sair ou excluir perfil</Text>
+                    </View>
+                  </View>
+                  <ChevronDown 
+                    color={colors.accentPurple} 
+                    size={20} 
+                    style={[styles.expandIcon, isAccountSettingsExpanded && styles.expandIconRotated]} 
+                  />
+                </View>
+              </TouchableOpacity>
+              {/*Menu - só aparece se expandido*/}
+              {isAccountSettingsExpanded && (
+                <>
+                  <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
+                    <View style={styles.menuItemContent}>
+                      <Edit color={colors.accentPurple} size={18} style={styles.menuItemIcon} />
+                      <Text style={styles.menuItemText}>Sair da conta</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.menuItem}>
+                    <View style={styles.menuItemContent}>
+                      <Edit color={colors.accentPurple} size={18} style={styles.menuItemIcon} />
+                      <Text style={[styles.menuItemText, styles.dangerText]}>Excluir perfil</Text>
+                    </View>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+
+            {/* Espaço branco ao final */}
+            <View style={styles.bottomSpacing} />
+
           </View>
         </View>
 
@@ -220,12 +381,121 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
   },
-  subtitle: {
-    fontSize: 15,
+  progressSection: {
+    marginBottom: 20,
+    paddingHorizontal: 20,
+    borderRadius: 16,
+  },
+  progressPercentageContainer: {
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  progressPercentage: {
+    fontSize: 20,
+    fontFamily: fontFamily.semibold,
+    color: colors.surfaceDark,
+  },
+  progressDetails: {
+    fontSize: 14,
     fontFamily: fontFamily.regular,
     color: colors.textSecondary,
+    marginTop: 4,
+  },
+  progressBarContainer: {
+    marginBottom: 12,
+  },
+  progressBarBackground: {
+    height: 20,
+    backgroundColor: colors.surfaceLight,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: '100%',
+    backgroundColor: colors.surfaceDark,
+    borderRadius: 8,
+  },
+  progressMessage: {
+    fontSize: 14,
+    fontFamily: fontFamily.regular,
+    color: colors.surfaceDark,
     textAlign: 'center',
-    marginBottom: 50,
+  },
+  sectionContainer: {
+    borderRadius: 10,
+    marginVertical: 0,
+    overflow: 'hidden',
+  },
+  sectionContainerExpanded: {
+    backgroundColor: colors.surfaceLight,
+  },
+  sectionHeader: {
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+  },
+  sectionHeaderContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  sectionTextContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  sectionIcon: {
+    marginRight: 12,
+  },
+  sectionTextsContainer: {
+    flex: 1,
+  },
+  expandIcon: {
+    marginLeft: 10,
+  },
+  expandIconRotated: {
+    transform: [{ rotate: '180deg' }],
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontFamily: fontFamily.semibold,
+    color: colors.textPrimary,
+  },
+  sectionSubtitle: {
+    fontSize: 13,
+    fontFamily: fontFamily.regular,
+    color: colors.textSecondary,
+    marginTop: 2,
+  },
+  menuItem: {
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderTopWidth: 1,
+    borderTopColor: colors.outline,
+  },
+  menuItemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  menuItemIcon: {
+    marginRight: 12,
+  },
+  menuItemText: {
+    fontSize: 16,
+    fontFamily: fontFamily.regular,
+    color: colors.textPrimary,
+  },
+  dangerText: {
+    color: colors.danger,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: colors.outline,
+    marginVertical: 1,
+    marginHorizontal: 5,
+  },
+  bottomSpacing: {
+    height: 50,
+    backgroundColor: colors.surface,
   },
   button: {
     height: 45,
