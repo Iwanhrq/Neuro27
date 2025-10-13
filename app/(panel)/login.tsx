@@ -113,7 +113,7 @@ export default function Login() {
 
         <TouchableOpacity
           style={styles.forgotPasswordContainer}
-          onPress={() => router.push('/(panel)/ForgotPassword/ForgotPasswordEmail')}
+          onPress={() => router.push('/(panel)/ForgotPasswordEmail')}
         >
           <Text style={[styles.colorfulText, { marginTop: 4, marginBottom: 32 }]}>
             Esqueceu a senha?

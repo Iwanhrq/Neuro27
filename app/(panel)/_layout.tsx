@@ -22,7 +22,7 @@ export default function PanelLayout() {
         }}
       />
       <Stack.Screen
-        name="ForgotPassword"
+        name="ForgotPasswordEmail"
         options={{
           headerShown: false,
         }}

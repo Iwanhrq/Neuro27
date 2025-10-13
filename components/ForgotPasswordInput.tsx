@@ -1,91 +1,69 @@
-import React from 'react';
-import { StyleSheet, Text, TextInput, TextInputProps, View } from 'react-native';
-import colors from '../constants/colors';
-import { fontFamily } from '../constants/fonts';
+import React from "react";
+import { View, TextInput, Text, StyleSheet, TextInputProps } from "react-native";
+import colors from "../constants/colors";
+import { fontFamily } from "../constants/fonts";
 
 interface ForgotPasswordInputProps extends TextInputProps {
   label?: string;
-  variant?: 'default' | 'code';
-  style?: any;
+  error?: string | null;
   rightIcon?: React.ReactNode;
 }
 
-export default function ForgotPasswordInput({ 
-  label, 
-  variant = 'default', 
-  style,
+export default function ForgotPasswordInput({
+  label,
+  error,
   rightIcon,
-  ...props 
+  style,
+  ...rest
 }: ForgotPasswordInputProps) {
   return (
-    <View style={styles.container}>
+    <View style={{ marginBottom: 20 }}>
       {label && <Text style={styles.label}>{label}</Text>}
-      <View style={styles.inputContainer}>
+      <View style={[styles.inputContainer, error && styles.inputError]}>
         <TextInput
-          style={[
-            styles.input,
-            variant === 'code' ? styles.codeInput : styles.defaultInput,
-            rightIcon && styles.inputWithIcon,
-            style
-          ]}
+          style={[styles.input, style]}
           placeholderTextColor={colors.textSecondary}
-          {...props}
+          {...rest}
         />
-        {rightIcon && (
-          <View style={styles.iconContainer}>
-            {rightIcon}
-          </View>
-        )}
+        {rightIcon && <View style={styles.iconContainer}>{rightIcon}</View>}
       </View>
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 10,
-  },
   label: {
-    fontSize: 14,
     fontFamily: fontFamily.semibold,
     color: colors.textOnDark,
-    marginBottom: 8,
-    marginTop: 20,
+    marginBottom: 5,
   },
   inputContainer: {
-    position: 'relative',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.surfaceDark,
+    borderWidth: 1,
+    borderColor: colors.inactive,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    height: 50,
   },
   input: {
-    fontSize: 16,
+    flex: 1,
+    color: colors.textOnDark,
     fontFamily: fontFamily.regular,
-  },
-  defaultInput: {
-    height: 55,
-    borderWidth: 1,
-    borderColor: colors.outline,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-  },
-  inputWithIcon: {
-    paddingRight: 50,
+    fontSize: 16,
   },
   iconContainer: {
-    position: 'absolute',
-    right: 16,
-    top: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginLeft: 10,
   },
-  codeInput: {
-    width: 70,
-    height: 75,
-    color: colors.textOnDark,
-    fontSize: 20,
-    fontFamily: fontFamily.bold,
-    textAlign: 'center',
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: colors.outline,
+  inputError: {
+    borderColor: colors.danger,
+  },
+  errorText: {
+    color: colors.danger,
+    fontSize: 14,
+    marginTop: 5,
+    fontFamily: fontFamily.regular,
   },
 });
