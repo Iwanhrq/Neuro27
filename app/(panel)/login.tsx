@@ -33,7 +33,7 @@ export default function Login() {
   const handleLogin = async (data: LoginFormData) => {
     try {
       await firebaseLogin(data.email, data.password);
-      router.push('/(tabs)/home' as any);
+      router.push('/(drawer)/home' as any);
     } catch (error: any) {
       let message = 'Email ou senha incorretos';
       let field: keyof LoginFormData = 'email';

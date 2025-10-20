@@ -35,7 +35,7 @@ export default function Register() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        router.replace('/(tabs)/home' as any);
+        router.replace('/(drawer)/home' as any);
       }
     });
 

@@ -2,44 +2,69 @@ import { auth } from '@/constants/auth';
 import colors from '@/constants/colors';
 import { fontFamily } from '@/constants/fonts';
 import { useChapterProgressContext } from '@/contexts/ChapterProgressContext';
+import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
-import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { deleteUser, onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { ChevronDown, Edit, Settings, Shield, UserRound } from 'lucide-react-native';
-import { useEffect, useState } from 'react';
-import { Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { Alert, Image, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function ProfileScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
   const [user, setUser] = useState<User | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [profileData, setProfileData] = useState<any>(null);
   const [isPersonalInfoExpanded, setIsPersonalInfoExpanded] = useState(false);
   const [isPreferencesExpanded, setIsPreferencesExpanded] = useState(false);
   const [isAccountSettingsExpanded, setIsAccountSettingsExpanded] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false); // Estado para controlar a visibilidade da modal
 
   // Contexto para gerenciar progresso dos capítulos
   const { progressPercentage, completedChapters, totalChapters } = useChapterProgressContext();
+
+  const loadProfileData = async (uid: string) => {
+    try {
+      // Carrega dados do perfil
+      const savedProfile = await AsyncStorage.getItem(`profile_${uid}`);
+      if (savedProfile) {
+        const profileData = JSON.parse(savedProfile);
+        setProfileData(profileData);
+      }
+
+      // Carrega imagem salva localmente
+      const savedImage = await AsyncStorage.getItem(`profile_image_${uid}`);
+      if (savedImage) {
+        setProfileImage(savedImage);
+        console.log('Carregou foto local:', savedImage);
+      }
+    } catch (error) {
+      console.log('Erro ao carregar dados do perfil:', error);
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser?.uid) {
-        // Carrega imagem salva localmente
-        try {
-          const savedImage = await AsyncStorage.getItem(`profile_image_${currentUser.uid}`);
-          if (savedImage) {
-            setProfileImage(savedImage);
-            console.log('Carregou foto local:', savedImage);
-          }
-        } catch (error) {
-          console.log('Erro ao carregar imagem local:', error);
-        }
+        await loadProfileData(currentUser.uid);
       }
     });
 
     return unsubscribe;
   }, []);
+
+  // Recarrega dados quando a tela é focada
+  useFocusEffect(
+    useCallback(() => {
+      if (user?.uid) {
+        loadProfileData(user.uid);
+      }
+    }, [user?.uid])
+  );
 
   const requestPermissions = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -131,6 +156,11 @@ export default function ProfileScreen() {
     setIsAccountSettingsExpanded(!isAccountSettingsExpanded);
   };
 
+  const openDrawer = () => {
+    // Usar o drawer navigation diretamente
+    (navigation as any).openDrawer();
+  };
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -140,15 +170,39 @@ export default function ProfileScreen() {
     }
   };
 
+  const confirmDeleteAccount = () => {
+    setIsModalVisible(true); // Mostrar modal de confirmação
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      if (user) {
+        await deleteUser(user); // Excluir o usuário do Firebase
+        Alert.alert('Conta excluída', 'Seu perfil foi excluído com sucesso.');
+        await handleLogout(); // Sair após excluir
+      }
+    } catch (error) {
+      console.log('Erro ao excluir perfil:', error);
+      Alert.alert('Erro', 'Não foi possível excluir o perfil.');
+    } finally {
+      setIsModalVisible(false); // Fechar modal após a ação
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Botão de Menu */}
+        <TouchableOpacity style={styles.menuButton} onPress={openDrawer}>
+          <FontAwesome name="bars" size={25} color={colors.surfaceLight} />
+        </TouchableOpacity>
+
         {/* Header azul com fundo */}
         <View style={styles.header} />
 
         {/* Moldura circular sobreposta */}
         <View style={styles.circleContainer}>
-          <TouchableOpacity style={styles.circle} onPress={selectImage}>
+          <TouchableOpacity style={styles.circle} onPress={() => router.push('/edit-profile')}>
             {profileImage ? (
               <Image source={{ uri: profileImage }} style={styles.profileImage} />
             ) : (
@@ -161,7 +215,7 @@ export default function ProfileScreen() {
         <View style={styles.contentBlock}>
           <View style={styles.content}>
             <Text style={styles.title}>
-              {user?.displayName || 'Usuário'}
+              {profileData?.name || user?.displayName || 'Usuário'}
             </Text>
 
             {/* Barra de Progresso Geral */}
@@ -198,29 +252,38 @@ export default function ProfileScreen() {
                       <Text style={styles.sectionSubtitle}>Nome, e-mail, senha e foto de perfil</Text>
                     </View>
                   </View>
-                  <ChevronDown 
-                    color={colors.accentPurple} 
-                    size={20} 
-                    style={[styles.expandIcon, isPersonalInfoExpanded && styles.expandIconRotated]} 
+                  <ChevronDown
+                    color={colors.accentPurple}
+                    size={20}
+                    style={[styles.expandIcon, isPersonalInfoExpanded && styles.expandIconRotated]}
                   />
                 </View>
               </TouchableOpacity>
               {/*Menu - só aparece se expandido*/}
               {isPersonalInfoExpanded && (
                 <>
-                  <TouchableOpacity style={styles.menuItem}>
+                  <TouchableOpacity
+                    style={styles.menuItem}
+                    onPress={() => router.push('/edit-profile')}
+                  >
                     <View style={styles.menuItemContent}>
                       <Edit color={colors.accentPurple} size={18} style={styles.menuItemIcon} />
                       <Text style={styles.menuItemText}>Editar perfil</Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.menuItem}>
+                  <TouchableOpacity
+                    style={styles.menuItem}
+                    onPress={() => router.push('/edit-profileEmail')}
+                  >
                     <View style={styles.menuItemContent}>
                       <Edit color={colors.accentPurple} size={18} style={styles.menuItemIcon} />
                       <Text style={styles.menuItemText}>Editar endereço de e-mail</Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.menuItem}>
+                  <TouchableOpacity
+                    style={styles.menuItem}
+                    onPress={() => router.push('/edit-profilePassword')}
+                  >
                     <View style={styles.menuItemContent}>
                       <Edit color={colors.accentPurple} size={18} style={styles.menuItemIcon} />
                       <Text style={styles.menuItemText}>Editar senha</Text>
@@ -244,10 +307,10 @@ export default function ProfileScreen() {
                       <Text style={styles.sectionSubtitle}>Tema, preferências de notificações</Text>
                     </View>
                   </View>
-                  <ChevronDown 
-                    color={colors.accentPurple} 
-                    size={20} 
-                    style={[styles.expandIcon, isPreferencesExpanded && styles.expandIconRotated]} 
+                  <ChevronDown
+                    color={colors.accentPurple}
+                    size={20}
+                    style={[styles.expandIcon, isPreferencesExpanded && styles.expandIconRotated]}
                   />
                 </View>
               </TouchableOpacity>
@@ -281,10 +344,10 @@ export default function ProfileScreen() {
                       <Text style={styles.sectionSubtitle}>Sair ou excluir perfil</Text>
                     </View>
                   </View>
-                  <ChevronDown 
-                    color={colors.accentPurple} 
-                    size={20} 
-                    style={[styles.expandIcon, isAccountSettingsExpanded && styles.expandIconRotated]} 
+                  <ChevronDown
+                    color={colors.accentPurple}
+                    size={20}
+                    style={[styles.expandIcon, isAccountSettingsExpanded && styles.expandIconRotated]}
                   />
                 </View>
               </TouchableOpacity>
@@ -297,7 +360,7 @@ export default function ProfileScreen() {
                       <Text style={styles.menuItemText}>Sair da conta</Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.menuItem}>
+                  <TouchableOpacity style={styles.menuItem} onPress={confirmDeleteAccount}>
                     <View style={styles.menuItemContent}>
                       <Edit color={colors.accentPurple} size={18} style={styles.menuItemIcon} />
                       <Text style={[styles.menuItemText, styles.dangerText]}>Excluir perfil</Text>
@@ -306,6 +369,29 @@ export default function ProfileScreen() {
                 </>
               )}
             </View>
+
+            {/* Modal de Confirmação */}
+            <Modal
+              transparent={true}
+              animationType="slide"
+              visible={isModalVisible}
+              onRequestClose={() => setIsModalVisible(false)}
+            >
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalTitle}>Confirmar Exclusão</Text>
+                  <Text style={styles.modalMessage}>Tem certeza que deseja excluir sua conta?</Text>
+                  <View style={styles.modalButtons}>
+                    <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+                      <Text style={styles.modalButton}>Cancelar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleConfirmDelete}>
+                      <Text style={styles.modalButton}>Excluir</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
 
             {/* Espaço branco ao final */}
             <View style={styles.bottomSpacing} />
@@ -322,6 +408,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.surface,
+  },
+  menuButton: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    zIndex: 1000,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   scrollContent: {
     flexGrow: 1,
@@ -456,15 +553,14 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '180deg' }],
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 17,
     fontFamily: fontFamily.semibold,
     color: colors.textPrimary,
   },
   sectionSubtitle: {
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: fontFamily.regular,
     color: colors.textSecondary,
-    marginTop: 2,
   },
   menuItem: {
     paddingVertical: 15,
@@ -509,5 +605,38 @@ const styles = StyleSheet.create({
     color: colors.textOnDark,
     fontSize: 16,
     fontFamily: fontFamily.semibold,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: colors.surface,
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontFamily: fontFamily.semibold,
+    marginBottom: 10,
+  },
+  modalMessage: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  modalButton: {
+    fontSize: 16,
+    color: colors.accentPurple,
+    marginHorizontal: 10,
   },
 });

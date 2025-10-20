@@ -1,7 +1,9 @@
 import colors from '@/constants/colors';
 import { fontFamily } from '@/constants/fonts';
+import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ContentCard } from '../../components';
 
 // Dados estáticos das emoções
@@ -14,10 +16,20 @@ const EMOTIONS = [
 
 export default function EmotionsScreen() {
   const router = useRouter();
+  const navigation = useNavigation();
+
+  const openDrawer = () => {
+    (navigation as any).openDrawer();
+  };
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.container}>
+        {/* Botão de Menu */}
+        <TouchableOpacity style={styles.menuButton} onPress={openDrawer}>
+          <FontAwesome name="bars" size={25} color={colors.surfaceLight} />
+        </TouchableOpacity>
+
         {/* Carrossel das Emoções */}
         <View style={styles.headerCard}>
           <View style={[styles.brainCard, { width: Dimensions.get('window').width, height: 220 }]}>
@@ -52,6 +64,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.surface,
+  },
+  menuButton: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    zIndex: 1000,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerCard: {
     position: 'relative',

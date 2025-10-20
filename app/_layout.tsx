@@ -37,7 +37,7 @@ export default function RootLayout() {
         {!isAuthenticated ? (
           <Stack.Screen name="(panel)" />
         ) : (
-          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="(drawer)" />
         )}
       </Stack>
     </ChapterProgressProvider>
