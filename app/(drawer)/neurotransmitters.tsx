@@ -48,6 +48,7 @@ export default function NeurotransmittersScreen() {
               key={nt.id}
               title={nt.title} // título curto
               description={nt.info} // descrição longa
+              icon={nt.id}
               onPress={() => router.push(
                 `/chapters?tipo=neurotransmissores&id=${nt.id}&name=${encodeURIComponent(nt.name)}&from=home`
               )}

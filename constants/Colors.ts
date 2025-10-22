@@ -25,5 +25,7 @@ export default  {
   accentPurpleDark: '#A283C8', // Cor para marcadores
   outline: '#E2E2E2',      // Cor de borda (Cinza claro)
   danger: '#FF6B6B',       // Cor de erro
+  success: '#10B981',      // Cor de sucesso (Verde)
+  warning: '#F59E0B',      // Cor de aviso (Laranja)
   inactive: '#8E8E93'  // Cor de tab inativa
 };

@@ -49,10 +49,11 @@ export default function BrainPartsScreen() {
               key={brainpart.id}
               title={brainpart.name} // título curto visível no card
               description={brainpart.info} // texto longo
+              icon={brainpart.id}
               onPress={() => router.push(
                 `/chapters?tipo=partesCerebro&id=${brainpart.id}&name=${encodeURIComponent(brainpart.title)}&from=brain`
               )}
-              imageContainerColor={colors.brandLight}
+              imageContainerColor={colors.surfaceDark}
             />
           ))}
 

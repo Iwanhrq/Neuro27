@@ -2,13 +2,13 @@ import colors from '@/constants/colors';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Bookmark, BookmarkCheck } from 'lucide-react-native';
-import { useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { AssociationCategoria, AssociationItem, associations } from '../constants/associations';
 import { chapters } from '../constants/chapters';
 import { fontFamily } from '../constants/fonts';
 import { useChapterProgressContext } from '../contexts/ChapterProgressContext';
+import { useSavedChaptersContext } from '../contexts/SavedChaptersContext';
 
 
 // Função utilitária para deixar a primeira letra de cada palavra maiúscula
@@ -19,10 +19,10 @@ function toTitleCase(str: string) {
 export default function Chapters() {
   const { tipo, id, name, from } = useLocalSearchParams<{ tipo?: string; id?: string; name?: string; from?: string }>();
   const router = useRouter();
-  const [savedChapters, setSavedChapters] = useState<Set<string>>(new Set());
   
   // Usar o contexto para gerenciar capítulos lidos
   const { completedChapters, isChapterCompleted } = useChapterProgressContext();
+  const { isChapterSaved, addSavedChapter, removeSavedChapter } = useSavedChaptersContext();
 
   if (!tipo || !id) return <Text style={styles.loading}>Loading...</Text>;
 
@@ -39,19 +39,31 @@ export default function Chapters() {
   const categorias: AssociationCategoria[] = ['emocoes', 'neurotransmissores', 'partesCerebro'];
 
   // Função para salvar/remover capítulo
-  const toggleSaveChapter = (chapterId: string) => {
-    const newSavedChapters = new Set(savedChapters);
-    if (newSavedChapters.has(chapterId)) {
-      newSavedChapters.delete(chapterId);
+  const toggleSaveChapter = async (chapterId: string, chapterTitle: string) => {
+    const fullChapterId = `${tipo}_${id}_${chapterId}`;
+    
+    if (isChapterSaved(fullChapterId)) {
+      await removeSavedChapter(fullChapterId);
     } else {
-      newSavedChapters.add(chapterId);
+      // Criar objeto do capítulo para salvar
+      const chapterToSave = {
+        id: fullChapterId,
+        title: chapterTitle,
+        description: `Capítulo sobre ${name}`,
+        category: toTitleCase(tipo),
+        progress: isChapterCompleted(chapterId) ? 100 : 0,
+        lastRead: new Date().toISOString().split('T')[0],
+        timeToRead: '15 min',
+        difficulty: 'Intermediário',
+        image: tipo === 'neurotransmissores' ? '⚡' : tipo === 'emocoes' ? '💭' : '🧠',
+        isCompleted: isChapterCompleted(chapterId),
+        tipo: tipo,
+        subtipo: id,
+        chapterId: parseInt(chapterId),
+      };
+      
+      await addSavedChapter(chapterToSave);
     }
-    setSavedChapters(newSavedChapters);
-  };
-
-  // Função para verificar se um capítulo está salvo
-  const isChapterSaved = (chapterId: string) => {
-    return savedChapters.has(chapterId);
   };
 
   // Função para calcular o progresso
@@ -152,10 +164,10 @@ export default function Chapters() {
               </View>
               <TouchableOpacity
                 style={styles.saveButton}
-                onPress={() => toggleSaveChapter(item.id.toString())}
-                accessibilityLabel={isChapterSaved(item.id.toString()) ? "Remover dos salvos" : "Salvar capítulo"}
+                onPress={() => toggleSaveChapter(item.id.toString(), item.title)}
+                accessibilityLabel={isChapterSaved(`${tipo}_${id}_${item.id}`) ? "Remover dos salvos" : "Salvar capítulo"}
               >
-                {isChapterSaved(item.id.toString()) ? (
+                {isChapterSaved(`${tipo}_${id}_${item.id}`) ? (
                   <BookmarkCheck color={colors.brand} size={24} />
                 ) : (
                   <Bookmark color={colors.textSecondary} size={24} />

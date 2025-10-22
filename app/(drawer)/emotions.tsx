@@ -47,6 +47,7 @@ export default function EmotionsScreen() {
               key={emotion.id}
               title={emotion.title} // título curto
               description={emotion.info} // texto longo
+              icon={emotion.id}
               onPress={() => router.push(
                 `/chapters?tipo=emocoes&id=${emotion.id}&name=${encodeURIComponent(emotion.name)}&from=emotions`
               )}

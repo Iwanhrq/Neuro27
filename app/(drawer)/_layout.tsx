@@ -1,5 +1,4 @@
 import colors from '@/constants/colors';
-import { FontAwesome } from '@expo/vector-icons';
 import { Drawer } from 'expo-router/drawer';
 
 export default function DrawerLayout() {
@@ -38,6 +37,12 @@ export default function DrawerLayout() {
         name="emotions"
         options={{
           title: "Emoções",
+        }}
+      />
+      <Drawer.Screen
+        name="saved"
+        options={{
+          title: "Capítulos Salvos",
         }}
       />
       <Drawer.Screen

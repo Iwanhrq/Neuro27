@@ -3,35 +3,36 @@ import { fontFamily } from '@/constants/fonts';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
+import { ArrowRight } from 'lucide-react-native';
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import dopaminImage from '../../assets/images/dopamin.png';
 import serotoninImage from '../../assets/images/serotonin.png';
 import { EmotionCard, NeurotransmitterCard } from '../../components';
 import BrainPartCard from '../../components/BrainPartCard';
 
 const NEUROTRANSMITTERS = [
-  { id: 'dopamina', name: 'Dopamina', info: 'Lorem ipsum...', image: dopaminImage },
-  { id: 'serotonina', name: 'Serotonina', info: 'Lorem ipsum...', image: serotoninImage },
-  { id: 'acetilcolina', name: 'Acetilcolina', info: 'Lorem ipsum...', image: dopaminImage },
-  { id: 'gaba', name: 'GABA', info: 'Lorem ipsum...', image: serotoninImage },
-  { id: 'glutamato', name: 'Glutamato', info: 'Lorem ipsum...', image: dopaminImage },
-  { id: 'noradrenalina', name: 'Noradrenalina', info: 'Lorem ipsum...', image: dopaminImage },
+  { id: 'dopamina', name: 'Dopamina', info: 'Lorem ipsum...', image: dopaminImage, color: '#8B5CF6' },
+  { id: 'serotonina', name: 'Serotonina', info: 'Lorem ipsum...', image: serotoninImage, color: '#06B6D4' },
+  { id: 'acetilcolina', name: 'Acetilcolina', info: 'Lorem ipsum...', image: dopaminImage, color: '#10B981' },
+  { id: 'gaba', name: 'GABA', info: 'Lorem ipsum...', image: serotoninImage, color: '#F59E0B' },
+  { id: 'glutamato', name: 'Glutamato', info: 'Lorem ipsum...', image: dopaminImage, color: '#EF4444' },
+  { id: 'noradrenalina', name: 'Noradrenalina', info: 'Lorem ipsum...', image: dopaminImage, color: '#EC4899' },
 ];
 
 const BRAIN_PARTS = [
-  { id: 'cerebro', name: 'Cérebro' },
-  { id: 'cerebelo', name: 'Cerebelo' },
-  { id: 'tronco', name: 'Tronco Cerebral' },
-  { id: 'hipotalamo', name: 'Hipotálamo' },
-  { id: 'amigdala', name: 'Amígdala' },
+  { id: 'cerebro', name: 'Cérebro', icon: 'cerebro' },
+  { id: 'cerebelo', name: 'Cerebelo', icon: 'cerebelo' },
+  { id: 'tronco', name: 'Tronco Cerebral', icon: 'tronco' },
+  { id: 'hipotalamo', name: 'Hipotálamo', icon: 'hipotalamo' },
+  { id: 'amigdala', name: 'Amígdala', icon: 'amigdala' },
 ];
 
 const EMOTIONS = [
-  { id: 'alegria', name: 'Alegria', category: 'Positiva' },
-  { id: 'tristeza', name: 'Tristeza', category: 'Negativa' },
-  { id: 'raiva', name: 'Raiva', category: 'Negativa' },
-  { id: 'medo', name: 'Medo', category: 'Negativa' },
-  { id: 'amor', name: 'Amor', category: 'Positiva' },
+  { id: 'alegria', name: 'Alegria', category: 'Positiva', icon: 'alegria' },
+  { id: 'tristeza', name: 'Tristeza', category: 'Negativa', icon: 'tristeza' },
+  { id: 'raiva', name: 'Raiva', category: 'Negativa', icon: 'raiva' },
+  { id: 'medo', name: 'Medo', category: 'Negativa', icon: 'medo' },
+  { id: 'amor', name: 'Amor', category: 'Positiva', icon: 'amor' },
 ];
 
 export default function Home() {
@@ -42,26 +43,38 @@ export default function Home() {
     (navigation as any).openDrawer();
   };
 
+  const navigateToBrain = () => router.push('/brain');
+  const navigateToNeurotransmitters = () => router.push('/neurotransmitters');
+  const navigateToEmotions = () => router.push('/emotions');
+
+  const renderSectionHeader = (title: string, onPress: () => void) => (
+    <TouchableOpacity style={styles.sectionHeader} onPress={onPress} activeOpacity={0.6}>
+      <Text style={styles.title}>{title}</Text>
+      <ArrowRight color="#000" size={22} />
+    </TouchableOpacity>
+  );
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface }}>
-      {/* Botão de Menu fixo no topo */}
-      <TouchableOpacity style={styles.menuButton} onPress={openDrawer}>
-        <FontAwesome name="bars" size={25} color={colors.textOnDark} />
+    <View style={{ flex: 1, backgroundColor: colors.surface }}>
+      <TouchableOpacity style={styles.menuButton} onPress={openDrawer} activeOpacity={0.7}>
+        <FontAwesome name="bars" size={22} color={colors.surfaceDark} />
       </TouchableOpacity>
 
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.headerCard}>
           <View style={[styles.brainCard, { width: Dimensions.get('window').width - 40, height: 200 }]} />
         </View>
 
         {/* Partes do cérebro */}
         <View style={styles.brainPartsContainer}>
-          <Text style={styles.title}>Partes do cérebro</Text>
+          {renderSectionHeader('Partes do cérebro', navigateToBrain)}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.brainPartsScroll}>
             {BRAIN_PARTS.map((brainPart) => (
               <BrainPartCard
                 key={brainPart.id}
                 name={brainPart.name}
+                icon={brainPart.icon}
                 onPress={() =>
                   router.push(`/chapters?tipo=partes-cerebro&id=${brainPart.id}&name=${encodeURIComponent(brainPart.name)}&from=home`)
                 }
@@ -72,13 +85,15 @@ export default function Home() {
 
         {/* Neurotransmissores */}
         <View style={styles.neurotransmittersContainer}>
-          <Text style={styles.title}>Neurotransmissores</Text>
+          {renderSectionHeader('Neurotransmissores', navigateToNeurotransmitters)}
           <View style={styles.neurotransmittersGrid}>
             <View style={styles.column}>
               {NEUROTRANSMITTERS.slice(0, 3).map((n) => (
                 <NeurotransmitterCard
                   key={n.id}
                   name={n.name}
+                  icon={n.id}
+                  iconColor={n.color}
                   onPress={() =>
                     router.push(`/chapters?tipo=neurotransmissores&id=${n.id}&name=${encodeURIComponent(n.name)}&from=home`)
                   }
@@ -90,6 +105,8 @@ export default function Home() {
                 <NeurotransmitterCard
                   key={n.id}
                   name={n.name}
+                  icon={n.id}
+                  iconColor={n.color}
                   onPress={() =>
                     router.push(`/chapters?tipo=neurotransmissores&id=${n.id}&name=${encodeURIComponent(n.name)}&from=home`)
                   }
@@ -101,13 +118,14 @@ export default function Home() {
 
         {/* Emoções */}
         <View style={styles.emotionsContainer}>
-          <Text style={styles.title}>Emoções</Text>
+          {renderSectionHeader('Emoções', navigateToEmotions)}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.emotionsScroll}>
             {EMOTIONS.map((emotion) => (
               <EmotionCard
                 key={emotion.id}
                 name={emotion.name}
                 category={emotion.category}
+                icon={emotion.icon}
                 onPress={() =>
                   router.push(`/chapters?tipo=emocoes&id=${emotion.id}&name=${encodeURIComponent(emotion.name)}&from=home`)
                 }
@@ -117,8 +135,9 @@ export default function Home() {
         </View>
 
         <View style={{ height: 50 }} />
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -129,24 +148,26 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   menuButton: {
-    alignSelf: 'flex-start',
-    top: 50,
+    position: 'absolute',
+    top: 60,
     left: 20,
     zIndex: 1000,
-    backgroundColor: colors.surfaceDark,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: colors.outline,
   },
   headerCard: {
-    marginTop: 60,
+    marginTop: 120,
   },
   brainCard: {
     backgroundColor: colors.brandLight,
@@ -157,6 +178,13 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: fontFamily.semibold,
     fontSize: 20,
+    color: '#000',
+    paddingRight: 5
+
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 15,
   },
   brainPartsContainer: {
