@@ -273,15 +273,6 @@ export default function ProfileScreen() {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.menuItem}
-                    onPress={() => router.push('/edit-profileEmail')}
-                  >
-                    <View style={styles.menuItemContent}>
-                      <Edit color={colors.accentPurple} size={18} style={styles.menuItemIcon} />
-                      <Text style={styles.menuItemText}>Editar endereço de e-mail</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.menuItem}
                     onPress={() => router.push('/edit-profilePassword')}
                   >
                     <View style={styles.menuItemContent}>
