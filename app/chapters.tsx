@@ -10,26 +10,48 @@ import { fontFamily } from '../constants/fonts';
 import { useChapterProgressContext } from '../contexts/ChapterProgressContext';
 import { useSavedChaptersContext } from '../contexts/SavedChaptersContext';
 
-
 // Função utilitária para deixar a primeira letra de cada palavra maiúscula
 function toTitleCase(str: string) {
   return str.replace(/_/g, ' ').replace(/\b\w/g, (txt) => txt.toUpperCase());
+}
+
+// Função para renderizar palavras grifadas manualmente
+function renderManualHighlights(text: string) {
+  const regex = /\*\*(.+?)\*\*/g; // palavras entre **
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(<Text key={lastIndex}>{text.slice(lastIndex, match.index)}</Text>);
+    }
+    parts.push(
+      <Text key={match.index} style={styles.highlight}>
+        {match[1]}
+      </Text>
+    );
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(<Text key={lastIndex}>{text.slice(lastIndex)}</Text>);
+  }
+
+  return <>{parts}</>;
 }
 
 export default function Chapters() {
   const { tipo, id, name, from } = useLocalSearchParams<{ tipo?: string; id?: string; name?: string; from?: string }>();
   const router = useRouter();
   
-  // Usar o contexto para gerenciar capítulos lidos
   const { completedChapters, isChapterCompleted } = useChapterProgressContext();
   const { isChapterSaved, addSavedChapter, removeSavedChapter } = useSavedChaptersContext();
 
   if (!tipo || !id) return <Text style={styles.loading}>Loading...</Text>;
 
-  // Lista de capítulos para o tipo e id atuais
-  const lista = (chapters as any)[tipo]?.[id] || [];
+  const lista: { id: number; title: string }[] = (chapters as any)[tipo]?.[id] || [];
 
-  // Associações para o item atual, padrão vazio se não existir
   const assoc: AssociationItem = associations[id as string] || {
     emocoes: [],
     neurotransmissores: [],
@@ -38,14 +60,12 @@ export default function Chapters() {
 
   const categorias: AssociationCategoria[] = ['emocoes', 'neurotransmissores', 'partesCerebro'];
 
-  // Função para salvar/remover capítulo
   const toggleSaveChapter = async (chapterId: string, chapterTitle: string) => {
     const fullChapterId = `${tipo}_${id}_${chapterId}`;
     
     if (isChapterSaved(fullChapterId)) {
       await removeSavedChapter(fullChapterId);
     } else {
-      // Criar objeto do capítulo para salvar
       const chapterToSave = {
         id: fullChapterId,
         title: chapterTitle,
@@ -66,38 +86,22 @@ export default function Chapters() {
     }
   };
 
-  // Função para calcular o progresso
   const calculateProgress = () => {
     if (lista.length === 0) return 0;
     const completedInThisList = lista.filter(item => isChapterCompleted(item.id.toString())).length;
     return (completedInThisList / lista.length) * 100;
   };
 
-  // Função para navegar para o conteúdo do capítulo
   const navigateToChapterContent = (chapterId: string, chapterTitle: string) => {
-    // Navega para a tela de conteúdo (sem marcar como lido automaticamente)
     router.push(`/chapter-content?chapterId=${chapterId}&title=${encodeURIComponent(chapterTitle)}&categoria=${tipo}&tipo=${id}&from=${from}`);
   };
 
-  // Função para marcar capítulo como concluído (chamada após questionário)
-  const markChapterAsCompleted = (chapterId: string) => {
-    // Esta função não é mais necessária pois o contexto gerencia isso
-    // Mantida para compatibilidade se necessário
-  };
-
-  const handleBack = () => {
-    router.back(); // volta para a página anterior
-  };
+  const handleBack = () => router.back();
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {/* Botão de voltar */}
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={handleBack}
-          accessibilityLabel="Voltar"
-        >
+        <TouchableOpacity style={styles.backButton} onPress={handleBack} accessibilityLabel="Voltar">
           <FontAwesome6 name="arrow-left" size={30} color="black" />
         </TouchableOpacity>
 
@@ -107,7 +111,7 @@ export default function Chapters() {
       </View>
 
       <View style={styles.content}>
-        {/* Renderiza todos os marcadores juntos, sem título */}
+        {/* Marcadores */}
         <View style={styles.markers}>
           {categorias.flatMap((categoria) =>
             assoc[categoria].map((chave: string) => (
@@ -118,7 +122,9 @@ export default function Chapters() {
                   router.push(`/chapters?tipo=${categoria}&id=${chave}&name=${encodeURIComponent(toTitleCase(chave))}&from=${from}`)
                 }
               >
-                <Text style={styles.textMarker} numberOfLines={2} ellipsizeMode="tail">{toTitleCase(chave)}</Text>
+                <Text style={styles.textMarker} numberOfLines={2} ellipsizeMode="tail">
+                  {toTitleCase(chave)}
+                </Text>
               </TouchableOpacity>
             ))
           )}
@@ -127,12 +133,7 @@ export default function Chapters() {
         {/* Barra de progresso */}
         <View style={styles.progressContainer}>
           <View style={styles.progressBar}>
-            <View
-              style={[
-                styles.progressFill,
-                { width: `${calculateProgress()}%` }
-              ]}
-            />
+            <View style={[styles.progressFill, { width: `${calculateProgress()}%` }]} />
           </View>
           <Text style={styles.progressText}>
             {lista.filter(item => isChapterCompleted(item.id.toString())).length}/{lista.length} capítulos lidos
@@ -140,38 +141,26 @@ export default function Chapters() {
         </View>
 
         {/* Lista de capítulos */}
-        <FlatList
+        <FlatList<{ id: number; title: string }>
           data={lista}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={[
-                styles.chapterItem,
-                isChapterCompleted(item.id.toString()) && styles.chapterItemRead
-              ]}
+              style={[styles.chapterItem, isChapterCompleted(item.id.toString()) && styles.chapterItemRead]}
               onPress={() => navigateToChapterContent(item.id.toString(), item.title)}
             >
               <View style={styles.chapterContent}>
-                <Text style={[
-                  styles.chapterTitle,
-                  isChapterCompleted(item.id.toString()) && styles.chapterTitleRead
-                ]}>
-                  {item.title}
+                <Text style={[styles.chapterTitle, isChapterCompleted(item.id.toString()) && styles.chapterTitleRead]}>
+                  {renderManualHighlights(item.title)}
                 </Text>
-                {isChapterCompleted(item.id.toString()) && (
-                  <Text style={styles.readIndicator}>✓ Lido</Text>
-                )}
+                {isChapterCompleted(item.id.toString()) && <Text style={styles.readIndicator}>✓ Lido</Text>}
               </View>
               <TouchableOpacity
                 style={styles.saveButton}
                 onPress={() => toggleSaveChapter(item.id.toString(), item.title)}
                 accessibilityLabel={isChapterSaved(`${tipo}_${id}_${item.id}`) ? "Remover dos salvos" : "Salvar capítulo"}
               >
-                {isChapterSaved(`${tipo}_${id}_${item.id}`) ? (
-                  <BookmarkCheck color={colors.brand} size={24} />
-                ) : (
-                  <Bookmark color={colors.textSecondary} size={24} />
-                )}
+                {isChapterSaved(`${tipo}_${id}_${item.id}`) ? <BookmarkCheck color={colors.brand} size={24} /> : <Bookmark color={colors.textSecondary} size={24} />}
               </TouchableOpacity>
             </TouchableOpacity>
           )}
@@ -323,4 +312,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#333',
   },
+  highlight: {
+    backgroundColor: '#FFD54F',
+    fontWeight: 'bold',
+  },
 });
+

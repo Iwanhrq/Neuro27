@@ -16,7 +16,7 @@ export default function EmotionCard({
   name, 
   category, 
   onPress, 
-  imageColor = colors.accentPurpleDark,
+  imageColor = colors.accent,
   icon = 'smile'
 }: EmotionCardProps) {
   const getIcon = () => {

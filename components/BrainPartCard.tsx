@@ -14,7 +14,7 @@ interface BrainPartCardProps {
 export default function BrainPartCard({ 
   name, 
   onPress, 
-  imageColor = colors.surfaceDark,
+  imageColor = colors.accentPurpleDark,
   icon = 'brain'
 }: BrainPartCardProps) {
   const getIcon = () => {

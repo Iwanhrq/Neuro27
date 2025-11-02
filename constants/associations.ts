@@ -9,7 +9,7 @@ export const associations: { [key: string]: AssociationItem } = {
   // Emoções
   emocoes: {
     neurotransmissores: ['dopamina', 'serotonina', 'acetilcolina'],
-    partesCerebro: ['sistema_limbico', 'cerebro_emocional', 'amigdala'],
+    partesCerebro: ['sistema_limbico', 'cerebro', 'amigdala'],
     emocoes: [],
   },
   alegria: {
@@ -41,7 +41,7 @@ export const associations: { [key: string]: AssociationItem } = {
   // Neurotransmissores
   neurotransmissores: {
     emocoes: ['alegria', 'tristeza', 'raiva', 'medo', 'amor'],
-    partesCerebro: ['sistema_limbico', 'cerebro_emocional', 'amigdala'],
+    partesCerebro: ['sistema_limbico', 'cerebro', 'amigdala'],
     neurotransmissores: [],
   },
   dopamina: {
@@ -86,7 +86,7 @@ export const associations: { [key: string]: AssociationItem } = {
     neurotransmissores: ['adrenalina', 'gaba'],
     partesCerebro: [],
   },
-  cerebro_emocional: {
+  cerebro: {
     emocoes: ['alegria'],
     neurotransmissores: ['acetilcolina'],
     partesCerebro: [],

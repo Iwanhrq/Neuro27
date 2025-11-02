@@ -8,10 +8,10 @@ import { ContentCard } from '../../components';
 
 // Dados estáticos das partes do cérebro
 const BRAIN_PARTS = [
-  { id: 'cérebro_emocional', name: 'O que é o cérebro emocional?', title: 'Cérebro Emocional', info: 'Entenda quais áreas do cérebro cuidam das emoções e como elas se conectam para te ajudar a reagir, lembrar e se adaptar.' },
-  { id: 'sistema_limbico', name: 'Sistema Límbico: o centro das emoções básicas', title: 'Sistema Límbico', info: 'Aprenda o que é o sistema límbico e por que ele é tão importante para emoções como medo, alegria e tristeza.' },
-  { id: 'amigdala', name: 'Amígdala: o alarme de emergência do cérebro', title: 'Amígdala', info: 'Descubra como essa pequena estrutura identifica ameaças e ativa reações como medo, raiva ou fuga.' },
-  { id: 'hipocampo', name: 'Hipocampo: onde memórias e emoções se encontram', title: 'Hipocampo', info: 'Veja como o cérebro usa memórias emocionais para reconhecer situações e decidir o que sentir.' },
+  { id: 'cerebro', name: 'Entenda o cérebro', title: 'Cérebro', chaptersName: 'Cérebro', info: 'Entenda quais áreas do cérebro cuidam das emoções e como elas se conectam para te ajudar a reagir, lembrar e se adaptar.' },
+  { id: 'sistema_limbico', name: 'Sistema Límbico: o centro das emoções básicas', title: 'Sistema Límbico', chaptersName: 'Sistema Límbico', info: 'Aprenda o que é o sistema límbico e por que ele é tão importante para emoções como medo, alegria e tristeza.' },
+  { id: 'amigdala', name: 'Amígdala: o alarme de emergência do cérebro', title: 'Amígdala', chaptersName: 'Amígdala', info: 'Descubra como essa pequena estrutura identifica ameaças e ativa reações como medo, raiva ou fuga.' },
+  { id: 'hipocampo', name: 'Hipocampo: onde memórias e emoções se encontram', title: 'Hipocampo', chaptersName: 'Hipocampo', info: 'Veja como o cérebro usa memórias emocionais para reconhecer situações e decidir o que sentir.' },
 ];
 
 
@@ -51,7 +51,7 @@ export default function BrainPartsScreen() {
               description={brainpart.info} // texto longo
               icon={brainpart.id}
               onPress={() => router.push(
-                `/chapters?tipo=partesCerebro&id=${brainpart.id}&name=${encodeURIComponent(brainpart.title)}&from=brain`
+                `/chapters?tipo=partesCerebro&id=${brainpart.id}&name=${encodeURIComponent(brainpart.chaptersName)}&from=brain`
               )}
               imageContainerColor={colors.surfaceDark}
             />

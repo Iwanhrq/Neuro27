@@ -11,6 +11,9 @@ const NEUROTRANSMITTERS = [
   { id: 'neurotransmissores', name: 'Neurotransmissores', title: 'O que são os neurotransmissores?', info: 'Descubra como essas substâncias químicas transmitem mensagens entre neurônios e controlam funções como humor, memória e atenção.' },
   { id: 'dopamina', name: 'Dopamina', title: 'Dopamina: a molécula da motivação', info: 'Entenda como a dopamina influencia prazer, recompensa e foco, e por que ela é essencial para aprender e se sentir motivado.' },
   { id: 'serotonina', name: 'Serotonina', title: 'Serotonina: o estabilizador do humor', info: 'Veja como a serotonina ajuda a regular o bem-estar, o sono e a ansiedade, mantendo o equilíbrio emocional.' },
+  { id: 'acetilcolina', name: 'Acetilcolina', title: 'Acetilcolina: memória e aprendizado', info: 'Entenda o papel da acetilcolina na atenção, memória e processos de aprendizado.' },
+  { id: 'gaba', name: 'GABA', title: 'GABA: equilíbrio e calma', info: 'Saiba como o GABA ajuda a inibir a atividade neural, promovendo relaxamento e controle da ansiedade.' },
+  { id: 'glutamato', name: 'Glutamato', title: 'Glutamato: excitação e plasticidade', info: 'Veja como o glutamato participa da comunicação neural e da plasticidade sináptica.' },
   { id: 'adrenalina', name: 'Adrenalina', title: 'Adrenalina: o impulso da ação', info: 'Saiba como a adrenalina prepara seu corpo para reagir rapidamente em situações de perigo ou desafio.' },
 ];
 
@@ -50,7 +53,7 @@ export default function NeurotransmittersScreen() {
               description={nt.info} // descrição longa
               icon={nt.id}
               onPress={() => router.push(
-                `/chapters?tipo=neurotransmissores&id=${nt.id}&name=${encodeURIComponent(nt.name)}&from=home`
+                `/chapters?tipo=neurotransmissores&id=${nt.id}&name=${encodeURIComponent(nt.name)}&from=neurotransmissores`
               )}
               imageContainerColor={colors.accentPurple}
             />

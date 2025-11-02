@@ -46,7 +46,7 @@ O Neuro27 é uma aplicação educacional que explora a complexa relação entre 
 <div align="center">
   <!-- Frontend -->
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/reactnative/reactnative-original.svg" height="50" alt="React Native" />
-  <img src="https://img.icons8.com/?color=FFFFFF&format=png&id=7ImWFDcPfSlz&size=100" height="50" alt="Expo" />
+<img src="https://img.icons8.com/?color=FFFFFF&format=png&id=7ImWFDcPfSlz&size=100" height="50" alt="Expo" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" height="50" alt="TypeScript" />
   
   <!-- Backend & Services -->
@@ -253,80 +253,3 @@ Cards especializados para cada tipo de conteúdo com visualizações específica
 ### ChapterCompleteButton
 Botão para marcar capítulos como concluídos e salvar progresso.
 
-## 🔧 Configurações
-
-### Firebase
-Configure as seguintes funcionalidades no Firebase:
-- **Authentication**: Email/Password
-- **Firestore**: Para dados do usuário (opcional)
-- **Storage**: Para upload de fotos de perfil (opcional)
-
-### Expo
-O projeto está configurado para:
-- **Multiplataforma**: iOS, Android e Web
-- **Deep Linking**: Para compartilhamento de conteúdo
-- **Splash Screen**: Personalizada
-- **Ícones**: Adaptativos para cada plataforma
-
-## 🚀 Deploy
-
-### Expo Application Services (EAS)
-```bash
-# Instalar EAS CLI
-npm install -g eas-cli
-
-# Configurar build
-eas build:configure
-
-# Build para produção
-eas build --platform all
-
-# Deploy para stores
-eas submit --platform all
-```
-
-### Build Local
-```bash
-# Android
-npx expo run:android --variant release
-
-# iOS
-npx expo run:ios --configuration Release
-```
-
-## 🤝 Contribuição
-
-1. **Fork** o projeto
-2. **Crie** uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. **Commit** suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** para a branch (`git push origin feature/AmazingFeature`)
-5. **Abra** um Pull Request
-
-### Padrões de Código
-- Use **TypeScript** para tipagem
-- Siga as convenções do **ESLint** configurado
-- Escreva **componentes funcionais** com hooks
-- Use **Expo Router** para navegação
-- Mantenha **componentes reutilizáveis** na pasta `components/`
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## 👥 Equipe
-
-- **Desenvolvedor Principal**: [Seu Nome](https://github.com/seu-usuario)
-- **Design**: [Nome do Designer](https://github.com/designer)
-- **Conteúdo**: [Nome do Especialista](https://github.com/especialista)
-
-## 📞 Contato
-
-- **Email**: seu.email@exemplo.com
-- **LinkedIn**: [Seu LinkedIn](https://linkedin.com/in/seu-perfil)
-- **Portfolio**: [Seu Portfolio](https://seu-portfolio.com)
-
----
-
-<p align="center">
-  Feito com ❤️ para democratizar o ensino de neurociência
-</p>

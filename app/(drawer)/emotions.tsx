@@ -9,9 +9,11 @@ import { ContentCard } from '../../components';
 // Dados estáticos das emoções
 const EMOTIONS = [
   { id: 'emocoes', name: 'Emoções', title: 'O que são as emoções?', info: 'Entenda como o cérebro cria as emoções e como elas ajudam você a reagir, se conectar e tomar decisões no dia a dia.' },
-  { id: 'alegria', name: 'Alegria', title: 'Alegria: energia para viver', info: 'Veja como a alegria influencia seu bem-estar, fortalece relacionamentos e aumenta a motivação' },
+  { id: 'alegria', name: 'Alegria', title: 'Alegria: energia para viver', info: 'Veja como a alegria influencia seu bem-estar, fortalece relacionamentos e aumenta a motivação.' },
   { id: 'tristeza', name: 'Tristeza', title: 'Tristeza: a força para refletir', info: 'Aprenda por que a tristeza faz parte do equilíbrio emocional e como ela ajuda a lidar com perdas e mudanças.' },
   { id: 'raiva', name: 'Raiva', title: 'Raiva: o motor da ação', info: 'Descubra como a raiva pode servir como alerta e combustível para buscar justiça ou defender limites.' },
+  { id: 'medo', name: 'Medo', title: 'Medo: proteção e alerta', info: 'Entenda como o medo ajuda a identificar ameaças e preparar respostas rápidas, e sua relação com a ansiedade.' },
+  { id: 'amor', name: 'Amor', title: 'Amor: conexão e vínculo', info: 'Veja como o amor fortalece laços sociais, empatia e motivação para o cuidado.' },
 ];
 
 export default function EmotionsScreen() {

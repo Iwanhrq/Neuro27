@@ -2,29 +2,30 @@ import colors from '@/constants/colors';
 import { fontFamily } from '@/constants/fonts';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { ArrowRight } from 'lucide-react-native';
 import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import dopaminImage from '../../assets/images/dopamin.png';
+import logoImage from '../../assets/images/logo.png';
 import serotoninImage from '../../assets/images/serotonin.png';
 import { EmotionCard, NeurotransmitterCard } from '../../components';
 import BrainPartCard from '../../components/BrainPartCard';
 
 const NEUROTRANSMITTERS = [
-  { id: 'dopamina', name: 'Dopamina', info: 'Lorem ipsum...', image: dopaminImage, color: '#8B5CF6' },
-  { id: 'serotonina', name: 'Serotonina', info: 'Lorem ipsum...', image: serotoninImage, color: '#06B6D4' },
-  { id: 'acetilcolina', name: 'Acetilcolina', info: 'Lorem ipsum...', image: dopaminImage, color: '#10B981' },
-  { id: 'gaba', name: 'GABA', info: 'Lorem ipsum...', image: serotoninImage, color: '#F59E0B' },
-  { id: 'glutamato', name: 'Glutamato', info: 'Lorem ipsum...', image: dopaminImage, color: '#EF4444' },
-  { id: 'noradrenalina', name: 'Noradrenalina', info: 'Lorem ipsum...', image: dopaminImage, color: '#EC4899' },
+  { id: 'dopamina', name: 'Dopamina', info: 'Lorem ipsum...', image: dopaminImage, color: colors.brand },
+  { id: 'serotonina', name: 'Serotonina', info: 'Lorem ipsum...', image: serotoninImage, color: colors.accentPurple },
+  { id: 'acetilcolina', name: 'Acetilcolina', info: 'Lorem ipsum...', image: dopaminImage, color: colors.brandLight },
+  { id: 'gaba', name: 'GABA', info: 'Lorem ipsum...', image: serotoninImage, color: colors.accentPurpleDark },
+  { id: 'glutamato', name: 'Glutamato', info: 'Lorem ipsum...', image: dopaminImage, color: colors.brand },
+  { id: 'adrenalina', name: 'Adrenalina', info: 'Lorem ipsum...', image: dopaminImage, color: colors.accentPurple },
 ];
 
 const BRAIN_PARTS = [
   { id: 'cerebro', name: 'Cérebro', icon: 'cerebro' },
-  { id: 'cerebelo', name: 'Cerebelo', icon: 'cerebelo' },
-  { id: 'tronco', name: 'Tronco Cerebral', icon: 'tronco' },
-  { id: 'hipotalamo', name: 'Hipotálamo', icon: 'hipotalamo' },
+  { id: 'sistema_limbico', name: 'Sistema Límbico', icon: 'sistema_limbico' },
   { id: 'amigdala', name: 'Amígdala', icon: 'amigdala' },
+  { id: 'hipocampo', name: 'Hipocampo', icon: 'hipocampo' },
 ];
 
 const EMOTIONS = [
@@ -63,7 +64,21 @@ export default function Home() {
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.headerCard}>
-          <View style={[styles.brainCard, { width: Dimensions.get('window').width - 40, height: 200 }]} />
+          <View style={[styles.brainCard, { width: Dimensions.get('window').width - 40, height: 200 }]}>
+            <View style={styles.headerContent}>
+              <Image 
+                source={logoImage} 
+                style={styles.logoImage}
+                contentFit="contain"
+              />
+              <View style={styles.textContainer}>
+                <Text style={styles.headerTitle}>Neuro27</Text>
+                <Text style={styles.headerSubtitle}>
+                  Entenda o funcionamento do cérebro de forma simples e interativa
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
 
         {/* Partes do cérebro */}
@@ -76,7 +91,7 @@ export default function Home() {
                 name={brainPart.name}
                 icon={brainPart.icon}
                 onPress={() =>
-                  router.push(`/chapters?tipo=partes-cerebro&id=${brainPart.id}&name=${encodeURIComponent(brainPart.name)}&from=home`)
+                  router.push(`/chapters?tipo=partesCerebro&id=${brainPart.id}&name=${encodeURIComponent(brainPart.name)}&from=home`)
                 }
               />
             ))}
@@ -170,10 +185,37 @@ const styles = StyleSheet.create({
     marginTop: 120,
   },
   brainCard: {
-    backgroundColor: colors.brandLight,
+    backgroundColor: colors.surfaceDark,
     borderRadius: 12,
-    padding: 20,
+    padding: 12,
     justifyContent: 'center',
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  logoImage: {
+    width: 100,
+    height: 100,
+    marginTop: 10,
+
+  },
+  textContainer: {
+    flex: 1,
+    marginLeft: 5,
+  },
+  headerTitle: {
+    fontFamily: fontFamily.bold,
+    fontSize: 40,
+    color: colors.textOnDark,
+  },
+  headerSubtitle: {
+    fontFamily: fontFamily.regular,
+    fontSize: 12,
+    color: colors.textOnDark,
+    lineHeight: 18,
+    opacity: 0.9,
   },
   title: {
     fontFamily: fontFamily.semibold,
