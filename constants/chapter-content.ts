@@ -555,6 +555,7 @@ Funções da tristeza:
 - Sinalização de necessidade de apoio
 - Reflexão sobre mudanças necessárias
 - Preparação para novos ciclos`,
+
       },
     },
   },
