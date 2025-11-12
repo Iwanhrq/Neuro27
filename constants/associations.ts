@@ -45,8 +45,8 @@ export const associations: { [key: string]: AssociationItem } = {
     neurotransmissores: [],
   },
   dopamina: {
-    emocoes: ['alegria', 'raiva', 'amor'],
-    partesCerebro: ['sistema_limbico'],
+    emocoes: ['alegria'],
+    partesCerebro: [],
     neurotransmissores: [],
   },
   serotonina: {

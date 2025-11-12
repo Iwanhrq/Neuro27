@@ -11,9 +11,7 @@ export const chapters = {
       { id: 7, title: "Capítulo 7 – Curiosidades e mitos sobre o cérebro" },
     ],
     sistema_limbico: [
-      { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2 - Estruturas do Sistema Límbico" },
-      { id: 3, title: "Capítulo 3 - Emoções Associadas" },
+      { id: 1, title: "Capítulo 1 - Introdução: o que é o sistema límbico?" },
     ],
     amigdala: [
       { id: 1, title: "Capítulo 1 - Introdução" },
@@ -33,14 +31,16 @@ export const chapters = {
       { id: 3, title: "Capítulo 3 - Tipos principais" },
     ],
     dopamina: [
-      { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2 - Dopamina e Comportamento" },
-      { id: 3, title: "Capítulo 3 - Dopamina e Saúde Mental" },
+      { id: 1, title: "Capítulo 1 - O que é a dopamina?" },
+      { id: 2, title: "Capítulo 2 - Principais funções da dopamina" },
+      { id: 3, title: "Capítulo 3 - Circuitos dopaminérgicos no cérebro" },
+      { id: 4, title: "Capítulo 4 - Dopamina e emoções" },
+      { id: 5, title: "Capítulo 5 - Dopamina e distúrbios neurológicos/psiquiátricos" },
+      { id: 6, title: "Capítulo 6 - Estilo de vida e dopamina" },
+      { id: 7, title: "Capítulo 7 - Estratégias para equilíbrio saudável da dopamina" },
     ],
     serotonina: [
-      { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2 - Serotonina e Humor" },
-      { id: 3, title: "Capítulo 3 - Regulação Biológica" },
+      { id: 1, title: "Capítulo 1 - Introdução: o que é a serotonina?" },
     ],
     acetilcolina: [
       { id: 1, title: "Capítulo 1 - Introdução" },
@@ -53,9 +53,7 @@ export const chapters = {
       { id: 3, title: "Capítulo 3 - Efeitos no Corpo" },
     ],
     gaba: [
-      { id: 1, title: "Capítulo 1 - Introdução" },
-      { id: 2, title: "Capítulo 2 - Inibição Neural" },
-      { id: 3, title: "Capítulo 3 - Relação com Ansiedade" },
+      { id: 1, title: "Capítulo 1 - Introdução: o que é o GABA?" },
     ],
     glutamato: [
       { id: 1, title: "Capítulo 1 - Introdução" },
