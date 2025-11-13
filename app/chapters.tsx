@@ -10,14 +10,22 @@ import { fontFamily } from '../constants/fonts';
 import { useChapterProgressContext } from '../contexts/ChapterProgressContext';
 import { useSavedChaptersContext } from '../contexts/SavedChaptersContext';
 
-// Função utilitária para deixar a primeira letra de cada palavra maiúscula
+
+// ------------------------------------------------------
+// FUNÇÃO: Coloca cada palavra com a primeira letra maiúscula
+// Ex: "corte_pre_frontal" → "Corte Pre Frontal"
+// ------------------------------------------------------
 function toTitleCase(str: string) {
   return str.replace(/_/g, ' ').replace(/\b\w/g, (txt) => txt.toUpperCase());
 }
 
-// Função para renderizar palavras grifadas manualmente
+
+// ------------------------------------------------------
+// FUNÇÃO: Renderiza palavras marcadas com **destaque**
+// Ex: "**Dopamina** é importante" → dopamina em amarelo
+// ------------------------------------------------------
 function renderManualHighlights(text: string) {
-  const regex = /\*\*(.+?)\*\*/g; // palavras entre **
+  const regex = /\*\*(.+?)\*\*/g;
   const parts = [];
   let lastIndex = 0;
   let match;
@@ -26,11 +34,13 @@ function renderManualHighlights(text: string) {
     if (match.index > lastIndex) {
       parts.push(<Text key={lastIndex}>{text.slice(lastIndex, match.index)}</Text>);
     }
+
     parts.push(
       <Text key={match.index} style={styles.highlight}>
         {match[1]}
       </Text>
     );
+
     lastIndex = regex.lastIndex;
   }
 
@@ -41,17 +51,23 @@ function renderManualHighlights(text: string) {
   return <>{parts}</>;
 }
 
+
+
 export default function Chapters() {
+  // Parâmetros vindos da navegação
   const { tipo, id, name, from } = useLocalSearchParams<{ tipo?: string; id?: string; name?: string; from?: string }>();
   const router = useRouter();
-  
+
+  // Contextos globais
   const { completedChapters, isChapterCompleted } = useChapterProgressContext();
   const { isChapterSaved, addSavedChapter, removeSavedChapter } = useSavedChaptersContext();
 
   if (!tipo || !id) return <Text style={styles.loading}>Loading...</Text>;
 
+  // Lista de capítulos da categoria selecionada
   const lista: { id: number; title: string }[] = (chapters as any)[tipo]?.[id] || [];
 
+  // Associações (emoções, neurotransmissores, partes do cérebro)
   const assoc: AssociationItem = associations[id as string] || {
     emocoes: [],
     neurotransmissores: [],
@@ -60,9 +76,15 @@ export default function Chapters() {
 
   const categorias: AssociationCategoria[] = ['emocoes', 'neurotransmissores', 'partesCerebro'];
 
+
+
+  // ------------------------------------------------------
+  // FUNÇÃO: Salvar / remover capítulo dos favoritos
+  // Cria um objeto completo com metadados antes de salvar
+  // ------------------------------------------------------
   const toggleSaveChapter = async (chapterId: string, chapterTitle: string) => {
     const fullChapterId = `${tipo}_${id}_${chapterId}`;
-    
+
     if (isChapterSaved(fullChapterId)) {
       await removeSavedChapter(fullChapterId);
     } else {
@@ -81,37 +103,58 @@ export default function Chapters() {
         subtipo: id,
         chapterId: parseInt(chapterId),
       };
-      
+
       await addSavedChapter(chapterToSave);
     }
   };
 
+
+  // ------------------------------------------------------
+  // FUNÇÃO: Calcula o progresso geral dessa lista
+  // ------------------------------------------------------
   const calculateProgress = () => {
     if (lista.length === 0) return 0;
     const completedInThisList = lista.filter(item => isChapterCompleted(item.id.toString())).length;
     return (completedInThisList / lista.length) * 100;
   };
 
+
+  // ------------------------------------------------------
+  // FUNÇÃO: Navega para a página de leitura do capítulo
+  // ------------------------------------------------------
   const navigateToChapterContent = (chapterId: string, chapterTitle: string) => {
-    router.push(`/chapter-content?chapterId=${chapterId}&title=${encodeURIComponent(chapterTitle)}&categoria=${tipo}&tipo=${id}&from=${from}`);
+    router.push(
+      `/chapter-content?chapterId=${chapterId}&title=${encodeURIComponent(chapterTitle)}&categoria=${tipo}&tipo=${id}&from=${from}`
+    );
   };
 
   const handleBack = () => router.back();
 
+
+
+  // ------------------------------------------------------
+  // RENDERIZAÇÃO PRINCIPAL
+  // ------------------------------------------------------
   return (
     <View style={styles.container}>
+      
+      {/* TOPO / Header */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={handleBack} accessibilityLabel="Voltar">
           <FontAwesome6 name="arrow-left" size={30} color="black" />
         </TouchableOpacity>
 
         <Text style={styles.headerTitle}>
-          {name ? decodeURIComponent(name) : id.replace(/_/g, ' ').replace(/\b\w/g, (str) => str.toUpperCase())}
+          {name ? decodeURIComponent(name) : toTitleCase(id)}
         </Text>
       </View>
 
+
       <View style={styles.content}>
-        {/* Marcadores */}
+
+        {/* --------------------------------------------------
+            Marcadores de associações (emoções, neurotransmissores, etc.)
+        --------------------------------------------------- */}
         <View style={styles.markers}>
           {categorias.flatMap((categoria) =>
             assoc[categoria].map((chave: string) => (
@@ -122,7 +165,7 @@ export default function Chapters() {
                   router.push(`/chapters?tipo=${categoria}&id=${chave}&name=${encodeURIComponent(toTitleCase(chave))}&from=${from}`)
                 }
               >
-                <Text style={styles.textMarker} numberOfLines={2} ellipsizeMode="tail">
+                <Text style={styles.textMarker} numberOfLines={2}>
                   {toTitleCase(chave)}
                 </Text>
               </TouchableOpacity>
@@ -130,7 +173,10 @@ export default function Chapters() {
           )}
         </View>
 
-        {/* Barra de progresso */}
+
+        {/* --------------------------------------------------
+            Barra de Progresso
+        --------------------------------------------------- */}
         <View style={styles.progressContainer}>
           <View style={styles.progressBar}>
             <View style={[styles.progressFill, { width: `${calculateProgress()}%` }]} />
@@ -140,7 +186,10 @@ export default function Chapters() {
           </Text>
         </View>
 
-        {/* Lista de capítulos */}
+
+        {/* --------------------------------------------------
+            Lista de capítulos
+        --------------------------------------------------- */}
         <FlatList<{ id: number; title: string }>
           data={lista}
           keyExtractor={(item) => item.id.toString()}
@@ -153,14 +202,24 @@ export default function Chapters() {
                 <Text style={[styles.chapterTitle, isChapterCompleted(item.id.toString()) && styles.chapterTitleRead]}>
                   {renderManualHighlights(item.title)}
                 </Text>
-                {isChapterCompleted(item.id.toString()) && <Text style={styles.readIndicator}>✓ Lido</Text>}
+
+                {isChapterCompleted(item.id.toString()) && (
+                  <Text style={styles.readIndicator}>✓ Lido</Text>
+                )}
               </View>
+
               <TouchableOpacity
                 style={styles.saveButton}
                 onPress={() => toggleSaveChapter(item.id.toString(), item.title)}
-                accessibilityLabel={isChapterSaved(`${tipo}_${id}_${item.id}`) ? "Remover dos salvos" : "Salvar capítulo"}
+                accessibilityLabel={
+                  isChapterSaved(`${tipo}_${id}_${item.id}`) ? "Remover dos salvos" : "Salvar capítulo"
+                }
               >
-                {isChapterSaved(`${tipo}_${id}_${item.id}`) ? <BookmarkCheck color={colors.brand} size={24} /> : <Bookmark color={colors.textSecondary} size={24} />}
+                {isChapterSaved(`${tipo}_${id}_${item.id}`) ? (
+                  <BookmarkCheck color={colors.brand} size={24} />
+                ) : (
+                  <Bookmark color={colors.textSecondary} size={24} />
+                )}
               </TouchableOpacity>
             </TouchableOpacity>
           )}
@@ -176,6 +235,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.surface,
   },
+
   header: {
     height: 200,
     backgroundColor: colors.brand,
@@ -184,6 +244,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     position: 'relative',
   },
+
   backButton: {
     position: 'absolute',
     top: 40,
@@ -191,16 +252,19 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
   },
+
   headerTitle: {
     fontFamily: fontFamily.semibold,
     fontSize: 28,
   },
+
   progressContainer: {
     width: '90%',
     alignItems: 'center',
     marginHorizontal: 20,
     marginBottom: 20,
   },
+
   progressBar: {
     width: '100%',
     height: 12,
@@ -209,17 +273,20 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 8,
   },
+
   progressFill: {
     height: '100%',
     backgroundColor: colors.accentPurpleDark,
     borderRadius: 6,
   },
+
   progressText: {
     fontFamily: fontFamily.regular,
     fontSize: 14,
     color: colors.textPrimary,
     opacity: 0.8,
   },
+
   content: {
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
@@ -228,6 +295,7 @@ const styles = StyleSheet.create({
     marginTop: -40,
     paddingTop: 10,
   },
+
   markers: {
     padding: 20,
     flexDirection: 'row',
@@ -235,6 +303,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 5,
   },
+
   marker: {
     paddingHorizontal: 15,
     paddingVertical: 0,
@@ -247,6 +316,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     marginVertical: 5,
   },
+
   textMarker: {
     fontFamily: fontFamily.regular,
     color: colors.textOnDark,
@@ -255,6 +325,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     lineHeight: 13,
   },
+
   chapterItem: {
     height: 75,
     flexDirection: 'row',
@@ -265,53 +336,64 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.outline,
   },
+
   chapterItemRead: {
     backgroundColor: colors.surfaceLight,
     opacity: 0.7,
   },
+
   chapterContent: {
     flex: 1,
     marginRight: 10,
   },
+
   chapterTitle: {
     fontFamily: fontFamily.regular,
     fontSize: 16,
   },
+
   chapterTitleRead: {
     textDecorationLine: 'line-through',
     opacity: 0.6,
   },
+
   readIndicator: {
     fontFamily: fontFamily.regular,
     fontSize: 12,
     color: colors.accentPurpleDark,
     marginTop: 2,
   },
+
   saveButton: {
     padding: 8,
     borderRadius: 20,
   },
+
   empty: {
     textAlign: 'center',
     color: '#888',
     marginTop: 32,
   },
+
   loading: {
     textAlign: 'center',
     marginTop: 32,
     color: '#888',
     fontSize: 18,
   },
+
   markersGroup: {
     marginBottom: 20,
     paddingHorizontal: 20,
   },
+
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#333',
   },
+
   highlight: {
     backgroundColor: '#FFD54F',
     fontWeight: 'bold',
